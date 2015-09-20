@@ -12,10 +12,18 @@ class User extends MY_Controller {
         parent::__construct();
     }
 
+    /**
+     * [index description]
+     * @return [type] [description]
+     */
     public function index()
     {
         if(!$this->is_logged_in()) {
-            redirect('user/login');
+            $data['title'] = "Login";
+
+            $data['content'] = $this->load->view('login', NULL, TRUE);
+            $this->load->view('html_anon', $data);
+
         }
         else {
             redirect('dashboard');
@@ -23,19 +31,64 @@ class User extends MY_Controller {
         
     }
 
-    public function login() 
-    {
-        $this->load->view('login');
+    /**
+     * [login description]
+     * @return [type] [description]
+     */
+    public function login() {
+        if (!$this->is_logged_in()) {
+            $data['title'] = 'Login';
+
+            $data['content'] = $this->load->view('login', NULL, TRUE);
+            $this->load->view('html_anon', $data);
+        }
+        else {
+            //Render access denied page
+            show_403();
+        }
     }
 
+
+    /**
+     * Log out
+     */
+    public function logout()
+    {
+        $this->authentication->logout();
+        redirect( secure_site_url( LOGIN_PAGE . '?logout=1') );
+    }
+
+    /**
+     * Reset password
+     * @return [type] [description]
+     */
+    
+    public function password() {
+        if (!$this->is_logged_in()) {
+            $data['title'] = "Forgot Password";
+
+            $data['content'] = $this->load->view('forgot', NULL, TRUE);
+            $this->load->view('html_anon', $data);
+        }
+        else {
+            //Render access denied page
+            show_403();
+        }
+    }
+
+    /**
+     * [dashboard description]
+     * @return [type] [description]
+     */
     public function dashboard() 
     {
-        echo "This will be your dashboard";
-    }
-
-    public function password() 
-    {
-        echo "You can request your password change from here";
+        if (!$this->is_logged_in()) {
+            redirect('user/login');
+        }
+        else {
+            $data['content'] = "This is your awesome dashboard";
+        }
+        
     }
 
 
@@ -228,15 +281,7 @@ class User extends MY_Controller {
 
     // --------------------------------------------------------------
 
-    /**
-     * Log out
-     */
-    public function logout()
-    {
-        $this->authentication->logout();
 
-        redirect( secure_site_url( LOGIN_PAGE . '?logout=1') );
-    }
 
     // --------------------------------------------------------------
 
@@ -411,32 +456,6 @@ class User extends MY_Controller {
     private function _hash_recovery_code( $user_salt, $recovery_code )
     {
         return $this->authentication->hash_passwd( $recovery_code, $user_salt );
-    }
-
-    // --------------------------------------------------------------
-    
-    /**
-     * Get an unused ID for user creation
-     *
-     * @return  int between 1200 and 4294967295
-     */
-    private function _get_unused_id()
-    {
-        // Create a random user id
-        $random_unique_int = 2147483648 + mt_rand( -2147482447, 2147483647 );
-
-        // Make sure the random user_id isn't already in use
-        $query = $this->db->where('user_id', $random_unique_int)
-            ->get_where(config_item('user_table'));
-
-        if ($query->num_rows() > 0) {
-            $query->free_result();
-
-            // If the random user_id is already in use, get a new number
-            return $this->_get_unused_id();
-        }
-
-        return $random_unique_int;
     }
 
     // --------------------------------------------------------------

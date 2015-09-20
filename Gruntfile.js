@@ -12,6 +12,7 @@ grunt.initConfig({
         'bower_components/jquery/dist/jquery.js', 
         'bower_components/bootstrap/dist/js/bootstrap.js', 
         'bower_components/bootstrap-wysihtml5/dist/bootstrap-wysihtml5-0.0.2.js', 
+        'bower_components/iCheck/icheck.js',
         'bower_components/AdminLTE/dist/js/app.js'
         ], 
         dest: 'assets/js/vendor/vendor.js' 
@@ -31,6 +32,7 @@ grunt.initConfig({
         'bower_components/bootstrap/dist/css/bootstrap.css', 
         'bower_components/font-awesome/css/font-awesome.css',
         'bower_components/bootstrap-wysihtml5/dist/bootstrap-wysihtml5-0.0.2.css',
+        'bower_components/iCheck/skins/square/blue.css',
         'bower_components/AdminLTE/dist/css/AdminLTE.css',
         'bower_components/AdminLTE/dist/css/skins/_all-skins.css'
         ], 
@@ -72,10 +74,10 @@ grunt.initConfig({
     target: {
       files: [
       {
-        'assets/css/vendor/vendor.min.css': ['assets/css/vendor/vendor.css']
+        'assets/css/vendor.min.css': ['assets/css/vendor/vendor.css']
       },
       {
-        'assets/css/custom/build/custom.min.css': ['assets/css/custom/build/custom.css']
+        'assets/css/custom.min.css': ['assets/css/custom/build/custom.css']
       },
       ]
     }
@@ -102,6 +104,13 @@ grunt.initConfig({
         flatten: true,
         src: 'bower_components/AdminLTE/dist/img/*',
         dest: 'assets/images/'
+
+      },
+      {
+        expand: true,
+        flatten: true,
+        src: 'bower_components/iCheck/skins/square/blue*.png',
+        dest: 'assets/css/'
 
       }
       ]
