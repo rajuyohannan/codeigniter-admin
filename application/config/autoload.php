@@ -66,6 +66,7 @@ $autoload['libraries'] = array(
 	'session',
 	'tokens',
 	'Authentication',
+	'form_validation'
 	);
 
 /*
@@ -142,4 +143,4 @@ $autoload['language'] = array();
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array();
+$autoload['model'] = array('auth_model');

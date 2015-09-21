@@ -161,7 +161,7 @@ $config['encrypt_all_cookies'] = TRUE;
 |
 */
 
-$config['allow_remember_me'] = FALSE;
+$config['allow_remember_me'] = TRUE;
 
 /*
 | -----------------------------------------------------------------
@@ -280,7 +280,7 @@ $config['show_login_form_on_logout'] = TRUE;
 | they will be redirected to. The default is to be redirected to the home page.
 */
 
-$config['default_login_redirect'] = '';
+$config['default_login_redirect'] = 'dashboard';
 
 /*
 | -----------------------------------------------------------------
@@ -320,7 +320,7 @@ $config['min_chars_for_password'] = 8;
 | The maximum amount of characters for a valid password
 */
 
-$config['max_chars_for_password'] = 256;
+$config['max_chars_for_password'] = 20;
 
 /*
 | -----------------------------------------------------------------
@@ -331,7 +331,7 @@ $config['max_chars_for_password'] = 256;
 | Make sure to remove any file extension, as this string is passed to config->load().
 */
 
-$config['login_form_validation_file'] = 'form_validation/examples/login';
+$config['login_form_validation_file'] = 'form_validation/examples/login.php';
 
 /*
 | -----------------------------------------------------------------

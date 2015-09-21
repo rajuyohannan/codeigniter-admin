@@ -41,3 +41,6 @@ cli-config.php
 # Codeigniter Docs
 #------------------------
 /user_guide/
+
+
+/application/config/email.php
