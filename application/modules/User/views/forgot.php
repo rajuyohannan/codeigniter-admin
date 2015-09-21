@@ -26,9 +26,9 @@
       <div class="callout callout-success">
         <h4>Instruction sent</h4>
         <p>We have sent you an email with instructions on how 
-        to recover your account. <!-- Because this email did not 
+        to recover your account. Because this email did not 
         really get sent, your link is shown below:</p>
-        <p> <?php echo  $special_link; ?></p>   -->   
+        <p> <?php echo  $special_link; ?></p>     
         <?php $show_form = true; ?> 
       </div>
   <?php elseif( isset( $no_match ) ): ?>
