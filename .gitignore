@@ -35,8 +35,8 @@ bower_components
 
 # Doctrine files
 #------------------------
-generate.php
-cli-config.php
+#generate.php
+#cli-config.php
 
 # Codeigniter Docs
 #------------------------

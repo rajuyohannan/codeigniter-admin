@@ -6,6 +6,7 @@
     <title>Mobiloitte PMS | <?php echo $title; ?></title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">    
     <link rel="stylesheet" href="<?php echo base_url('assets/css/vendor.min.css'); ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/custom.min.css'); ?>">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

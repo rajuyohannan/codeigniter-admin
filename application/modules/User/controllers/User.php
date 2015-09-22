@@ -249,21 +249,10 @@ class User extends MY_Controller {
             redirect('user/login');
         }
         else {
-            $content = "Welcome " . $this->auth_user_name . ",";
 
-            $content .= secure_anchor( 
-                                'user/logout', 
-                                'Logout'
-                            );
-
-            $data['content'] .=  "<br/><br/>".$this->auth_role . ' logged in!<br />
-                User ID is ' . $this->auth_user_id . '<br />
-                Auth level is ' . $this->auth_level . '<br />
-                Username is ' . $this->auth_user_name;
-
-                $data['title'] = "My Dashboard";
-
-                //$data['content'] = $this->load->view('verfication', ( isset( $view_data ) ) ? $view_data : NULL, TRUE);
+                $data['title'] = "Dashboard";
+                $data['description'] = "My Dashboard";
+                $data['content'] = $this->load->view('dashboard', NULL, TRUE);
                 $this->load->view('html', $data);
 
         }
