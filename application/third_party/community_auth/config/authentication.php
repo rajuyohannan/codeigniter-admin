@@ -28,8 +28,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 $config['levels_and_roles'] = array(
-	'1' => 'customer',
-	'6' => 'manager',
+	'1' => 'user',
+	'2' => 'teamleader',
+	'5' => 'client',
+	'7' => 'manager',
+	'8' => 'management',
 	'9' => 'admin'
 );
 
@@ -42,7 +45,8 @@ $config['levels_and_roles'] = array(
 */
 
 $config['groups'] = array(
-	'employees' => 'manager,admin'
+	'employees' => 'user,teamleader,manager,management,admin',
+	'clients'   => 'client'
 );
 
 /*
@@ -55,7 +59,7 @@ $config['groups'] = array(
 | 
 */
 
-$config['max_allowed_attempts'] = 5;
+$config['max_allowed_attempts'] = 10;
 
 /*
 | -----------------------------------------------------------------
@@ -70,7 +74,7 @@ $config['max_allowed_attempts'] = 5;
 | 
 */
 
-$config['deny_access_at'] = 10;
+$config['deny_access_at'] = 0;
 
 /*
 | -----------------------------------------------------------------
@@ -136,7 +140,7 @@ $config['disallow_multiple_logins'] = TRUE;
 |
 */
 
-$config['encrypt_auth_identifiers'] = FALSE;
+$config['encrypt_auth_identifiers'] = TRUE;
 
 /*
 | -----------------------------------------------------------------
@@ -257,7 +261,7 @@ $config['recovery_code_expiration'] = 60 * 60 * 2;
 | the session cookie is immediately re-created.
 */
 
-$config['delete_session_cookie_on_logout'] = FALSE;
+$config['delete_session_cookie_on_logout'] = TRUE;
 
 /*
 | -----------------------------------------------------------------

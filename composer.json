@@ -20,6 +20,7 @@
 		"doctrine/orm": "2.4.*",
 		"phpoffice/phpexcel": "^1.8",
 		"phpoffice/phpword": "^0.12.1",
-		"dompdf/dompdf": "^0.6.1"
+		"dompdf/dompdf": "^0.6.1",
+		"slim/slim": "^2.6"
 	}
 }

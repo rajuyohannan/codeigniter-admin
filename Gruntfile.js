@@ -13,7 +13,9 @@ grunt.initConfig({
         'bower_components/bootstrap/dist/js/bootstrap.js', 
         'bower_components/bootstrap-wysihtml5/dist/bootstrap-wysihtml5-0.0.2.js', 
         'bower_components/iCheck/icheck.js',
-        'bower_components/AdminLTE/dist/js/app.js'
+        'bower_components/AdminLTE/dist/js/app.js',
+        'bower_components/jquery-ui/jquery-ui.js',
+        'bower_components/fileapi/dist/FileAPI.js',
         ], 
         dest: 'assets/js/vendor/vendor.js' 
       },
@@ -34,7 +36,7 @@ grunt.initConfig({
         'bower_components/bootstrap-wysihtml5/dist/bootstrap-wysihtml5-0.0.2.css',
         'bower_components/iCheck/skins/square/blue.css',
         'bower_components/AdminLTE/dist/css/AdminLTE.css',
-        'bower_components/AdminLTE/dist/css/skins/_all-skins.css'
+        'bower_components/AdminLTE/dist/css/skins/_all-skins.css',
         ], 
         dest: 'assets/css/vendor/vendor.css' 
       },
@@ -83,7 +85,25 @@ grunt.initConfig({
     }
   },
   copy: {
-    dist: {
+    images: {
+      files: [
+      {
+        expand: true,
+        flatten: true,
+        src: 'bower_components/AdminLTE/dist/img/*',
+        dest: 'assets/images/'
+
+      },
+      {
+        expand: true,
+        flatten: true,
+        src: 'bower_components/iCheck/skins/square/blue*.png',
+        dest: 'assets/css/'
+
+      },
+      ]
+    },
+    fonts: {
       files: [
       {
         expand: true,
@@ -99,20 +119,17 @@ grunt.initConfig({
         dest: 'assets/fonts/'
 
       },
+      ]
+    },
+    fileAPI: {
+      files: [
       {
         expand: true,
-        flatten: true,
-        src: 'bower_components/AdminLTE/dist/img/*',
-        dest: 'assets/images/'
+        cwd:  'bower_components/fileapi/dist',
+        src: ['**'],
+        dest: 'assets/plugins/fileapi'
 
       },
-      {
-        expand: true,
-        flatten: true,
-        src: 'bower_components/iCheck/skins/square/blue*.png',
-        dest: 'assets/css/'
-
-      }
       ]
     }
   }

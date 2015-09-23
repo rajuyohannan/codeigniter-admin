@@ -10,6 +10,7 @@ class User extends MY_Controller {
     function __construct()
     {
         parent::__construct();
+        //$this->require_min_level(1);
     }
 
     /**
@@ -148,8 +149,8 @@ class User extends MY_Controller {
         }
         else {
             //Render access denied page
-            show_403();
-            //redirect('dashboard');
+            show_error('You are not authorized to view this page', '403');
+            
         }
     }
 

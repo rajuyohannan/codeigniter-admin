@@ -1,0 +1,6 @@
+RewriteEngine On
+
+RewriteBase /PMS3/api
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [QSA,L]

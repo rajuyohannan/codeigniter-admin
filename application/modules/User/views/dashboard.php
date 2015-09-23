@@ -4,4 +4,4 @@
         Welcome <?php echo $auth_user_name; ?>,
         </div>
 	</div>
-</section>>
+</section>

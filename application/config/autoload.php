@@ -113,7 +113,9 @@ $autoload['helper'] = array(
 */
 $autoload['config'] = array(
 		'db_tables',
-		'authentication'
+		'authentication',
+		'email',
+		'site_config'
 	);
 
 /*

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Mobiloitte PMS | <?php echo $title; ?></title>
+    <title><?php echo $this->config->item('site_name'); ?> | <?php echo $title; ?></title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -16,7 +16,10 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body class="hold-transition skin-green sidebar-mini">
+  <body class="hold-transition 
+               <?php echo $this->config->item('site_theme_color'); ?> 
+               <?php echo $this->config->item('site_show_drawer') ? 'sidebar-mini' : '';  ?> 
+    ">
     <!-- Site wrapper -->
     <div class="wrapper">
       <!-- Header Add -->
@@ -36,12 +39,20 @@
 
         <?php print $content; ?>
 
-
       </div><!-- /.content-wrapper -->
       <!-- Footer Add -->
       <?php $this->load->view('partials/footer'); ?>
     </div><!-- ./wrapper -->
+    <script>
+    var FileAPI = {
+      debug: true, 
+      staticPath: '<?php print base_url() . "assets/plugins/fileapi/"; ?>'
+    };
+    </script>   
     <script src="<?php echo base_url('assets/js/vendor/vendor.min.js'); ?>"></script>
+    <script type="text/javascript">
+      var baseurl = "<?php print base_url(); ?>";
+    </script>    
     <script src="<?php echo base_url('assets/js/custom/build/custom.min.js'); ?>"></script>
   </body>
 </html>
