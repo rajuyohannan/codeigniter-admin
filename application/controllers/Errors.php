@@ -23,7 +23,7 @@ class Errors extends MY_Controller {
 
         $this->output->set_status_header('404');        
         $data['check_login'] = $loggedin = $this->authentication->check_login( 1 );
-
+        
         $data['content'] = $this->load->view('errors/page_not_found', $data, TRUE);
 
     	if (!$loggedin->user_id) {
