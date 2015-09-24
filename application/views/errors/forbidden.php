@@ -15,7 +15,8 @@
         <h3><i class="fa fa-ban text-yellow"></i> Oops! Access Denied.</h3>
         <p>
          You are not authorized to access the page .
-          <br/><br/>
+         <hr>
+
           <?php if($check_login->user_id): ?>
             You may <a href="<?php echo base_url(); ?>">return to dashboard</a>.
           <?php else: ?>

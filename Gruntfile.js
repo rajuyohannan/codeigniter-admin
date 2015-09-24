@@ -10,6 +10,7 @@ grunt.initConfig({
       { 
         src: [
         'bower_components/jquery/dist/jquery.js', 
+        'bower_components/jquery/jquery.js', 
         'bower_components/bootstrap/dist/js/bootstrap.js', 
         'bower_components/bootstrap-wysihtml5/dist/bootstrap-wysihtml5-0.0.2.js', 
         'bower_components/iCheck/icheck.js',
