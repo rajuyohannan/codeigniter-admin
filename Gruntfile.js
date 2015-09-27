@@ -132,6 +132,17 @@ grunt.initConfig({
 
       },
       ]
+    },
+    emojiOne: {
+      files: [
+      {
+        expand: true,
+        cwd:  'bower_components/emojione/assets/png',
+        src: ['**'],
+        dest: 'assets/plugins/emojione'
+
+      },
+      ]
     }
   }
 

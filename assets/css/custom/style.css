@@ -215,3 +215,59 @@ label.error {display: inline !important;}
 .widget-user-2 .widget-user-header {
     text-align: center;
 }
+
+.emoji-list {
+    box-sizing: border-box;
+    font-size: 24px;
+    padding: 20px 20px 20px 0.7em;
+    width: calc(100% + 0.5em);
+}
+
+.emoji-list li {
+       margin-bottom: 0.2em;
+    margin-right: 0.2em;
+    width: 1.1em;
+    float: left;
+    list-style:  none;
+}
+
+.emoji-list li a {
+    cursor: pointer;
+    font-size: inherit;
+    height: 1.1em;
+    width: 1.1em;
+    display: inline-block;
+}
+
+.emoji-list img {
+    display: block;
+    height: 1em;
+    margin: 0.05em 0 0;
+    width: 1.1em;
+}
+
+.emoji-show {
+    cursor: pointer;
+}
+
+.clearfix:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+    }
+
+
+* html .clearfix             { zoom: 1; } /* IE6 */
+*:first-child+html .clearfix { zoom: 1; } /* IE7 */
+
+.user-panel > .image > img {background-color: #E6E6E6;}
+.fa.fa-asterisk.form-required {color: #dd4b39 !important;font-size: 10px;}
+.box .panel.panel-default {
+    margin: 20px 10px;
+}
+.box .alert {
+    margin: 10px;
+}

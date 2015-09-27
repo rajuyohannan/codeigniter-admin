@@ -1,3 +1,4 @@
+<?php print smiley_js(); ?>
 <section class="content">
 
           <div class="row">
@@ -11,10 +12,9 @@
                 <div class="widget-user-header <?php echo $this->config->item('site_palette_active'); ?>">
                   <div class="widget-user-image">
 
-
                     <form name="userpic" class="upload">
                       <div id="preview" class="upload__preview"></div>
-                      <img alt="User Avatar" src="<?php echo base_url('assets/images/user7-128x128.jpg'); ?>" class="img-circle">
+                      <img alt="User Avatar" width="128" src="<?php echo base_url('assets/images/default-male.jpg'); ?>" class="img-circle">
                       <div class="upload__progress">Uploading&hellip;</div>
 
                       <div class="upload__link hidden">
@@ -28,7 +28,7 @@
                     
                   </div><!-- /.widget-user-image -->
                   <h3 class="widget-user-username"><?php echo $auth_user_name; ?></h3>
-                  <h5 class="widget-user-desc">Lead Developer</h5>
+                  <h5 class="widget-user-desc"><?php print ucfirst($auth_role); ?></h5>
                 </div>
                 <div class="box-footer no-padding">
                   <ul class="nav nav-stacked">
@@ -78,7 +78,7 @@
             <div class="col-md-9">
               <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                  <li class="active"><a data-toggle="tab" href="#activity">Activity</a></li>
+                  <li class="active"><a data-toggle="tab" href="#activity">Latest Activity</a></li>
                   <li><a data-toggle="tab" href="#timeline">Notifications</a></li>
                   <li><a data-toggle="tab" href="#settings">Profile</a></li>
                   <li><a data-toggle="tab" href="#account">Account settings</a></li>
@@ -87,7 +87,7 @@
                 <div class="tab-content">
                   <div id="activity" class="active tab-pane">
                     <!-- Post -->
-                    <div class="post">
+                    <div class="post clearfix">
                       <div class="user-block">
                         <img alt="user image" src="<?php echo base_url('assets/images/user1-128x128.jpg'); ?>" class="img-circle img-bordered-sm">
                         <span class="username">
@@ -108,8 +108,24 @@
                         <li><a class="link-black text-sm" href="#"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a></li>
                         <li class="pull-right"><a class="link-black text-sm" href="#"><i class="fa fa-comments-o margin-r-5"></i> Comments (5)</a></li>
                       </ul>
+                        <div class="form-group">
+                          <div class="input-group">
+                            <input type="text" placeholder="Press enter to post comment" id="comments" class="form-control input-sm comments">
+                            <div class="input-group-addon emoji-show">
+                              <i class="fa fa-smile-o"></i>
+                            </div>
+                          </div>
 
-                      <input type="text" placeholder="Type a comment" class="form-control input-sm">
+                        <ul class="emoji-list hidden">
+                        <?php foreach($smiley_table as $key => $smilies): ?>
+                          <?php foreach($smilies as $smily): ?>
+                            <li>
+                              <?php print $smily; ?>
+                            </li>
+                          <?php endforeach; ?>
+                        <?php endforeach; ?>
+                        </ul>
+                      </div>
                     </div><!-- /.post -->
 
                     <!-- Post -->
@@ -186,14 +202,14 @@
                     <ul class="timeline timeline-inverse">
                       <!-- timeline time label -->
                       <li class="time-label">
-                        <span class="bg-red">
+                        <span class="<?php echo $this->config->item('site_palette_original');?>">
                           10 Feb. 2014
                         </span>
                       </li>
                       <!-- /.timeline-label -->
                       <!-- timeline item -->
                       <li>
-                        <i class="fa fa-envelope bg-blue"></i>
+                        <i class="fa fa-envelope <?php echo $this->config->item('site_palette_original');?>"></i>
                         <div class="timeline-item">
                           <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
                           <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
@@ -212,7 +228,7 @@
                       <!-- END timeline item -->
                       <!-- timeline item -->
                       <li>
-                        <i class="fa fa-user bg-aqua"></i>
+                        <i class="fa fa-user <?php echo $this->config->item('site_palette_original');?>"></i>
                         <div class="timeline-item">
                           <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
                           <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request</h3>
@@ -221,7 +237,7 @@
                       <!-- END timeline item -->
                       <!-- timeline item -->
                       <li>
-                        <i class="fa fa-comments bg-yellow"></i>
+                        <i class="fa fa-comments <?php echo $this->config->item('site_palette_original');?>"></i>
                         <div class="timeline-item">
                           <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
                           <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
@@ -238,14 +254,14 @@
                       <!-- END timeline item -->
                       <!-- timeline time label -->
                       <li class="time-label">
-                        <span class="bg-green">
+                        <span class="<?php echo $this->config->item('site_palette_original');?>">
                           3 Jan. 2014
                         </span>
                       </li>
                       <!-- /.timeline-label -->
                       <!-- timeline item -->
                       <li>
-                        <i class="fa fa-camera bg-purple"></i>
+                        <i class="fa fa-camera <?php echo $this->config->item('site_palette_original');?>"></i>
                         <div class="timeline-item">
                           <span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
                           <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
@@ -259,7 +275,7 @@
                       </li>
                       <!-- END timeline item -->
                       <li>
-                        <i class="fa fa-clock-o bg-gray"></i>
+                        <i class="fa fa-clock-o <?php echo $this->config->item('site_palette_original');?>"></i>
                       </li>
                     </ul>
                   </div><!-- /.tab-pane -->

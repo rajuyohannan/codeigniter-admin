@@ -1,0 +1,55 @@
+body.skin-red .nav-tabs-custom > .nav-tabs > li.active,
+body.skin-red-light .nav-tabs-custom > .nav-tabs > li.active
+ {
+	border-top-color: #dd4b39 !important;
+}
+
+body.skin-black .nav-tabs-custom > .nav-tabs > li.active,
+body.skin-black-light .nav-tabs-custom > .nav-tabs > li.active
+ {
+	border-top-color: #000 !important;
+}
+
+body.skin-green .nav-tabs-custom > .nav-tabs > li.active,
+body.skin-green-light .nav-tabs-custom > .nav-tabs > li.active
+ {
+	border-top-color: #00a65a !important;
+}
+
+body.skin-purple .nav-tabs-custom > .nav-tabs > li.active,
+body.skin-purple-light .nav-tabs-custom > .nav-tabs > li.active
+ {
+	border-top-color: #605ca8 !important;
+}
+
+body.skin-yellow .nav-tabs-custom > .nav-tabs > li.active,
+body.skin-yellow-light .nav-tabs-custom > .nav-tabs > li.active
+ {
+	border-top-color: #f39c12 !important;
+}
+
+body.skin-red .timeline::before, 
+body.skin-red-light .timeline::before {
+	background: #dd4b39 none repeat scroll 0 0;
+}
+body.skin-blue .timeline::before, 
+body.skin-blue-light .timeline::before {
+	background: #0073b7 none repeat scroll 0 0;
+}
+body.skin-black .timeline::before, 
+body.skin-black-light .timeline::before {
+	background: #000 none repeat scroll 0 0;
+}
+body.skin-green .timeline::before, 
+body.skin-green-light .timeline::before {
+	background: #00a65a none repeat scroll 0 0;
+}
+body.skin-purple .timeline::before, 
+body.skin-purple-light .timeline::before {
+	background: #605ca8 none repeat scroll 0 0;
+}
+
+body.skin-yellow .timeline::before, 
+body.skin-yellow-light .timeline::before {
+	background: #f39c12 none repeat scroll 0 0;
+}

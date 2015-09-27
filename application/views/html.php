@@ -25,7 +25,8 @@
       <!-- Header Add -->
       <?php $this->load->view('partials/header'); ?>
       <!-- Sidebar Add -->
-      <?php $this->load->view('partials/sidebar'); ?>
+
+      <?php $this->load->view('partials/sidebar/sidebar'); ?>
 
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">

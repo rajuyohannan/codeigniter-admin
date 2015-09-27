@@ -17,18 +17,17 @@ class Doctrine {
         require_once APPPATH.'config/database.php';
 
         //A Doctrine Autoloader is needed to load the models
-        $entitiesClassLoader = new ClassLoader('Entities', APPPATH."models");
+        $entitiesClassLoader = new ClassLoader('Entity', APPPATH."models");
         $entitiesClassLoader->register();
 
         // Set up caches
         $config = new Configuration;
         $cache = new ArrayCache;
         $config->setMetadataCacheImpl($cache);
-        //$driverImpl = $config->newDefaultAnnotationDriver(array(APPPATH.'models/Entities'));
         
         AnnotationRegistry::registerFile(APPPATH . "/vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php");
         $reader = new AnnotationReader();
-        $driverImpl = new \Doctrine\ORM\Mapping\Driver\AnnotationDriver($reader, array(APPPATH.'models/Entities'));
+        $driverImpl = new \Doctrine\ORM\Mapping\Driver\AnnotationDriver($reader, array(APPPATH.'models/Entity'));
 
         $config->setMetadataDriverImpl($driverImpl);
         $config->setQueryCacheImpl($cache);
@@ -40,18 +39,18 @@ class Doctrine {
         $config->setProxyNamespace('Proxies');
 
         // Set up logger
-        $logger = new EchoSQLLogger;
-        $config->setSQLLogger($logger);
+        //$logger = new EchoSQLLogger;
+        //$config->setSQLLogger($logger);
 
         $config->setAutoGenerateProxyClasses( TRUE );
 
         // Database connection information
         $connectionOptions = array(
             'driver' => 'pdo_mysql',
-            'user' =>     $db['default']['username'],
-            'password' => $db['default']['password'],
-            'host' =>     $db['default']['hostname'],
-            'dbname' =>   $db['default']['database']
+            'user' =>     'root',
+            'password' => 'whoami',
+            'host' =>     'localhost',
+            'dbname' =>   'pms3'
         );
 
         // Create EntityManager

@@ -19,13 +19,17 @@ $entityManager->getConnection()->getDatabasePlatform()->registerDoctrineTypeMapp
 $driver = new \Doctrine\ORM\Mapping\Driver\DatabaseDriver(
                 $entityManager->getConnection()->getSchemaManager()
 );
+
+
 $entityManager->getConfiguration()->setMetadataDriverImpl($driver);
 $cmf = new \Doctrine\ORM\Tools\DisconnectedClassMetadataFactory($em);
 $cmf->setEntityManager($entityManager);
 $classes = $driver->getAllClassNames();
 $metadata = $cmf->getAllMetadata();
 $generator = new Doctrine\ORM\Tools\EntityGenerator();
+
 $generator->setUpdateEntityIfExists(true);
 $generator->setGenerateStubMethods(true);
-// $generator->setGenerateAnnotations(true);
-$generator->generate($metadata, APPPATH . 'models/Entities');
+$generator->setGenerateAnnotations(true);
+
+$generator->generate($metadata, APPPATH . 'models/Entity');

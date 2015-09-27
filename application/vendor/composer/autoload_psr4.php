@@ -8,4 +8,5 @@ $baseDir = dirname(dirname($vendorDir));
 return array(
     'Symfony\\Component\\Console\\' => array($vendorDir . '/symfony/console'),
     'PhpOffice\\PhpWord\\' => array($vendorDir . '/phpoffice/phpword/src/PhpWord'),
+    'Emojione\\' => array($vendorDir . '/emojione/emojione/lib/php/src'),
 );

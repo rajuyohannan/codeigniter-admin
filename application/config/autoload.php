@@ -66,7 +66,8 @@ $autoload['libraries'] = array(
 	'session',
 	'tokens',
 	'Authentication',
-	'form_validation'
+	'form_validation',
+	'email'
 	);
 
 /*
@@ -96,7 +97,7 @@ $autoload['helper'] = array(
 		'serialization',
 		'url',
 		'form',
-		'cookie'
+		'cookie',
 	);
 
 /*
