@@ -25,7 +25,7 @@ class Doctrine {
         $cache = new ArrayCache;
         $config->setMetadataCacheImpl($cache);
         
-        AnnotationRegistry::registerFile(APPPATH . "/vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php");
+        AnnotationRegistry::registerFile(APPPATH . "vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php");
         $reader = new AnnotationReader();
         $driverImpl = new \Doctrine\ORM\Mapping\Driver\AnnotationDriver($reader, array(APPPATH.'models/Entity'));
 
@@ -35,7 +35,7 @@ class Doctrine {
         $config->setQueryCacheImpl($cache);
 
         // Proxy configuration
-        $config->setProxyDir(APPPATH.'/models/proxies');
+        $config->setProxyDir(APPPATH.'models/proxies');
         $config->setProxyNamespace('Proxies');
 
         // Set up logger

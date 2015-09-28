@@ -326,3 +326,14 @@ label.error {display: inline !important;}
 .box .alert {
     margin: 10px;
 }
+
+.ui-sortable-handle td:first-child:hover {
+    cursor: move;
+}
+
+.ui-sortable-handle td:first-child::before {
+    content: "\f047";
+    font-family: "FontAwesome";
+    margin-right: 20px;
+    max-width: 2px !important;
+}

@@ -35,7 +35,7 @@ $config['site_initial']  = 'M';
 | 
 */
 
-$config['site_theme_color'] = 'skin-green';
+$config['site_theme_color'] = 'skin-red';
 
 /*
 | -----------------------------------------------------------------
@@ -48,9 +48,9 @@ $config['site_theme_color'] = 'skin-green';
 |	bg-green
 | 	bg-green active
 */
-$config['site_palette_disabled'] = 'bg-green disabled color-palette';
-$config['site_palette_original'] = 'bg-green color-palette';
-$config['site_palette_active'] 	 = 'bg-green active color-palette';
+$config['site_palette_disabled'] = 'bg-red disabled color-palette';
+$config['site_palette_original'] = 'bg-red color-palette';
+$config['site_palette_active'] 	 = 'bg-red active color-palette';
 
 /*
 |--------------------------------------------------------------------------

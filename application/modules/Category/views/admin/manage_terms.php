@@ -31,15 +31,17 @@
 		</div>
     <div class="box-body">
      <table class="table table-striped">
-      <tbody>
+      <thead>
        <tr>
         <th style="width:30%;">Term Name</th>
         <th>Status</th>
         <th>Actions</th>
       </tr>
+      </thead>
+      <tbody <?php if($terms): ?>id="sortable"<?php endif; ?>>
       <?php if($terms): ?>
         <?php foreach($terms as $term): ?>
-         <tr>
+         <tr class="ui-state-default">
           <td><?php echo $term->getTitle(); ?></td>
           <td><?php echo $term->getStatus() ? 'Published' : 'Unpublished'; ?></td>
           <td>

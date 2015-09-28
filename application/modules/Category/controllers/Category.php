@@ -266,7 +266,12 @@ class Category extends MY_Controller {
         $data['title'] = 'Edit Terms';
         return $this->load->view('html', $data);
     }
-
+    
+    /**
+     * [delete_term description]
+     * @param  [type] $tid [description]
+     * @return [type]      [description]
+     */
     public function delete_term($tid) {
         try {
             $entity = $this->doctrine->em->getReference('Entity\Terms', $tid);
