@@ -2,4 +2,5 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 #Admin path
-$route['admin/categories/(:any)'] = 'Category/$1';
+$route['admin/groups']		  = 'Group';
+$route['admin/groups/(:any)'] = 'Group/$1';

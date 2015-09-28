@@ -64,16 +64,16 @@ class Groups
     private $weight;
 
     /**
-     * @var integer
+     * @var \DateTime
      *
-     * @ORM\Column(name="created_on", type="integer", nullable=false)
+     * @ORM\Column(name="created_on", type="datetime", nullable=false)
      */
     private $createdOn;
 
     /**
-     * @var integer
+     * @var \DateTime
      *
-     * @ORM\Column(name="updated_on", type="integer", nullable=false)
+     * @ORM\Column(name="updated_on", type="datetime", nullable=false)
      */
     private $updatedOn;
 
@@ -239,8 +239,8 @@ class Groups
     /**
      * Set createdOn
      *
-     * @param integer $createdOn
-     * @return Groups
+     * @param \DateTime $createdOn
+     * @return Categories
      */
     public function setCreatedOn($createdOn)
     {
@@ -252,7 +252,7 @@ class Groups
     /**
      * Get createdOn
      *
-     * @return integer 
+     * @return \DateTime 
      */
     public function getCreatedOn()
     {
@@ -288,7 +288,7 @@ class Groups
      * @param \Users $createdBy
      * @return Groups
      */
-    public function setCreatedBy(\Users $createdBy = null)
+    public function setCreatedBy(Users $createdBy = null)
     {
         $this->createdBy = $createdBy;
 

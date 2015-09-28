@@ -21,6 +21,6 @@ $config['cur_tag_open'] = '<li class="active"><a href="#">';
 $config['cur_tag_close'] = '</a></li>';
 $config['num_tag_open'] = '<li>';
 $config['num_tag_close'] = '</li>';
-$config['per_page'] = 1;
+$config['per_page'] = 25;
 $config['use_page_numbers'] = TRUE;
 $config['suffix'] = '?'. http_build_query($_GET, '', "&");	

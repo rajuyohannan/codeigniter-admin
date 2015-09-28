@@ -5,7 +5,7 @@ $route['user'] = 'User';
 $route['dashboard'] = 'User/dashboard';
 
 # Admin paths
-$route['admin/users']        = 'User/users';
+$route['admin/users']        		= 'User/users';
 $route['admin/users/(:num)']        = 'User/users/$1';
 
 $route['admin/users/(:any)/(:num)'] = 'User/$1/$2';

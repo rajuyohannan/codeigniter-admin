@@ -35,7 +35,7 @@
             </ul>
           </li>
           <li><a href="<?php echo base_url('admin/categories/manage'); ?>"><i class="fa fa-list"></i> Manage Categories</a></li>
-          <li><a href="<?php echo base_url(); ?>"><i class="fa fa-folder-open"></i> Manage Groups</a></li>
+          <li><a href="<?php echo base_url('admin/groups'); ?>"><i class="fa fa-folder-open"></i> Manage Groups</a></li>
         </ul>
       </li>
 

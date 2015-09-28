@@ -35,6 +35,15 @@ grunt.initConfig({
         'bower_components/bootstrap/dist/css/bootstrap.css', 
         'bower_components/font-awesome/css/font-awesome.css',
         'bower_components/bootstrap-wysihtml5/dist/bootstrap-wysihtml5-0.0.2.css',
+        'bower_components/iCheck/skins/square/square.css',
+        'bower_components/iCheck/skins/square/green.css',
+        'bower_components/iCheck/skins/square/aero.css',
+        'bower_components/iCheck/skins/square/grey.css',
+        'bower_components/iCheck/skins/square/orange.css',
+        'bower_components/iCheck/skins/square/pink.css',
+        'bower_components/iCheck/skins/square/purple.css',
+        'bower_components/iCheck/skins/square/red.css',
+        'bower_components/iCheck/skins/square/yellow.css',
         'bower_components/iCheck/skins/square/blue.css',
         'bower_components/AdminLTE/dist/css/AdminLTE.css',
         'bower_components/AdminLTE/dist/css/skins/_all-skins.css',
@@ -98,7 +107,7 @@ grunt.initConfig({
       {
         expand: true,
         flatten: true,
-        src: 'bower_components/iCheck/skins/square/blue*.png',
+        src: 'bower_components/iCheck/skins/square/*.png',
         dest: 'assets/css/'
 
       },

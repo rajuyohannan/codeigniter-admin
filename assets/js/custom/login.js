@@ -1,7 +1,7 @@
 $(function () {
 	$('input').iCheck({
-  		checkboxClass: 'icheckbox_square-blue',
-  		radioClass: 'iradio_square-blue',
+  		checkboxClass: 'icheckbox_square-grey',
+  		radioClass: 'iradio_square-grey',
   		increaseArea: '10%' // optional
 	});
 });

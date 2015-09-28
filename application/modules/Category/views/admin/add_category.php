@@ -15,7 +15,7 @@
 
       <?php if( null != validation_errors() ): ?>
         <div class="callout callout-danger">
-          <h4>The following error prevented user account creation</h4>
+          <h4>The following error prevented cataegory creation</h4>
           <ul>
             <?php echo validation_errors(); ?>
           </ul>
