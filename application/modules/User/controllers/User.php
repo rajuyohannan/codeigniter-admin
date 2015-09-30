@@ -611,4 +611,15 @@ class User extends MY_Controller {
         }
     }
 
+    /**
+     * [get_user_boxes description]
+     * @param  [type] $users [description]
+     * @return [type]        [description]
+     */
+    public function get_user_boxes($users) {
+        $data['users'] = $users;
+        return $this->load->view('user_boxes', $data, TRUE);
+    }
+
+
  }

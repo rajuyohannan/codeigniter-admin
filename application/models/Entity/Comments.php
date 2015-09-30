@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Comments
  *
- * @ORM\Table(name="comments", indexes={@ORM\Index(name="pid", columns={"pid"}), @ORM\Index(name="created_by", columns={"created_by"})})
+ * @ORM\Table(name="comments", indexes={@ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="articles_id", columns={"articles_id"})})
  * @ORM\Entity
  */
 class Comments
@@ -36,11 +36,21 @@ class Comments
     private $status;
 
     /**
-     * @var integer
+     * @var \DateTime
      *
-     * @ORM\Column(name="created_on", type="integer", nullable=false)
+     * @ORM\Column(name="created_on", type="datetime", nullable=false)
      */
     private $createdOn;
+
+    /**
+     * @var \Articles
+     *
+     * @ORM\ManyToOne(targetEntity="Articles")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="articles_id", referencedColumnName="id")
+     * })
+     */
+    private $articles;
 
     /**
      * @var \Users
@@ -51,16 +61,6 @@ class Comments
      * })
      */
     private $createdBy;
-
-    /**
-     * @var \Articles
-     *
-     * @ORM\ManyToOne(targetEntity="Articles")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="pid", referencedColumnName="id")
-     * })
-     */
-    private $pid;
 
 
     /**
@@ -122,7 +122,7 @@ class Comments
     /**
      * Set createdOn
      *
-     * @param integer $createdOn
+     * @param \DateTime $createdOn
      * @return Comments
      */
     public function setCreatedOn($createdOn)
@@ -135,11 +135,34 @@ class Comments
     /**
      * Get createdOn
      *
-     * @return integer 
+     * @return \DateTime 
      */
     public function getCreatedOn()
     {
         return $this->createdOn;
+    }
+
+    /**
+     * Set articles
+     *
+     * @param \Articles $articles
+     * @return Comments
+     */
+    public function setArticles(\Articles $articles = null)
+    {
+        $this->articles = $articles;
+
+        return $this;
+    }
+
+    /**
+     * Get articles
+     *
+     * @return \Articles 
+     */
+    public function getArticles()
+    {
+        return $this->articles;
     }
 
     /**
@@ -163,28 +186,5 @@ class Comments
     public function getCreatedBy()
     {
         return $this->createdBy;
-    }
-
-    /**
-     * Set pid
-     *
-     * @param \Articles $pid
-     * @return Comments
-     */
-    public function setPid(\Articles $pid = null)
-    {
-        $this->pid = $pid;
-
-        return $this;
-    }
-
-    /**
-     * Get pid
-     *
-     * @return \Articles 
-     */
-    public function getPid()
-    {
-        return $this->pid;
     }
 }

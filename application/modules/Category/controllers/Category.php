@@ -13,6 +13,7 @@ class Category extends MY_Controller {
         if (!$this->require_min_level(9)) {
         	show_error('You do not have access to view this resource', '403');
         }
+
     }
 
     /**
@@ -68,7 +69,8 @@ class Category extends MY_Controller {
             $category->setDescription($this->input->post('description'));
             $status = $this->input->post('status') ? $this->input->post('status') : '0';
             $category->setStatus($status);
-            $category->setCreatedBy($this->auth_user_id);
+            $createdBy = $this->doctrine->em->getReference('Entity\Users', $this->auth_user_id);
+            $category->setCreatedBy($createdBy);
             $category->setCreatedOn(date_create(date('Y-m-d H:i:s')));
 
             try {
@@ -201,7 +203,8 @@ class Category extends MY_Controller {
 
             $terms->setWeight($weight + 1);
             $terms->setCategory($category);
-            $terms->setCreatedBy($this->auth_user_id);
+            $createdBy = $this->doctrine->em->getReference('Entity\Users', $this->auth_user_id);
+            $terms->setCreatedBy($createdBy);
             $terms->setCreatedOn(date_create(date('Y-m-d H:i:s')));
 
             try {

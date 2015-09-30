@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Articles
  *
- * @ORM\Table(name="articles", indexes={@ORM\Index(name="gid", columns={"gid"}), @ORM\Index(name="created_by", columns={"created_by"})})
+ * @ORM\Table(name="articles", indexes={@ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="groups_id", columns={"groups_id"})})
  * @ORM\Entity
  */
 class Articles
@@ -31,13 +31,6 @@ class Articles
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=255, nullable=false)
-     */
-    private $type;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="body", type="text", length=65535, nullable=false)
      */
     private $body;
@@ -50,28 +43,18 @@ class Articles
     private $status;
 
     /**
-     * @var integer
+     * @var \DateTime
      *
-     * @ORM\Column(name="created_on", type="integer", nullable=false)
+     * @ORM\Column(name="created_on", type="datetime", nullable=false)
      */
     private $createdOn;
 
     /**
-     * @var integer
+     * @var \DateTime
      *
-     * @ORM\Column(name="updated_on", type="integer", nullable=false)
+     * @ORM\Column(name="updated_on", type="datetime", nullable=false)
      */
     private $updatedOn;
-
-    /**
-     * @var \Groups
-     *
-     * @ORM\ManyToOne(targetEntity="Groups")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="gid", referencedColumnName="id")
-     * })
-     */
-    private $gid;
 
     /**
      * @var \Users
@@ -82,6 +65,16 @@ class Articles
      * })
      */
     private $createdBy;
+
+    /**
+     * @var \Groups
+     *
+     * @ORM\ManyToOne(targetEntity="Groups")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="groups_id", referencedColumnName="id")
+     * })
+     */
+    private $groups;
 
 
     /**
@@ -115,29 +108,6 @@ class Articles
     public function getTitle()
     {
         return $this->title;
-    }
-
-    /**
-     * Set type
-     *
-     * @param string $type
-     * @return Articles
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return string 
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 
     /**
@@ -189,7 +159,7 @@ class Articles
     /**
      * Set createdOn
      *
-     * @param integer $createdOn
+     * @param \DateTime $createdOn
      * @return Articles
      */
     public function setCreatedOn($createdOn)
@@ -202,7 +172,7 @@ class Articles
     /**
      * Get createdOn
      *
-     * @return integer 
+     * @return \DateTime 
      */
     public function getCreatedOn()
     {
@@ -212,7 +182,7 @@ class Articles
     /**
      * Set updatedOn
      *
-     * @param integer $updatedOn
+     * @param \DateTime $updatedOn
      * @return Articles
      */
     public function setUpdatedOn($updatedOn)
@@ -225,34 +195,11 @@ class Articles
     /**
      * Get updatedOn
      *
-     * @return integer 
+     * @return \DateTime 
      */
     public function getUpdatedOn()
     {
         return $this->updatedOn;
-    }
-
-    /**
-     * Set gid
-     *
-     * @param \Groups $gid
-     * @return Articles
-     */
-    public function setGid(\Groups $gid = null)
-    {
-        $this->gid = $gid;
-
-        return $this;
-    }
-
-    /**
-     * Get gid
-     *
-     * @return \Groups 
-     */
-    public function getGid()
-    {
-        return $this->gid;
     }
 
     /**
@@ -276,5 +223,28 @@ class Articles
     public function getCreatedBy()
     {
         return $this->createdBy;
+    }
+
+    /**
+     * Set groups
+     *
+     * @param \Groups $groups
+     * @return Articles
+     */
+    public function setGroups(\Groups $groups = null)
+    {
+        $this->groups = $groups;
+
+        return $this;
+    }
+
+    /**
+     * Get groups
+     *
+     * @return \Groups 
+     */
+    public function getGroups()
+    {
+        return $this->groups;
     }
 }

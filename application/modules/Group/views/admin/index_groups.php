@@ -39,6 +39,7 @@
 				<div class="row">
 					<div class="col-md-3">
 						<div class="form-group">
+              <label for="title">Group Name</label>
 							<?php echo form_input(array(
 								'name' => 'title', 
 								'id'   => 'title',
@@ -48,19 +49,51 @@
 								'maxlength' => 255,
 								'value' => $_GET['title'],
 								)); ?>
-							</div>
 						</div>
-            <div class="col-md-2">
-              <?php echo form_submit(
-                'submit', 
-                'Filter', 
-                array('class' => 'btn-block btn btn-primary btn-flat')
-                ); ?>
-              </div>
-              <div class="col-md-2">
-                <?php echo anchor('admin/groups', 'Reset', array('class' => 'btn-block btn btn-danger btn-flat')); ?>
-              </div>
+					</div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="visibility">Group Visibility</label>
+              <?php echo form_dropdown(
+                'visibility', 
+                 array('-1' => ' - Select Visibility - ', 'public' => 'Public Groups', 'private' => 'Private Groups'),
+                 $_GET['visibility'],
+                array(
+                  'id'   => 'visibility',
+                  'class' => 'form-control', 
+                  'maxlength' => 255,
+              )); ?>              
             </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="type">Group Type</label>
+              <?php echo form_dropdown(
+                'type', 
+                 array('-1' => ' - Select Type - ', 'organic' => 'Organic Groups', 'project' => 'Project Groups'),
+                 $_GET['type'],
+                array(
+                  'id'   => 'type',
+                  'class' => 'form-control', 
+                  'maxlength' => 255,
+              )); ?>              
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-8">
+          </div>
+          <div class="col-md-2">
+            <?php echo form_submit(
+              'submit', 
+              'Filter', 
+              array('class' => 'btn-block btn btn-primary btn-flat')
+              ); ?>
+            </div>
+            <div class="col-md-2">
+              <?php echo anchor('admin/groups', 'Reset', array('class' => 'btn-block btn btn-danger btn-flat')); ?>
+            </div>
+          </div>
             <?php form_close(); ?>
 					</div>
 				</div>
@@ -69,7 +102,9 @@
 					<table class="table table-striped">
 						<tbody>
 							<tr>
-            		<th style="width:30%;">Name</th>
+            		<th>Name</th>
+                <th>Visibility</th>
+                <th>Type</th>
                 <th>Status</th>
                 <th>Created On</th>
 								<th>Actions</th>
@@ -78,6 +113,8 @@
 								<?php foreach($groups as $group): ?>
 									<tr>
 										  <td><?php print $group->getTitle(); ?></td>
+                      <td><?php echo ucfirst($group->getVisibility()); ?></td>
+                      <td><?php echo ucfirst($group->getType()); ?></td>
                       <td><?php print $group->getStatus() == 0 ? 'Unpublished' : 'Published' ; ?></td>
                       <td><?php print $group->getCreatedOn()->format('l, dS F Y'); ?></td>
 											<td>
@@ -90,18 +127,18 @@
     												data-body="The action can not be undone. The deleted groups will be removed from persistent storage." 
     												data-button="Delete" 
     												data-class="modal-danger" 
-    												data-action="<?php echo base_url('admin/categories/delete/'.$group->getId()); ?>" 
+    												data-action="<?php echo base_url('admin/groups/delete/'.$group->getId()); ?>" 
     												class="btn btn-danger" href="#">
 												  <i class="fa fa-trash"></i>&nbsp;Delete
 											</a>
-                      <a class="btn btn-primary" href="<?php echo base_url('admin/categories/terms/'.$group->getId()); ?>">
+                      <a class="btn btn-primary" href="<?php echo base_url('admin/groups/members/'.$group->getId()); ?>">
                         <i class="fa fa-users"></i>&nbsp;Group Subscription
                       </a>
 								</td>
 							</tr>
 						<?php endforeach; ?>
 					<?php else: ?>
-						<tr><td colspan="2"><h3>No records found.</h3></td></tr>
+						<tr><td colspan="4"><h3>No records found.</h3></td></tr>
 					<?php endif; ?>
 				</tbody>
 			</table>

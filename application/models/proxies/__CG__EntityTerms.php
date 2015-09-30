@@ -64,10 +64,10 @@ class Terms extends \Entity\Terms implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', '' . "\0" . 'Entity\\Terms' . "\0" . 'id', '' . "\0" . 'Entity\\Terms' . "\0" . 'title', '' . "\0" . 'Entity\\Terms' . "\0" . 'description', '' . "\0" . 'Entity\\Terms' . "\0" . 'status', '' . "\0" . 'Entity\\Terms' . "\0" . 'weight', '' . "\0" . 'Entity\\Terms' . "\0" . 'createdBy', '' . "\0" . 'Entity\\Terms' . "\0" . 'createdOn', '' . "\0" . 'Entity\\Terms' . "\0" . 'category');
+            return array('__isInitialized__', '' . "\0" . 'Entity\\Terms' . "\0" . 'id', '' . "\0" . 'Entity\\Terms' . "\0" . 'title', '' . "\0" . 'Entity\\Terms' . "\0" . 'description', '' . "\0" . 'Entity\\Terms' . "\0" . 'status', '' . "\0" . 'Entity\\Terms' . "\0" . 'weight', '' . "\0" . 'Entity\\Terms' . "\0" . 'createdOn', '' . "\0" . 'Entity\\Terms' . "\0" . 'createdBy', '' . "\0" . 'Entity\\Terms' . "\0" . 'category');
         }
 
-        return array('__isInitialized__', '' . "\0" . 'Entity\\Terms' . "\0" . 'id', '' . "\0" . 'Entity\\Terms' . "\0" . 'title', '' . "\0" . 'Entity\\Terms' . "\0" . 'description', '' . "\0" . 'Entity\\Terms' . "\0" . 'status', '' . "\0" . 'Entity\\Terms' . "\0" . 'weight', '' . "\0" . 'Entity\\Terms' . "\0" . 'createdBy', '' . "\0" . 'Entity\\Terms' . "\0" . 'createdOn', '' . "\0" . 'Entity\\Terms' . "\0" . 'category');
+        return array('__isInitialized__', '' . "\0" . 'Entity\\Terms' . "\0" . 'id', '' . "\0" . 'Entity\\Terms' . "\0" . 'title', '' . "\0" . 'Entity\\Terms' . "\0" . 'description', '' . "\0" . 'Entity\\Terms' . "\0" . 'status', '' . "\0" . 'Entity\\Terms' . "\0" . 'weight', '' . "\0" . 'Entity\\Terms' . "\0" . 'createdOn', '' . "\0" . 'Entity\\Terms' . "\0" . 'createdBy', '' . "\0" . 'Entity\\Terms' . "\0" . 'category');
     }
 
     /**
@@ -279,28 +279,6 @@ class Terms extends \Entity\Terms implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function setCreatedBy($createdBy)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCreatedBy', array($createdBy));
-
-        return parent::setCreatedBy($createdBy);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getCreatedBy()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCreatedBy', array());
-
-        return parent::getCreatedBy();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function setCreatedOn($createdOn)
     {
 
@@ -318,6 +296,28 @@ class Terms extends \Entity\Terms implements \Doctrine\ORM\Proxy\Proxy
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCreatedOn', array());
 
         return parent::getCreatedOn();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setCreatedBy(\Entity\Users $createdBy = NULL)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCreatedBy', array($createdBy));
+
+        return parent::setCreatedBy($createdBy);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getCreatedBy()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCreatedBy', array());
+
+        return parent::getCreatedBy();
     }
 
     /**

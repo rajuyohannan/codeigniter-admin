@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Categories
  *
- * @ORM\Table(name="categories")
+ * @ORM\Table(name="categories", indexes={@ORM\Index(name="created_by", columns={"created_by"})})
  * @ORM\Entity
  */
 class Categories
@@ -43,18 +43,21 @@ class Categories
     private $status;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="created_by", type="integer", nullable=false)
-     */
-    private $createdBy;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_on", type="datetime", nullable=false)
      */
     private $createdOn;
+
+    /**
+     * @var \Users
+     *
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="created_by", referencedColumnName="user_id")
+     * })
+     */
+    private $createdBy;
 
 
     /**
@@ -137,29 +140,6 @@ class Categories
     }
 
     /**
-     * Set createdBy
-     *
-     * @param integer $createdBy
-     * @return Categories
-     */
-    public function setCreatedBy($createdBy)
-    {
-        $this->createdBy = $createdBy;
-
-        return $this;
-    }
-
-    /**
-     * Get createdBy
-     *
-     * @return integer 
-     */
-    public function getCreatedBy()
-    {
-        return $this->createdBy;
-    }
-
-    /**
      * Set createdOn
      *
      * @param \DateTime $createdOn
@@ -180,5 +160,28 @@ class Categories
     public function getCreatedOn()
     {
         return $this->createdOn;
+    }
+
+    /**
+     * Set createdBy
+     *
+     * @param \Users $createdBy
+     * @return Categories
+     */
+    public function setCreatedBy(Users $createdBy = null)
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    /**
+     * Get createdBy
+     *
+     * @return \Users 
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
     }
 }

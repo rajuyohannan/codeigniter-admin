@@ -62,7 +62,7 @@
     </tr>
   <?php endforeach; ?>
 <?php else: ?>
-  <tr><td colspan="2"><h3>No records found.</h3></td></tr>
+  <tr><td colspan="3"><h3>No records found.</h3></td></tr>
 <?php endif; ?>
 </tbody>
 </table>

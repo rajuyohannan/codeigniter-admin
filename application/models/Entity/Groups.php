@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Groups
  *
- * @ORM\Table(name="groups", indexes={@ORM\Index(name="title", columns={"title"}), @ORM\Index(name="created_by", columns={"created_by"})})
+ * @ORM\Table(name="groups", indexes={@ORM\Index(name="created_by", columns={"created_by"})})
  * @ORM\Entity
  */
 class Groups
@@ -240,7 +240,7 @@ class Groups
      * Set createdOn
      *
      * @param \DateTime $createdOn
-     * @return Categories
+     * @return Groups
      */
     public function setCreatedOn($createdOn)
     {
@@ -262,7 +262,7 @@ class Groups
     /**
      * Set updatedOn
      *
-     * @param integer $updatedOn
+     * @param \DateTime $updatedOn
      * @return Groups
      */
     public function setUpdatedOn($updatedOn)
@@ -275,7 +275,7 @@ class Groups
     /**
      * Get updatedOn
      *
-     * @return integer 
+     * @return \DateTime 
      */
     public function getUpdatedOn()
     {

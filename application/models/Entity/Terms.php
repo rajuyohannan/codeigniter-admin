@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -8,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Terms
  *
- * @ORM\Table(name="terms", indexes={@ORM\Index(name="category_id", columns={"category_id"})})
+ * @ORM\Table(name="terms", indexes={@ORM\Index(name="category_id", columns={"category_id"}), @ORM\Index(name="created_by", columns={"created_by"})})
  * @ORM\Entity
  */
 class Terms
@@ -51,18 +50,21 @@ class Terms
     private $weight;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="created_by", type="integer", nullable=false)
-     */
-    private $createdBy;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_on", type="datetime", nullable=false)
      */
     private $createdOn;
+
+    /**
+     * @var \Users
+     *
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="created_by", referencedColumnName="user_id")
+     * })
+     */
+    private $createdBy;
 
     /**
      * @var \Categories
@@ -178,29 +180,6 @@ class Terms
     }
 
     /**
-     * Set createdBy
-     *
-     * @param integer $createdBy
-     * @return Terms
-     */
-    public function setCreatedBy($createdBy)
-    {
-        $this->createdBy = $createdBy;
-
-        return $this;
-    }
-
-    /**
-     * Get createdBy
-     *
-     * @return integer 
-     */
-    public function getCreatedBy()
-    {
-        return $this->createdBy;
-    }
-
-    /**
      * Set createdOn
      *
      * @param \DateTime $createdOn
@@ -221,6 +200,29 @@ class Terms
     public function getCreatedOn()
     {
         return $this->createdOn;
+    }
+
+    /**
+     * Set createdBy
+     *
+     * @param \Users $createdBy
+     * @return Terms
+     */
+    public function setCreatedBy(Users $createdBy = null)
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    /**
+     * Get createdBy
+     *
+     * @return \Users 
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
     }
 
     /**

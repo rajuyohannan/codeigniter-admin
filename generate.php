@@ -28,7 +28,7 @@ $classes = $driver->getAllClassNames();
 $metadata = $cmf->getAllMetadata();
 $generator = new Doctrine\ORM\Tools\EntityGenerator();
 
-$generator->setUpdateEntityIfExists(true);
+$generator->setUpdateEntityIfExists(false);
 $generator->setGenerateStubMethods(true);
 $generator->setGenerateAnnotations(true);
 

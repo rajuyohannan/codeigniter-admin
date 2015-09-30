@@ -5,12 +5,12 @@ namespace Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Likes
+ * Subscription
  *
- * @ORM\Table(name="likes", indexes={@ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="articles_id", columns={"articles_id"})})
+ * @ORM\Table(name="subscription", indexes={@ORM\Index(name="group_id", columns={"group_id"}), @ORM\Index(name="user_id", columns={"user_id"})})
  * @ORM\Entity
  */
-class Likes
+class Subscription
 {
     /**
      * @var integer
@@ -33,20 +33,20 @@ class Likes
      *
      * @ORM\ManyToOne(targetEntity="Users")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="created_by", referencedColumnName="user_id")
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="user_id")
      * })
      */
-    private $createdBy;
+    private $user;
 
     /**
-     * @var \Articles
+     * @var \Groups
      *
-     * @ORM\ManyToOne(targetEntity="Articles")
+     * @ORM\ManyToOne(targetEntity="Groups")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="articles_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="group_id", referencedColumnName="id")
      * })
      */
-    private $articles;
+    private $group;
 
 
     /**
@@ -63,7 +63,7 @@ class Likes
      * Set createdOn
      *
      * @param \DateTime $createdOn
-     * @return Likes
+     * @return Subscription
      */
     public function setCreatedOn($createdOn)
     {
@@ -83,48 +83,48 @@ class Likes
     }
 
     /**
-     * Set createdBy
+     * Set user
      *
-     * @param \Users $createdBy
-     * @return Likes
+     * @param \Users $user
+     * @return Subscription
      */
-    public function setCreatedBy(\Users $createdBy = null)
+    public function setUser(Users $user = null)
     {
-        $this->createdBy = $createdBy;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get createdBy
+     * Get user
      *
      * @return \Users 
      */
-    public function getCreatedBy()
+    public function getUser()
     {
-        return $this->createdBy;
+        return $this->user;
     }
 
     /**
-     * Set articles
+     * Set group
      *
-     * @param \Articles $articles
-     * @return Likes
+     * @param \Groups $group
+     * @return Subscription
      */
-    public function setArticles(\Articles $articles = null)
+    public function setGroup(Groups $group = null)
     {
-        $this->articles = $articles;
+        $this->group = $group;
 
         return $this;
     }
 
     /**
-     * Get articles
+     * Get group
      *
-     * @return \Articles 
+     * @return \Groups 
      */
-    public function getArticles()
+    public function getGroup()
     {
-        return $this->articles;
+        return $this->group;
     }
 }

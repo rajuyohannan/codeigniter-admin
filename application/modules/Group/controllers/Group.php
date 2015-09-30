@@ -21,9 +21,16 @@ class Group extends MY_Controller {
         $em = $this->doctrine->em;
         $where = array();
 
-        if ($this->input->get('title')) {
-            $where['title'] = $this->input->get('title');
+        if ($this->input->get()) {
+            foreach ($this->input->get() as $key => $params) {
+                if (!in_array($key, array('submit')) 
+                    && !in_array($params, array('-1'))
+                    && !empty($params)) {
+                    $where[$key] = $params;
+                } 
+            }
         }
+
 
         $this->load->library('pagination');
         $config = $this->config->load('pagination', TRUE);
@@ -83,7 +90,7 @@ class Group extends MY_Controller {
             if (!$weight)
             	$weight = 1;
             
-            $group->setWeight($weight);
+            $group->setWeight($weight  + 1);
 
 
             try {
@@ -96,13 +103,83 @@ class Group extends MY_Controller {
 
             }
             catch(Exception $err) {
-                die($err->getMessage());
                 $this->session->set_flashdata('warning', 'Some error occured while saving the values, please try again later.');
                 redirect('admin/groups');
             }
         }
     	return $this->load->view('html', $data);
-
     }
+
+    public function delete($id) {
+        try {
+            $entity = $this->doctrine->em->getReference('Entity\Groups', $id);
+            $this->doctrine->em->remove($entity);
+            $this->doctrine->em->flush();
+            $this->session->set_flashdata('success', 'Group has been successfully deleted');
+
+            redirect($_SERVER['HTTP_REFERER']);
+        }
+        catch (Exception $err) {
+            $this->session->set_flashdata('warning', 'Error removing group, try again later.<br/>'.$err->getMessage());
+            redirect($_SERVER['HTTP_REFERER']);
+        }
+    }
+
+    public function edit($gid) {
+        $view['group'] = $group = $this->doctrine->em->getRepository('Entity\Groups')
+            ->findOneBy(array('id' => $gid));
+
+        //Validations
+        $this->form_validation->set_rules('title', 'Group name', 'trim|required');
+        $this->form_validation->set_rules('visibility', 'Group visibility', 'required');
+        $this->form_validation->set_rules('type', 'Group type', 'required');
+
+        if (!$this->form_validation->run()) {
+            $data['content'] = $this->load->view('admin/edit_group', $view, TRUE);
+        }
+        else {
+            //Update terms
+            $group->setTitle($this->input->post('title'));
+            $group->setDescription($this->input->post('description'));
+            $status = $this->input->post('status') ? $this->input->post('status') : '0';
+            $group->setStatus($status);
+            $group->setType($this->input->post('type'));
+            $group->setVisibility($this->input->post('visibility'));
+            $group->setUpdatedOn(date_create(date('Y-m-d H:i:s')));
+
+
+            try {
+                $this->doctrine->em->persist($group);
+                $this->doctrine->em->flush();
+
+                $this->session->set_flashdata('success', 'Group has been successfully updated.');
+                redirect('admin/groups');
+            }
+            catch(Exception $err) {
+                $this->session->set_flashdata('warning', 'Some error occured while saving the values, please try again later.');
+                redirect('admin/groups');
+            }
+        }
+
+        $data['title'] = 'Edit Terms';
+        return $this->load->view('html', $data);
+    }
+
+    public function members($gid) {
+        $data['title'] = 'Manage Subscription';
+        
+        // $em = $this->doctrine->em;
+        // $groups = $em->find('Entity\Groups', $gid);
+
+        // $view['subscriptions'] = $em->getRepository('Entity\Subscription')->findBy(array('group' => $groups));
+        // $view['title'] = "Manage subscription for <b>" . $groups->getTitle() . "</b>";
+        // $members = $em->getRepository('Entity\Users')->findAll();
+        
+        //$view['members'] = modules::run('User/get_user_boxes', array($members));
+
+        $data['content'] = $this->load->view('admin/groups_member', $view, TRUE);
+        return $this->load->view('html', $data);
+    }
+
 
 }
