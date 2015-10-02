@@ -94,7 +94,7 @@
     												class="btn btn-danger" href="#">
 												  <i class="fa fa-trash"></i>&nbsp;Delete
 											</a>
-                      <a class="btn btn-primary" href="<?php echo base_url('admin/categories/terms/'.$category->getId()); ?>">
+                      <a class="btn btn-primary" href="<?php echo base_url('admin/terms/'.$category->getId()); ?>">
                         <i class="fa fa-list"></i>&nbsp;Manage Terms
                       </a>
 								</td>

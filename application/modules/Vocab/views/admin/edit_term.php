@@ -5,7 +5,7 @@
     <div class="box-header">
       <h3 class="box-title"></h3>
       <div class="box-tools pull-right">
-        <a href="<?php echo base_url('admin/categories/terms/'.$term->getCategory()->getId()); ?>" class="btn btn-block btn-success btn-social">
+        <a href="<?php echo base_url('admin/terms/'.$term->getCategory()->getId()); ?>" class="btn btn-block btn-success btn-social">
             <i class="fa fa-angle-double-left"></i> Back to list
          </a>
       </div>

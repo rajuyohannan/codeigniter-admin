@@ -168,12 +168,12 @@ class Group extends MY_Controller {
     public function members($gid) {
         $data['title'] = 'Manage Subscription';
         
-        // $em = $this->doctrine->em;
-        // $groups = $em->find('Entity\Groups', $gid);
+        $em = $this->doctrine->em;
+        $groups = $em->find('Entity\Groups', $gid);
 
-        // $view['subscriptions'] = $em->getRepository('Entity\Subscription')->findBy(array('group' => $groups));
-        // $view['title'] = "Manage subscription for <b>" . $groups->getTitle() . "</b>";
-        // $members = $em->getRepository('Entity\Users')->findAll();
+        $view['subscriptions'] = $em->getRepository('Entity\Subscription')->findBy(array('group' => $groups));
+        $view['title'] = "Manage subscription for <b>" . $groups->getTitle() . "</b>";
+        $view['members'] = $em->getRepository('Entity\Users')->findAll();
         
         //$view['members'] = modules::run('User/get_user_boxes', array($members));
 
