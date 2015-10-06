@@ -139,3 +139,11 @@ $(function () {
   		increaseArea: '10%' // optional
 	});
 });
+$(function () {
+	$('#description').wysihtml5({
+		toolbar: {
+			"font-styles": false,
+			"image": false
+		}	
+	});
+});

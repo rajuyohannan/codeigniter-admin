@@ -5,12 +5,12 @@ namespace Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Articles
+ * Estimations
  *
- * @ORM\Table(name="articles", indexes={@ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="groups_id", columns={"groups_id"})})
+ * @ORM\Table(name="estimations", indexes={@ORM\Index(name="marketplace_id", columns={"marketplace_id"}), @ORM\Index(name="assigned_by", columns={"assigned_by"})})
  * @ORM\Entity
  */
-class Articles
+class Estimations
 {
     /**
      * @var integer
@@ -31,16 +31,16 @@ class Articles
     /**
      * @var string
      *
-     * @ORM\Column(name="body", type="text", length=65535, nullable=false)
+     * @ORM\Column(name="description", type="text", length=65535, nullable=false)
      */
-    private $body;
+    private $description;
 
     /**
-     * @var integer
+     * @var \DateTime
      *
-     * @ORM\Column(name="status", type="integer", nullable=false)
+     * @ORM\Column(name="schduled_on", type="datetime", nullable=false)
      */
-    private $status;
+    private $schduledOn;
 
     /**
      * @var \DateTime
@@ -52,7 +52,7 @@ class Articles
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="updated_on", type="datetime", nullable=false)
+     * @ORM\Column(name="updated_on", type="datetime", nullable=true)
      */
     private $updatedOn;
 
@@ -61,20 +61,20 @@ class Articles
      *
      * @ORM\ManyToOne(targetEntity="Users")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="created_by", referencedColumnName="user_id")
+     *   @ORM\JoinColumn(name="assigned_by", referencedColumnName="user_id")
      * })
      */
-    private $createdBy;
+    private $assignedBy;
 
     /**
-     * @var \Groups
+     * @var \Terms
      *
-     * @ORM\ManyToOne(targetEntity="Groups")
+     * @ORM\ManyToOne(targetEntity="Terms")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="groups_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="marketplace_id", referencedColumnName="id")
      * })
      */
-    private $groups;
+    private $marketplace;
 
 
     /**
@@ -91,7 +91,7 @@ class Articles
      * Set title
      *
      * @param string $title
-     * @return Articles
+     * @return Estimations
      */
     public function setTitle($title)
     {
@@ -111,56 +111,56 @@ class Articles
     }
 
     /**
-     * Set body
+     * Set description
      *
-     * @param string $body
-     * @return Articles
+     * @param string $description
+     * @return Estimations
      */
-    public function setBody($body)
+    public function setDescription($description)
     {
-        $this->body = $body;
+        $this->description = $description;
 
         return $this;
     }
 
     /**
-     * Get body
+     * Get description
      *
      * @return string 
      */
-    public function getBody()
+    public function getDescription()
     {
-        return $this->body;
+        return $this->description;
     }
 
     /**
-     * Set status
+     * Set schduledOn
      *
-     * @param integer $status
-     * @return Articles
+     * @param \DateTime $schduledOn
+     * @return Estimations
      */
-    public function setStatus($status)
+    public function setSchduledOn($schduledOn)
     {
-        $this->status = $status;
+        $this->schduledOn = $schduledOn;
 
         return $this;
     }
 
     /**
-     * Get status
+     * Get schduledOn
      *
-     * @return integer 
+     * @return \DateTime 
      */
-    public function getStatus()
+    public function getSchduledOn()
     {
-        return $this->status;
+        return $this->schduledOn;
     }
 
     /**
      * Set createdOn
      *
      * @param \DateTime $createdOn
-     * @return Articles
+     * @return Estimations
      */
     public function setCreatedOn($createdOn)
     {
@@ -183,7 +183,7 @@ class Articles
      * Set updatedOn
      *
      * @param \DateTime $updatedOn
-     * @return Articles
+     * @return Estimations
      */
     public function setUpdatedOn($updatedOn)
     {
@@ -203,48 +203,48 @@ class Articles
     }
 
     /**
-     * Set createdBy
+     * Set assignedBy
      *
-     * @param \Users $createdBy
-     * @return Articles
+     * @param \Users $assignedBy
+     * @return Estimations
      */
-    public function setCreatedBy(Users $createdBy = null)
+    public function setAssignedBy(Users $assignedBy = null)
     {
-        $this->createdBy = $createdBy;
+        $this->assignedBy = $assignedBy;
 
         return $this;
     }
 
     /**
-     * Get createdBy
+     * Get assignedBy
      *
      * @return \Users 
      */
-    public function getCreatedBy()
+    public function getAssignedBy()
     {
-        return $this->createdBy;
+        return $this->assignedBy;
     }
 
     /**
-     * Set groups
+     * Set marketplace
      *
-     * @param \Groups $groups
-     * @return Articles
+     * @param \Terms $marketplace
+     * @return Estimations
      */
-    public function setGroups(Groups $groups = null)
+    public function setMarketplace(Terms $marketplace = null)
     {
-        $this->groups = $groups;
+        $this->marketplace = $marketplace;
 
         return $this;
     }
 
     /**
-     * Get groups
+     * Get marketplace
      *
-     * @return \Groups 
+     * @return \Terms 
      */
-    public function getGroups()
+    public function getMarketplace()
     {
-        return $this->groups;
+        return $this->marketplace;
     }
 }

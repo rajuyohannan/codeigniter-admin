@@ -39,6 +39,22 @@
         </ul>
       </li>
 
+      <li class="treeview">
+        <a href="#">
+          <i class="fa fa-building-o"></i>
+          <span>BDMS</span>
+        </a>
+        <ul class="treeview-menu">
+          <li>
+            <a href="#"><i class="fa fa-bullseye"></i>Leads<i class="fa fa-angle-left pull-right"></i></a>
+            <ul class="treeview-menu">
+              <li><a href="<?php echo base_url('admin/bdms/estimations'); ?>"><i class="fa fa-calculator"></i>Estimations</a></li>
+              <li><a href="<?php echo base_url('admin/bdms/doi'); ?>"><i class="fa  fa-paperclip"></i>DOIs</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+
       <li class="header">NOTIFICATIONS</li>
       <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span>
       <small class="label pull-right bg-red">30</small>

@@ -1,6 +1,6 @@
 RewriteEngine On
 
-RewriteBase /PMS3/api
+RewriteBase /codeigniter-admin/api
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ index.php [QSA,L]
