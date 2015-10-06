@@ -23,6 +23,23 @@ $(function () {
 });
 
 $(function () {
+	
+	var dates = [];
+
+	for (var i = 0; i <= 7; i++) {
+		var currentDate = new Date();
+		currentDate.setDate(currentDate.getDate() + i);
+		dates.push(currentDate);
+	}
+	
+	$('#datetimepicker-scheduled').datetimepicker({
+		daysOfWeekDisabled: [0],
+		format: 'MM/DD/YYYY HH:mm',
+		enabledDates: dates,
+	});
+
+});
+$(function () {
 	$('.emoji-show').click(function(){
 		var EmojiList = $(this).parents('.form-group').find('.emoji-list');
 		if (EmojiList.is(":visible")) {
@@ -42,13 +59,24 @@ $(function () {
       }); 
 
 
+      
+
+
+
+
+
+
+
+
+
+   /* Profile photo upload */
    var form = document.forms.userpic;
       if (form && typeof form !== undefined) {
       var input = form.photo;
       var preview = document.getElementById('preview');
 
       var previewOpts = {
-         width:  128
+           width:  128
          , height: 128
       };
 
@@ -138,6 +166,24 @@ $(function () {
   		radioClass: 'iradio_square-grey',
   		increaseArea: '10%' // optional
 	});
+
+
+	var url = window.location.pathname, 
+	urlRegExp = new RegExp(url.replace(/\/$/,'') + "$"); 
+	$('.sidebar-menu a').each(function(){
+	    if(urlRegExp.test(this.href.replace(/\/$/,''))){
+	        $(this).parents('li').addClass('active');
+	    }
+	});
+
+	var hash = window.location.hash.substring(1);
+
+	if (hash) {
+		$('a[href="#password"]').tab('show')	
+	}
+
+	
+
 });
 $(function () {
 	$('#description').wysihtml5({

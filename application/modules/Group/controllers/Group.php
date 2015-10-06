@@ -15,7 +15,11 @@ class Group extends MY_Controller {
         }
     }
 
-
+    /**
+     * [index description]
+     * @param  integer $page [description]
+     * @return [type]        [description]
+     */
     public function index($page = 1) {
 
         $em = $this->doctrine->em;
@@ -50,6 +54,10 @@ class Group extends MY_Controller {
     	return $this->load->view('html', $data);
     }
 
+
+    /**
+     * [add description]
+     */
     public function add() {
     	$data['title']  = 'Add Group';
 
@@ -75,9 +83,10 @@ class Group extends MY_Controller {
         	$user = $this->doctrine->em->getRepository('Entity\Users')
         		->findOneBy(array('userId' => $this->auth_user_id));
 
+            $now = date_create(date('Y-m-d H:i:s'));
             $group->setCreatedBy($user);
-            $group->setCreatedOn(date_create(date('Y-m-d H:i:s')));
-            $group->setUpdatedOn(date_create(date('Y-m-d H:i:s')));
+            $group->setCreatedOn($now);
+            $group->setUpdatedOn($now);
 
             //Get weights
             $dql = "SELECT MAX(g.weight) AS weight FROM Entity\Groups g " .
@@ -96,6 +105,22 @@ class Group extends MY_Controller {
             try {
                 //save to database
                 $this->doctrine->em->persist($group);
+
+                //For public groups assign all users in the group
+                if ($group->getVisibility() == 'public') {
+                    //All active users
+                    $users = $this->doctrine->em->getRepository('Entity\Users')->findAll();
+
+                    foreach ($users as $user) {
+                        $subscription = new Entity\Subscription();
+                        $subscription->setGroup($group);
+                        $subscription->setUser($user);
+                        $subscription->setCreatedOn($now);
+
+                        $this->doctrine->em->persist($subscription);
+                    }
+                }
+
                 $this->doctrine->em->flush();
 
                 $this->session->set_flashdata('success', 'Group has been successfully added.');
@@ -103,13 +128,19 @@ class Group extends MY_Controller {
 
             }
             catch(Exception $err) {
-                $this->session->set_flashdata('warning', 'Some error occured while saving the values, please try again later.');
+                $this->session->set_flashdata('warning', $err->getMessage());
                 redirect('admin/groups');
             }
         }
     	return $this->load->view('html', $data);
     }
 
+
+    /**
+     * [delete description]
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
     public function delete($id) {
         try {
             $entity = $this->doctrine->em->getReference('Entity\Groups', $id);
@@ -125,6 +156,11 @@ class Group extends MY_Controller {
         }
     }
 
+    /**
+     * [edit description]
+     * @param  [type] $gid [description]
+     * @return [type]      [description]
+     */
     public function edit($gid) {
         $view['group'] = $group = $this->doctrine->em->getRepository('Entity\Groups')
             ->findOneBy(array('id' => $gid));
@@ -138,14 +174,46 @@ class Group extends MY_Controller {
             $data['content'] = $this->load->view('admin/edit_group', $view, TRUE);
         }
         else {
-            //Update terms
+            $now = date_create(date('Y-m-d H:i:s'));
+
+            //Update subscriptions, if the group visibility is being changed
+            //@TODO - Take into account user profile settings.
+            if ($group->getVisibility() == 'public' 
+                && $this->input->post('visibility') == 'private') {
+                //From public to private
+                $subscriptions = $this->doctrine->em->getRepository('Entity\Subscription')->findBy(array(
+                        'group' => $group
+                    ));
+                foreach ($subscriptions as $subscription) {
+                    $this->doctrine->em->remove($subscription);
+                }
+                $this->session->set_flashdata('warning', 'Group subscription has been revoked');
+            }
+
+            if ($group->getVisibility() == 'private' 
+                && $this->input->post('visibility') == 'public') {
+              //From private to public
+              $users = $this->doctrine->em->getRepository('Entity\Users')->findAll();
+
+                foreach ($users as $user) {
+                    $subscription = new Entity\Subscription();
+                    $subscription->setGroup($group);
+                    $subscription->setUser($user);
+                    $subscription->setCreatedOn($now);
+
+                    $this->doctrine->em->persist($subscription);
+                }
+                $this->session->set_flashdata('warning', 'Group subscription has been updated');
+            }
+
+            //Update Groups
             $group->setTitle($this->input->post('title'));
             $group->setDescription($this->input->post('description'));
             $status = $this->input->post('status') ? $this->input->post('status') : '0';
             $group->setStatus($status);
             $group->setType($this->input->post('type'));
             $group->setVisibility($this->input->post('visibility'));
-            $group->setUpdatedOn(date_create(date('Y-m-d H:i:s')));
+            $group->setUpdatedOn($now);
 
 
             try {
@@ -165,6 +233,11 @@ class Group extends MY_Controller {
         return $this->load->view('html', $data);
     }
 
+    /**
+     * [members description]
+     * @param  [type] $gid [description]
+     * @return [type]      [description]
+     */
     public function members($gid) {
         $data['title'] = 'Manage Subscription';
         

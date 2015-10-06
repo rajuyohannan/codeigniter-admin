@@ -184,4 +184,25 @@ class Categories
     {
         return $this->createdBy;
     }
+
+    /**
+     * [loadTermsByCategory description]
+     * @param  [type] $em [description]
+     * @return [type]     [description]
+     */
+    public function loadTermsByCategory($em) {
+
+        $query = $em->createQuery("SELECT t.id, t.title FROM Entity\Terms t WHERE t.category = ?1 AND t.status = ?2");
+        $query->setParameters(array(1 => $this, 2 => 1));
+        $terms = $query->getResult();
+
+        $result = array();
+
+        foreach ($terms as $term) {
+            $result[$term['id']] = $term['title'];
+        }
+
+        return $result;
+    }
+
 }

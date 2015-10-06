@@ -7,13 +7,24 @@
       }); 
 
 
+      
+
+
+
+
+
+
+
+
+
+   /* Profile photo upload */
    var form = document.forms.userpic;
       if (form && typeof form !== undefined) {
       var input = form.photo;
       var preview = document.getElementById('preview');
 
       var previewOpts = {
-         width:  128
+           width:  128
          , height: 128
       };
 

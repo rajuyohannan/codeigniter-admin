@@ -95,7 +95,7 @@
            <div class="col-xs-8">
           </div><!-- /.col -->         
             <div class="col-xs-4">
-              <?php echo form_submit('submit', 'Add Category', array('class' => 'input-lg btn-block btn btn-primary btn-flat')); ?>
+              <?php echo form_submit('submit', 'Update Group', array('class' => 'input-lg btn-block btn btn-primary btn-flat')); ?>
             </div><!-- /.col -->
           </div>
       <?php echo form_close(); ?>

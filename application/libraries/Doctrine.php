@@ -46,7 +46,7 @@ class Doctrine {
 
         // Database connection information
         $connectionOptions = array(
-            'driver' =>    'pdo_mysql',
+            'driver' =>   'pdo_mysql',
             'user' =>     'root',
             'password' => 'whoami',
             'host' =>     'localhost',

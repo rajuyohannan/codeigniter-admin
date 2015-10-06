@@ -76,7 +76,18 @@
             'maxlength' => 255,
             )); ?>
           </div>
-
+        <div class="form-group">
+          <label for="department">Select Department <i class="fa fa-asterisk form-required"></i></label>
+          <?php echo form_dropdown(
+            'department', 
+            $department,
+            '2',
+            array(
+            'id'   => 'department',
+            'class' => 'form-control input-lg', 
+            'maxlength' => 255,
+            )); ?>
+          </div>
         <div class="form-group">
           <label for="email">Select User Role <i class="fa fa-asterisk form-required"></i></label>
           <?php echo form_dropdown(

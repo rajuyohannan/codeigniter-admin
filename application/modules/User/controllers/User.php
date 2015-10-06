@@ -355,15 +355,21 @@ class User extends MY_Controller {
         }
 
         $data['title'] = 'Add User';
+        $em = $this->doctrine->em;
+
+
+        $view['department'] = $em->getReference('\Entity\Categories', 7)->loadTermsByCategory($em);
 
         //Validate
         $this->form_validation->set_rules('username', 'Username', 'required|callback__username_check');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|callback__email_check');
         $this->form_validation->set_rules('password', 'Password', 'trim|required|external_callbacks[model,formval_callbacks,_check_password_strength,TRUE]');
         $this->form_validation->set_rules('confirm_pass', 'Password Confirmation', 'required|matches[password]');
+        $this->form_validation->set_rules('department', 'Department', 'required');
+
         
         if (!$this->form_validation->run()) {
-            $data['content'] = $this->load->view('admin/add_user', null, TRUE);
+            $data['content'] = $this->load->view('admin/add_user', $view, TRUE);
         }
         else {
             //Save user
@@ -378,16 +384,40 @@ class User extends MY_Controller {
                 $this->input->post('password'), 
                 $salt
             );
+
+            $now = date_create(date('Y-m-d H:i:s'));
+
             $user->setUserPass($pass);
             $user->setUserSalt($salt);
-            $user->setUserDate(date_create(date('Y-m-d H:i:s')));
-            $user->setUserModified(date_create(date('Y-m-d H:i:s')));
+            $user->setUserDate($now);
+            $user->setUserModified($now);
             $user->setUserBanned(0);
 
             try {
                 //save to database
-                $this->doctrine->em->persist($user);
-                $this->doctrine->em->flush();
+                $em->persist($user);
+
+                //Add user department
+                $profile = new Entity\Profiles();
+                $department = $em->getReference('Entity\Terms', $this->input->post('department'));
+                $profile->setUser($user);
+                $profile->setDepartment($department);
+                $profile->setCreatedOn($now);
+                $em->persist($profile);
+
+                //Subscribe user to the public groups
+                $groups = $em->getRepository('Entity\Groups')->findBy(array('type' => 'organic', 'visibility' => 'public'));
+
+                foreach ($groups as $group) {
+                    $subscription = new Entity\Subscription();
+                    $subscription->setGroup($group);
+                    $subscription->setUser($user);
+                    $subscription->setCreatedOn($now);
+
+                    $em->persist($subscription);
+                }
+
+                $em->flush();
 
 
                 if ($this->input->post('notify')) {
@@ -539,14 +569,16 @@ class User extends MY_Controller {
 
         try {
             $entity = $this->doctrine->em->getReference('Entity\Users', $uid);
-            var_dump($this->doctrine->em->remove($entity));
+            $this->doctrine->em->remove($entity);
             $this->doctrine->em->flush();
             $this->session->set_flashdata('success', 'User account has been successfully deleted');
 
             redirect($_SERVER['HTTP_REFERER']);
         }
         catch (Exception $err) {
-            return FALSE;
+            $this->session->set_flashdata('warning', $err->getMessage());
+            redirect($_SERVER['HTTP_REFERER']);
+
         }
     }
 

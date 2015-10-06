@@ -39,7 +39,7 @@
           </div>
 
         <div class="form-group">
-          <label for="username">Title <i class="fa fa-asterisk form-required"></i></label>
+          <label for="title">Title <i class="fa fa-asterisk form-required"></i></label>
           <?php echo form_input(array(
             'name' => 'title', 
             'id'   => 'title',
@@ -51,7 +51,7 @@
           </div>
 
         <div class="form-group">
-          <label for="email">Description</label>
+          <label for="email">Description<i class="fa fa-asterisk form-required"></i></label>
           <?php echo form_textarea(array(
             'name' => 'description', 
             'id'   => 'description',
@@ -60,48 +60,35 @@
             'value' => set_value('description'),
             )); ?>
           </div>
+
         <div class="form-group">
-          <label for="visibility">Group Visibility<i class="fa fa-asterisk form-required"></i></label>
-          <br/>
-          <?php echo form_radio(array(
-            'name' => 'visibility', 
-            'id'   => 'visibility',
-            'class' => 'form-control input-lg',
-            ), 'public', set_value('visibility') == 'public' ? TRUE : FALSE); ?>
-          <?php echo form_label('Public', 'visibility'); ?>
-          <?php echo form_radio(array(
-            'name' => 'visibility', 
-            'id'   => 'visibility',
-            'class' => 'form-control input-lg',
-            ), 'private', set_value('visibility') == 'private' ? TRUE : FALSE); ?>
-          <?php echo form_label('Private', 'visibility'); ?>
-          <p class="help-block">Groups with public visibility will be accessible to all user, whereas with private only allowed users can access.</p>
-        </div>
-        <div class="form-group">
-          <label for="type">Group Types<i class="fa fa-asterisk form-required"></i></label>
-          <br/>
-          <?php echo form_radio(array(
-            'name' => 'type', 
-            'id'   => 'type',
-            'class' => 'form-control input-lg',
-            ), 'organic', set_value('type') == 'organic' ? TRUE : FALSE); ?>
-          <?php echo form_label('Organic Groups', 'type'); ?>
-          <?php echo form_radio(array(
-            'name' => 'type', 
-            'id'   => 'type',
-            'class' => 'form-control input-lg',
-            ), 'project', set_value('type') == 'project' ? TRUE : FALSE); ?>
-          <?php echo form_label('Project Groups', 'type'); ?>
-          <p class="help-block">Organic groups are social groups, whereas Project groups are for creating projects on the website.</p>
-        </div>
-        <div class="form-group">
-          <?php echo form_checkbox(array(
-            'name' => 'status', 
-            'id'   => 'status',
-            'class' => 'form-control input-lg',
-            'checked' => true, 
-            ), '1'); ?>
-            <?php echo form_label('Published', 'status'); ?>
+          <label for="files"><i class="fa fa-file-o">&nbsp;</i>Add Files</label>
+          <?php echo form_upload(array(
+            'name' => 'files', 
+            'id'   => 'files',
+            'class' => 'form-control input-lg', 
+            'multiple' => 'multiple',
+            'value' => set_value('files'),
+            )); ?>
+          </div>
+
+
+          <div class="form-group">
+            <label for="scheduledOn">Scheduled Completion<i class="fa fa-asterisk form-required"></i></label>
+           <div class='input-group date' id='datetimepicker-scheduled'>
+           <?php echo form_input(array(
+                'name' => 'scheduledOn',
+                'id'   => 'scheduledOn',
+                'class' => 'form-control input-lg',
+                'placeholder' => 'mm/dd/yyyy hh:mm',
+                'value' => set_value('scheduledOn'),
+                'autocomplete' => false,
+              ));
+            ?>
+                <span class="input-group-addon">
+                  <span class="fa fa-calendar"></span>
+              </span>
+              </div>
           </div>
 
           <div class="row">

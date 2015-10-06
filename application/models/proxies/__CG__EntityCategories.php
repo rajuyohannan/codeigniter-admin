@@ -298,4 +298,15 @@ class Categories extends \Entity\Categories implements \Doctrine\ORM\Proxy\Proxy
         return parent::getCreatedBy();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function loadTermsByCategory($em)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'loadTermsByCategory', array($em));
+
+        return parent::loadTermsByCategory($em);
+    }
+
 }
