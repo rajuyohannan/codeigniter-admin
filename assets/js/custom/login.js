@@ -14,12 +14,14 @@ $(function () {
 	    }
 	});
 
-	var hash = window.location.hash.substring(1);
+	var hash = window.location.hash;
 
 	if (hash) {
-		$('a[href="#password"]').tab('show')	
+		$('a[href="' + hash + '"]').tab('show');
+		$("html, body").animate({ scrollTop: 0 }, "slow");
 	}
-
 	
+ 	$("#contact").inputmask("mask", {"mask": "(999) 999-9999"});
+ 	$("#name").inputmask("mask", {"mask": "a{5,25} a{5,25} a{5,25}"});
 
 });

@@ -18,17 +18,51 @@ class Profile extends MY_Controller {
      * [index description]
      * @return [type] [description]
      */
-    function index($id = null) {
+    public function index($id = null) {
 
         $this->load->helper('smiley');
         $this->load->library('table');
 
+        if (!$id)
+             $id = $this->auth_user_id;
+
         $image_array = get_clickable_smileys(base_url('assets/plugins/emojione/'), 'comments');
-        $smileys['smiley_table'] = $this->table->make_columns($image_array, 12);
+        $view['smiley_table'] = $this->table->make_columns($image_array, 12);
+
+        $view['user']         = $this->doctrine->em->getRepository('Entity\Users', 1)
+            ->findOneBy(array('userId' => $id));
+
+        
+
+        $view['skills'] = $this->doctrine->em->getReference('Entity\Categories', 3)
+            ->loadTermsByCategory($this->doctrine->em);
 
     	$data['title']   = "My Profile";
-    	$data['content'] = $this->load->view('user_profile', $smileys, true);
+    	$data['content'] = $this->load->view('user_profile', $view, true);
     	$this->load->view('html', $data);
+    }
+
+    /**
+     * [update description]
+     * @return [type] [description]
+     */
+    public function update($id = null) {
+        if (!$id)
+             $id = $this->auth_user_id;
+
+        //Validations
+        $this->form_validation->set_rules('name', 'Name', 'required');
+        $this->form_validation->set_rules('dob', 'Date of Birth', 'required');
+        $this->form_validation->set_rules('skills', 'Skills', 'required');
+
+        if (!$this->form_validation->run()) {
+            $this->session->set_flashdata('error', validation_errors());           
+        }
+        else {
+            
+        }
+
+        redirect('user/profile#profile');
     }
 
 
@@ -36,65 +70,51 @@ class Profile extends MY_Controller {
      * [updatePassword description]
      * @return [type] [description]
      */
-    function password() {
+    public function password() {
+
+        //Validations
+        $this->form_validation->set_rules('currentPassword', 'Current Password', 'required|callback__password_check');
+        $this->form_validation->set_rules('password', 'Password', 'trim|required|external_callbacks[model,formval_callbacks,_check_password_strength,TRUE]');
+        $this->form_validation->set_rules('confirmPassword', 'Password Confirmation', 'trim|required|matches[password]');
+        
+
+        if (!$this->form_validation->run()) {
+            $this->session->set_flashdata('error', validation_errors());           
+        }
+        else {
+            //Save values
+        }
+
         redirect('user/profile#password');
     }
 
-
-
     /**
-     * [create description]
+     * [_password_check description]
      * @return [type] [description]
      */
-    function create() {
+    public function _password_check() {
 
+        $auth_data = $this->auth_model->get_auth_data($this->auth_user_name);
+        
+        $wrong_password = ( ! $this->authentication->check_passwd( $auth_data->user_pass, $auth_data->user_salt, $this->input->post('password') ) );
+        if ($wrong_password) {
+            $this->form_validation->set_message('_password_check', "Current password doesn't matches with our record");
+            return FALSE;
+        }
+        else {
+            return TRUE;
+        }
     }
 
+
+
+
+
     /**
-     * [store description]
+     * [upload description]
      * @return [type] [description]
      */
-    function store() {
-
-    }
-
-    /**
-     * [show description]
-     * @param  [type] $id [description]
-     * @return [type]     [description]
-     */
-    function show($id) {
-
-    }
-
-    /**
-     * [edit description]
-     * @param  [type] $id [description]
-     * @return [type]     [description]
-     */
-    function edit($id) {
-
-    }
-
-    /**
-     * [update description]
-     * @param  [type] $id [description]
-     * @return [type]     [description]
-     */
-    function update($id) {
-
-    }
-
-    /**
-     * [destroy description]
-     * @param  [type] $id [description]
-     * @return [type]     [description]
-     */
-    function destroy($id) {
-
-    }
-
-    function upload() {
+    public function upload() {
         echo "Success";
     }
 }

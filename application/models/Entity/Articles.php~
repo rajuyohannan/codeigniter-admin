@@ -1,17 +1,16 @@
 <?php
 
-
 namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Categories
+ * Articles
  *
- * @ORM\Table(name="categories", indexes={@ORM\Index(name="created_by", columns={"created_by"})})
+ * @ORM\Table(name="articles", indexes={@ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="groups_id", columns={"groups_id"})})
  * @ORM\Entity
  */
-class Categories
+class Articles
 {
     /**
      * @var integer
@@ -32,9 +31,9 @@ class Categories
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text", length=65535, nullable=true)
+     * @ORM\Column(name="body", type="text", length=65535, nullable=false)
      */
-    private $description;
+    private $body;
 
     /**
      * @var integer
@@ -51,6 +50,13 @@ class Categories
     private $createdOn;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_on", type="datetime", nullable=false)
+     */
+    private $updatedOn;
+
+    /**
      * @var \Users
      *
      * @ORM\ManyToOne(targetEntity="Users")
@@ -59,6 +65,16 @@ class Categories
      * })
      */
     private $createdBy;
+
+    /**
+     * @var \Groups
+     *
+     * @ORM\ManyToOne(targetEntity="Groups")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="groups_id", referencedColumnName="id")
+     * })
+     */
+    private $groups;
 
 
     /**
@@ -75,7 +91,7 @@ class Categories
      * Set title
      *
      * @param string $title
-     * @return Categories
+     * @return Articles
      */
     public function setTitle($title)
     {
@@ -95,33 +111,33 @@ class Categories
     }
 
     /**
-     * Set description
+     * Set body
      *
-     * @param string $description
-     * @return Categories
+     * @param string $body
+     * @return Articles
      */
-    public function setDescription($description)
+    public function setBody($body)
     {
-        $this->description = $description;
+        $this->body = $body;
 
         return $this;
     }
 
     /**
-     * Get description
+     * Get body
      *
      * @return string 
      */
-    public function getDescription()
+    public function getBody()
     {
-        return $this->description;
+        return $this->body;
     }
 
     /**
      * Set status
      *
      * @param integer $status
-     * @return Categories
+     * @return Articles
      */
     public function setStatus($status)
     {
@@ -144,7 +160,7 @@ class Categories
      * Set createdOn
      *
      * @param \DateTime $createdOn
-     * @return Categories
+     * @return Articles
      */
     public function setCreatedOn($createdOn)
     {
@@ -164,10 +180,33 @@ class Categories
     }
 
     /**
+     * Set updatedOn
+     *
+     * @param \DateTime $updatedOn
+     * @return Articles
+     */
+    public function setUpdatedOn($updatedOn)
+    {
+        $this->updatedOn = $updatedOn;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedOn
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedOn()
+    {
+        return $this->updatedOn;
+    }
+
+    /**
      * Set createdBy
      *
      * @param \Users $createdBy
-     * @return Categories
+     * @return Articles
      */
     public function setCreatedBy(Users $createdBy = null)
     {
@@ -186,21 +225,26 @@ class Categories
         return $this->createdBy;
     }
 
+    /**
+     * Set groups
+     *
+     * @param \Groups $groups
+     * @return Articles
+     */
+    public function setGroups(Groups $groups = null)
+    {
+        $this->groups = $groups;
+
+        return $this;
+    }
 
     /**
-     * [loadTermsByCategory description]
-     * @param  [type] $em [description]
-     * @return [type]     [description]
+     * Get groups
+     *
+     * @return \Groups 
      */
-    public function loadTermsByCategory($em) {
-        $query = $em->createQuery("SELECT t.id, t.title FROM Entity\Terms t WHERE t.category = ?1 AND t.status = ?2");
-        $query->setParameters(array(1 => $this, 2 => 1));
-        $terms = $query->getResult();
-        $result = array();
-        foreach ($terms as $term) {
-            $result[$term['id']] = $term['title'];
-        }
-        return $result;
+    public function getGroups()
+    {
+        return $this->groups;
     }
-    
 }

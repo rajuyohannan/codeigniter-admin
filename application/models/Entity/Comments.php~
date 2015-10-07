@@ -1,17 +1,16 @@
 <?php
 
-
 namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Categories
+ * Comments
  *
- * @ORM\Table(name="categories", indexes={@ORM\Index(name="created_by", columns={"created_by"})})
+ * @ORM\Table(name="comments", indexes={@ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="articles_id", columns={"articles_id"})})
  * @ORM\Entity
  */
-class Categories
+class Comments
 {
     /**
      * @var integer
@@ -25,21 +24,14 @@ class Categories
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255, nullable=false)
+     * @ORM\Column(name="body", type="text", length=65535, nullable=false)
      */
-    private $title;
+    private $body;
 
     /**
-     * @var string
+     * @var boolean
      *
-     * @ORM\Column(name="description", type="text", length=65535, nullable=true)
-     */
-    private $description;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="status", type="integer", nullable=false)
+     * @ORM\Column(name="status", type="boolean", nullable=false)
      */
     private $status;
 
@@ -49,6 +41,16 @@ class Categories
      * @ORM\Column(name="created_on", type="datetime", nullable=false)
      */
     private $createdOn;
+
+    /**
+     * @var \Articles
+     *
+     * @ORM\ManyToOne(targetEntity="Articles")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="articles_id", referencedColumnName="id")
+     * })
+     */
+    private $articles;
 
     /**
      * @var \Users
@@ -72,56 +74,33 @@ class Categories
     }
 
     /**
-     * Set title
+     * Set body
      *
-     * @param string $title
-     * @return Categories
+     * @param string $body
+     * @return Comments
      */
-    public function setTitle($title)
+    public function setBody($body)
     {
-        $this->title = $title;
+        $this->body = $body;
 
         return $this;
     }
 
     /**
-     * Get title
+     * Get body
      *
      * @return string 
      */
-    public function getTitle()
+    public function getBody()
     {
-        return $this->title;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return Categories
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string 
-     */
-    public function getDescription()
-    {
-        return $this->description;
+        return $this->body;
     }
 
     /**
      * Set status
      *
-     * @param integer $status
-     * @return Categories
+     * @param boolean $status
+     * @return Comments
      */
     public function setStatus($status)
     {
@@ -133,7 +112,7 @@ class Categories
     /**
      * Get status
      *
-     * @return integer 
+     * @return boolean 
      */
     public function getStatus()
     {
@@ -144,7 +123,7 @@ class Categories
      * Set createdOn
      *
      * @param \DateTime $createdOn
-     * @return Categories
+     * @return Comments
      */
     public function setCreatedOn($createdOn)
     {
@@ -164,12 +143,35 @@ class Categories
     }
 
     /**
+     * Set articles
+     *
+     * @param \Articles $articles
+     * @return Comments
+     */
+    public function setArticles(\Articles $articles = null)
+    {
+        $this->articles = $articles;
+
+        return $this;
+    }
+
+    /**
+     * Get articles
+     *
+     * @return \Articles 
+     */
+    public function getArticles()
+    {
+        return $this->articles;
+    }
+
+    /**
      * Set createdBy
      *
      * @param \Users $createdBy
-     * @return Categories
+     * @return Comments
      */
-    public function setCreatedBy(Users $createdBy = null)
+    public function setCreatedBy(\Users $createdBy = null)
     {
         $this->createdBy = $createdBy;
 
@@ -185,22 +187,4 @@ class Categories
     {
         return $this->createdBy;
     }
-
-
-    /**
-     * [loadTermsByCategory description]
-     * @param  [type] $em [description]
-     * @return [type]     [description]
-     */
-    public function loadTermsByCategory($em) {
-        $query = $em->createQuery("SELECT t.id, t.title FROM Entity\Terms t WHERE t.category = ?1 AND t.status = ?2");
-        $query->setParameters(array(1 => $this, 2 => 1));
-        $terms = $query->getResult();
-        $result = array();
-        foreach ($terms as $term) {
-            $result[$term['id']] = $term['title'];
-        }
-        return $result;
-    }
-    
 }

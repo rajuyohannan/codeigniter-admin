@@ -38,6 +38,13 @@ $(function () {
 		enabledDates: dates,
 	});
 
+
+	$("#dob").datetimepicker({
+		format: 'MM/DD/YYYY',
+		maxDate: new Date(new Date().setYear(new Date().getFullYear() - 20)),
+	});
+
+
 });
 $(function () {
 	$('.emoji-show').click(function(){
@@ -176,13 +183,22 @@ $(function () {
 	    }
 	});
 
-	var hash = window.location.hash.substring(1);
+	var hash = window.location.hash;
 
 	if (hash) {
-		$('a[href="#password"]').tab('show')	
+		$('a[href="' + hash + '"]').tab('show');
+		$("html, body").animate({ scrollTop: 0 }, "slow");
 	}
-
 	
+ 	$("#contact").inputmask("mask", {"mask": "(999) 999-9999"});
+ 	$("#name").inputmask("mask", {"mask": "a{5,25} a{5,25} a{5,25}"});
+
+});
+$(function () {
+
+    $("#skills").select2({
+    	tags: true
+    });
 
 });
 $(function () {

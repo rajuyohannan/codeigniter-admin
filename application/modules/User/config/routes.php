@@ -16,6 +16,6 @@ $route['admin/users/(:any)/(:any)/(:num)/(:num)'] = 'User/$2/$3/$4';
 $route['user/profile'] = 'User/Profile';
 $route['user/profile/(:any)'] = 'User/Profile/$1';
 
-$route['user/(:any)/(:num)'] = 'User/Profile/$1/$2';
+$route['user/(:any)'] = 'User/User/$1';
 $route['user/(:any)/(:num)/(:any)'] = 'User/$1/$2/$3';
 

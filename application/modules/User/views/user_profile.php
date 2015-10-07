@@ -75,13 +75,38 @@
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
             </div><!-- /.col -->
+
             <div class="col-md-9">
+
+              <?php if($this->session->flashdata('warning')): ?>          
+                <div class="alert alert-warning alert-dismissable">
+                  <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                  <h4><i class="icon fa fa-warning"></i> Alert!</h4>
+                  <?php echo $this->session->flashdata('warning'); ?>
+                </div>
+              <?php endif; ?>
+              <?php if($this->session->flashdata('success')): ?>          
+                <div class="alert alert-success alert-dismissable">
+                  <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                  <h4><i class="icon fa fa-check"></i> Alert!</h4>
+                  <?php echo $this->session->flashdata('success'); ?>
+                </div>
+              <?php endif; ?>
+
+              <?php if($this->session->flashdata('error')): ?>          
+                <div class="callout callout-danger">
+                  <h4>The following error prevented password updation</h4>
+                  <ul>
+                    <?php echo $this->session->flashdata('error'); ?>
+                  </ul>
+                </div>
+              <?php endif; ?>
+
               <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                   <li class="active"><a data-toggle="tab" href="#activity">Latest Activity</a></li>
                   <li><a data-toggle="tab" href="#timeline">Notifications</a></li>
-                  <li><a data-toggle="tab" href="#settings">Profile</a></li>
-                  <li><a data-toggle="tab" href="#account">Account settings</a></li>
+                  <li><a data-toggle="tab" href="#profile">Profile</a></li>
                   <li><a data-toggle="tab" href="#password">Change Password</a></li>
                 </ul>
                 <div class="tab-content">
@@ -280,99 +305,96 @@
                     </ul>
                   </div><!-- /.tab-pane -->
 
-                  <div id="settings" class="tab-pane">
-                    <form class="form-horizontal">
+                  <div id="profile" class="tab-pane">
+                    <?php echo form_open('user/profile/update', array('class' => 'form-horizontal')); ?>
                       <div class="form-group">
-                        <label class="col-sm-2 control-label" for="inputName">Name</label>
+                        <label class="col-sm-2 control-label" for="name">Name</label>
                         <div class="col-sm-10">
-                          <input type="email" placeholder="Name" id="inputName" class="form-control">
+                          <?php echo form_input(array(
+                                'name' => 'name', 
+                                'id'   => 'name',
+                                'class' => 'form-control', 
+                                'placeholder' => 'Full name',
+                                'autocomplete' => 'off',
+                                'maxlength' => 255,
+                                'value' => ''
+                          )); ?>
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="col-sm-2 control-label" for="inputEmail">Email</label>
+                        <label class="col-sm-2 control-label" for="email">Email</label>
                         <div class="col-sm-10">
-                          <input type="email" placeholder="Email" id="inputEmail" class="form-control">
+                          <?php echo form_input(array(
+                                'name' => 'email', 
+                                'id'   => 'email',
+                                'class' => 'form-control', 
+                                'placeholder' => 'Email id',
+                                'autocomplete' => 'off',
+                                'maxlength' => 255,
+                                'value' => $user->getUserEmail(),
+                                'disabled' => 'disabled'
+                          )); ?>
                         </div>
                       </div>
-                      <div class="form-group">
-                        <label class="col-sm-2 control-label" for="inputName">Name</label>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="contact">Contact Number</label>
                         <div class="col-sm-10">
-                          <input type="text" placeholder="Name" id="inputName" class="form-control">
+                          <?php echo form_input(array(
+                                'name' => 'contact', 
+                                'id'   => 'contact',
+                                'class' => 'form-control', 
+                                'autocomplete' => 'off',
+                                'placeholder'=> 'Contact number',
+                                'maxlength' => 255,
+                                'value' => ''
+                          )); ?>
                         </div>
                       </div>
-                      <div class="form-group">
-                        <label class="col-sm-2 control-label" for="inputExperience">Experience</label>
+                   <div class="form-group">
+                        <label class="col-sm-2 control-label" for="address">Address</label>
                         <div class="col-sm-10">
-                          <textarea placeholder="Experience" id="inputExperience" class="form-control"></textarea>
+                          <?php echo form_textarea(array(
+                                'name' => 'address', 
+                                'id'   => 'address',
+                                'class' => 'form-control', 
+                                'rows'  => 2,
+                                'value' => ''
+                          )); ?>
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="col-sm-2 control-label" for="inputSkills">Skills</label>
+                        <label class="col-sm-2 control-label" for="inputName">Date of Birth</label>
                         <div class="col-sm-10">
-                          <input type="text" placeholder="Skills" id="inputSkills" class="form-control">
+                          <?php echo form_input(array(
+                                'name' => 'dob', 
+                                'id'   => 'dob',
+                                'class' => 'form-control', 
+                                'placeholder' => 'mm/dd/yyyy',
+                                'autocomplete' => 'off',
+                                'maxlength' => 255,
+                                'value' => ''
+                          )); ?>
                         </div>
                       </div>
-                      <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                          <div class="checkbox">
-                            <label>
-                              <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                          <button class="btn btn-danger" type="submit">Submit</button>
-                        </div>
-                      </div>
-                    </form>
-                  </div><!-- /.tab-pane -->
 
-                  <div id="account" class="tab-pane">
-                    <form class="form-horizontal">
                       <div class="form-group">
-                        <label class="col-sm-2 control-label" for="inputName">Name</label>
+                        <label class="col-sm-2 control-label" for="skills">Skills</label>
                         <div class="col-sm-10">
-                          <input type="email" placeholder="Name" id="inputName" class="form-control">
+                         <?php echo form_dropdown(
+                            'skills', 
+                            $skills,
+                            '',
+                            array(
+                            'id'   => 'skills',
+                            'class' => 'form-control', 
+                            "multiple" => "multiple"
+                          )); ?>
                         </div>
                       </div>
-                      <div class="form-group">
-                        <label class="col-sm-2 control-label" for="inputEmail">Email</label>
-                        <div class="col-sm-10">
-                          <input type="email" placeholder="Email" id="inputEmail" class="form-control">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="col-sm-2 control-label" for="inputName">Name</label>
-                        <div class="col-sm-10">
-                          <input type="text" placeholder="Name" id="inputName" class="form-control">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="col-sm-2 control-label" for="inputExperience">Experience</label>
-                        <div class="col-sm-10">
-                          <textarea placeholder="Experience" id="inputExperience" class="form-control"></textarea>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="col-sm-2 control-label" for="inputSkills">Skills</label>
-                        <div class="col-sm-10">
-                          <input type="text" placeholder="Skills" id="inputSkills" class="form-control">
-                        </div>
-                      </div>
+
                       <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                          <div class="checkbox">
-                            <label>
-                              <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                          <button class="btn btn-danger" type="submit">Submit</button>
+                          <?php echo form_submit('submit', 'Update Profile', array('class' => 'btn btn-danger btn-flat')); ?>
                         </div>
                       </div>
                     </form>
@@ -424,7 +446,7 @@
                       </div>
                       <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                          <button class="btn btn-danger" type="submit">Update password</button>
+                          <?php echo form_submit('submit', 'Update Password', array('class' => 'btn btn-danger btn-flat')); ?>
                         </div>
                       </div>
                     <?php echo form_close(); ?>

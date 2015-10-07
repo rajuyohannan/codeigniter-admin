@@ -14,4 +14,11 @@ $(function () {
 		enabledDates: dates,
 	});
 
+
+	$("#dob").datetimepicker({
+		format: 'MM/DD/YYYY',
+		maxDate: new Date(new Date().setYear(new Date().getFullYear() - 20)),
+	});
+
+
 });

@@ -1,17 +1,16 @@
 <?php
 
-
 namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Categories
+ * Groups
  *
- * @ORM\Table(name="categories", indexes={@ORM\Index(name="created_by", columns={"created_by"})})
+ * @ORM\Table(name="groups", indexes={@ORM\Index(name="created_by", columns={"created_by"})})
  * @ORM\Entity
  */
-class Categories
+class Groups
 {
     /**
      * @var integer
@@ -32,16 +31,37 @@ class Categories
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text", length=65535, nullable=true)
+     * @ORM\Column(name="description", type="text", length=65535, nullable=false)
      */
     private $description;
 
     /**
-     * @var integer
+     * @var boolean
      *
-     * @ORM\Column(name="status", type="integer", nullable=false)
+     * @ORM\Column(name="status", type="boolean", nullable=false)
      */
     private $status;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=255, nullable=false)
+     */
+    private $type;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="visibility", type="string", length=255, nullable=false)
+     */
+    private $visibility;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="weight", type="integer", nullable=false)
+     */
+    private $weight;
 
     /**
      * @var \DateTime
@@ -49,6 +69,13 @@ class Categories
      * @ORM\Column(name="created_on", type="datetime", nullable=false)
      */
     private $createdOn;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_on", type="datetime", nullable=false)
+     */
+    private $updatedOn;
 
     /**
      * @var \Users
@@ -75,7 +102,7 @@ class Categories
      * Set title
      *
      * @param string $title
-     * @return Categories
+     * @return Groups
      */
     public function setTitle($title)
     {
@@ -98,7 +125,7 @@ class Categories
      * Set description
      *
      * @param string $description
-     * @return Categories
+     * @return Groups
      */
     public function setDescription($description)
     {
@@ -120,8 +147,8 @@ class Categories
     /**
      * Set status
      *
-     * @param integer $status
-     * @return Categories
+     * @param boolean $status
+     * @return Groups
      */
     public function setStatus($status)
     {
@@ -133,7 +160,7 @@ class Categories
     /**
      * Get status
      *
-     * @return integer 
+     * @return boolean 
      */
     public function getStatus()
     {
@@ -141,10 +168,79 @@ class Categories
     }
 
     /**
+     * Set type
+     *
+     * @param string $type
+     * @return Groups
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string 
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set visibility
+     *
+     * @param string $visibility
+     * @return Groups
+     */
+    public function setVisibility($visibility)
+    {
+        $this->visibility = $visibility;
+
+        return $this;
+    }
+
+    /**
+     * Get visibility
+     *
+     * @return string 
+     */
+    public function getVisibility()
+    {
+        return $this->visibility;
+    }
+
+    /**
+     * Set weight
+     *
+     * @param integer $weight
+     * @return Groups
+     */
+    public function setWeight($weight)
+    {
+        $this->weight = $weight;
+
+        return $this;
+    }
+
+    /**
+     * Get weight
+     *
+     * @return integer 
+     */
+    public function getWeight()
+    {
+        return $this->weight;
+    }
+
+    /**
      * Set createdOn
      *
      * @param \DateTime $createdOn
-     * @return Categories
+     * @return Groups
      */
     public function setCreatedOn($createdOn)
     {
@@ -164,10 +260,33 @@ class Categories
     }
 
     /**
+     * Set updatedOn
+     *
+     * @param \DateTime $updatedOn
+     * @return Groups
+     */
+    public function setUpdatedOn($updatedOn)
+    {
+        $this->updatedOn = $updatedOn;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedOn
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedOn()
+    {
+        return $this->updatedOn;
+    }
+
+    /**
      * Set createdBy
      *
      * @param \Users $createdBy
-     * @return Categories
+     * @return Groups
      */
     public function setCreatedBy(Users $createdBy = null)
     {
@@ -186,21 +305,4 @@ class Categories
         return $this->createdBy;
     }
 
-
-    /**
-     * [loadTermsByCategory description]
-     * @param  [type] $em [description]
-     * @return [type]     [description]
-     */
-    public function loadTermsByCategory($em) {
-        $query = $em->createQuery("SELECT t.id, t.title FROM Entity\Terms t WHERE t.category = ?1 AND t.status = ?2");
-        $query->setParameters(array(1 => $this, 2 => 1));
-        $terms = $query->getResult();
-        $result = array();
-        foreach ($terms as $term) {
-            $result[$term['id']] = $term['title'];
-        }
-        return $result;
-    }
-    
 }

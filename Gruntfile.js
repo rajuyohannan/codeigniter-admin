@@ -19,6 +19,10 @@ grunt.initConfig({
         'bower_components/fileapi/dist/FileAPI.js',
         'bower_components/moment/moment.js',
         'bower_components/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js',
+        'bower_components/jquery.inputmask/dist/inputmask/inputmask.js',
+        'bower_components/jquery.inputmask/dist/inputmask/jquery.inputmask.js',
+        'bower_components/jquery.inputmask/dist/inputmask/inputmask.extensions.js',
+        'bower_components/select2/dist/js/select2.js',
         ], 
         dest: 'assets/js/vendor/vendor.js' 
       },
@@ -48,8 +52,10 @@ grunt.initConfig({
         'bower_components/iCheck/skins/square/red.css',
         'bower_components/iCheck/skins/square/yellow.css',
         'bower_components/iCheck/skins/square/blue.css',
+        'bower_components/select2/dist/css/select2.css',
         'bower_components/AdminLTE/dist/css/AdminLTE.css',
         'bower_components/AdminLTE/dist/css/skins/_all-skins.css',
+
         ], 
         dest: 'assets/css/vendor/vendor.css' 
       },
