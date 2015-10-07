@@ -31,7 +31,7 @@ class Profile extends MY_Controller {
 
         $view['user']         = $this->doctrine->em->getRepository('Entity\Users', 1)
             ->findOneBy(array('userId' => $id));
-
+        $view['profile'] = $this->doctrine->em->getRepository('Entity\Profiles')->find($id);
         
 
         $view['skills'] = $this->doctrine->em->getReference('Entity\Categories', 3)
@@ -47,6 +47,7 @@ class Profile extends MY_Controller {
      * @return [type] [description]
      */
     public function update($id = null) {
+
         if (!$id)
              $id = $this->auth_user_id;
 
@@ -59,7 +60,25 @@ class Profile extends MY_Controller {
             $this->session->set_flashdata('error', validation_errors());           
         }
         else {
+
+            $profile = $this->doctrine->em->getRepository('Entity\Profiles')->find($id);
+
+            if (!$profile) {
+                //Add a new profile for user   
+                $profile = new Entity\Profiles();
+            }
+
+            $now = date_create(date('Y-m-d H:i:s'));
+
+            $profile->setName($this->input->post('name'));
+            $profile->setDob(date_create(date('Y-m-d H:i:s', strtotime($this->input->post('dob')))));
+            $profile->setContactNumber($this->input->post('contact'));
+            $profile->setAddress($this->input->post('address'));
+            $profile->setCreatedOn($now);
             
+            $this->doctrine->em->persist($profile);
+            $this->doctrine->em->flush();
+
         }
 
         redirect('user/profile#profile');

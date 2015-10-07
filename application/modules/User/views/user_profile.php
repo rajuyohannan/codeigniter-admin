@@ -317,7 +317,7 @@
                                 'placeholder' => 'Full name',
                                 'autocomplete' => 'off',
                                 'maxlength' => 255,
-                                'value' => ''
+                                'value' => $profile->getName(),
                           )); ?>
                         </div>
                       </div>
@@ -346,7 +346,7 @@
                                 'autocomplete' => 'off',
                                 'placeholder'=> 'Contact number',
                                 'maxlength' => 255,
-                                'value' => ''
+                                'value' => $profile->getContactNumber()
                           )); ?>
                         </div>
                       </div>
@@ -358,11 +358,12 @@
                                 'id'   => 'address',
                                 'class' => 'form-control', 
                                 'rows'  => 2,
-                                'value' => ''
+                                'value' => $profile->getAddress(),
                           )); ?>
                         </div>
                       </div>
                       <div class="form-group">
+                        <?php print $profile->getDob()->format('m/d/Y'); ?>
                         <label class="col-sm-2 control-label" for="inputName">Date of Birth</label>
                         <div class="col-sm-10">
                           <?php echo form_input(array(
@@ -372,7 +373,7 @@
                                 'placeholder' => 'mm/dd/yyyy',
                                 'autocomplete' => 'off',
                                 'maxlength' => 255,
-                                'value' => ''
+                                'value' => $profile->getDob()->format('m/d/Y')
                           )); ?>
                         </div>
                       </div>
