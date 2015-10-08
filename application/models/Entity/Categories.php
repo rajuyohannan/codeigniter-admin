@@ -60,7 +60,6 @@ class Categories
      */
     private $createdBy;
 
-
     /**
      * Get id
      *
@@ -202,5 +201,23 @@ class Categories
         }
         return $result;
     }
-    
+
+    /**
+     * [getMaxWeight description]
+     * @param  [type] $cid [description]
+     * @return [type]      [description]
+     */
+    public function getMaxWeight() {
+
+        $dql = "SELECT MAX(t.weight) AS weight FROM Entity\Terms t " .
+               "WHERE t.category = ?1";
+
+        $weight = $em->createQuery($dql)
+                        ->setParameter(1, $cid)
+                        ->getSingleScalarResult();
+
+        return $weight;
+
+    }
+
 }

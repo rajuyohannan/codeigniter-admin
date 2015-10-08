@@ -363,7 +363,6 @@
                         </div>
                       </div>
                       <div class="form-group">
-                        <?php print $profile->getDob()->format('m/d/Y'); ?>
                         <label class="col-sm-2 control-label" for="inputName">Date of Birth</label>
                         <div class="col-sm-10">
                           <?php echo form_input(array(
@@ -381,14 +380,16 @@
                       <div class="form-group">
                         <label class="col-sm-2 control-label" for="skills">Skills</label>
                         <div class="col-sm-10">
-                         <?php echo form_dropdown(
-                            'skills', 
+                         <?php print $profile->getSkills(); ?>
+                         <?php echo form_multiselect(
+                            'skills[]', 
                             $skills,
                             '',
                             array(
                             'id'   => 'skills',
                             'class' => 'form-control', 
-                            "multiple" => "multiple"
+                            "multiple" => "multiple",
+                            "style" => 'width:100%',
                           )); ?>
                         </div>
                       </div>

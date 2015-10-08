@@ -54,7 +54,7 @@ class Profile extends MY_Controller {
         //Validations
         $this->form_validation->set_rules('name', 'Name', 'required');
         $this->form_validation->set_rules('dob', 'Date of Birth', 'required');
-        $this->form_validation->set_rules('skills', 'Skills', 'required');
+        $this->form_validation->set_rules('skills[]', 'Skills', 'required');
 
         if (!$this->form_validation->run()) {
             $this->session->set_flashdata('error', validation_errors());           
@@ -62,6 +62,7 @@ class Profile extends MY_Controller {
         else {
 
             $profile = $this->doctrine->em->getRepository('Entity\Profiles')->find($id);
+            $actingUser = $this->doctrine->em->getReference('Entity\Users', $this->auth_user_id);
 
             if (!$profile) {
                 //Add a new profile for user   
@@ -77,6 +78,49 @@ class Profile extends MY_Controller {
             $profile->setCreatedOn($now);
             
             $this->doctrine->em->persist($profile);
+            //Add Skills
+            if ($skills = $this->input->post("skills")) {
+                foreach ($skills as $skill) {
+                    if (!is_numeric($skill)) {
+                       //Save new tags
+                        $terms = new Entity\Terms();
+                        $terms->setTitle($skill);
+                        $terms->setStatus(1);
+                        $terms->setDescription('');
+
+
+
+
+                        $dql = "SELECT MAX(t.weight) AS weight FROM Entity\Terms t " .
+                               "WHERE t.category = ?1";
+                        $category = $this->doctrine->em->getReference('Entity\Categories', 3);
+                        
+                        $weight = $category->getMaxWeight();
+
+                        $terms->setWeight($weight + 1);
+                        $terms->setCategory();
+                        $terms->setCreatedBy($actingUser);
+                        $terms->setCreatedOn(date_create(date('Y-m-d H:i:s')));
+                        $this->doctrine->em->persist($terms);
+
+                    }
+                    else {
+                        $terms = $this->doctrine->em->getRepository('Entity\Terms')->find($skill);
+                    }
+
+                    $exist = $this->doctrine->em->getRepository('Entity\UserSkills')->findBy(array('term' => $terms->getId()));
+
+                    if (!$exist) {
+                        //Add Terms in user skills
+                        $userSkills = new Entity\UserSkills();
+                        $userSkills->setTerm($terms);
+                        $userSkills->setUser($actingUser);
+                        $this->doctrine->em->persist($userSkills);
+                    }
+                }
+            }
+
+
             $this->doctrine->em->flush();
 
         }
