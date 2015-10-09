@@ -58,7 +58,7 @@ class UserSkills
      * @param \Users $user
      * @return UserSkills
      */
-    public function setUser(\Users $user = null)
+    public function setUser(Users $user = null)
     {
         $this->user = $user;
 
@@ -81,7 +81,7 @@ class UserSkills
      * @param \Terms $term
      * @return UserSkills
      */
-    public function setTerm(\Terms $term = null)
+    public function setTerm(Terms $term = null)
     {
         $this->term = $term;
 

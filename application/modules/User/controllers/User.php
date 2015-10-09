@@ -654,4 +654,24 @@ class User extends MY_Controller {
     }
 
 
+    public function get() {
+        $search = $this->input->get('q');
+
+        $query = "SELECT p, u.userId FROM Entity\Profiles p JOIN p.user u WHERE p.name LIKE :word ";
+        $result = $this->doctrine->em->createQuery($query)->setParameter(':word', '%'.$search.'%')->getArrayResult();
+
+        $data = array();
+
+        foreach ($result as $user) {
+            $data[] = array(
+                'id' => $user[0]['id'], 
+                'name' => $user[0]['name']
+            );
+        }
+
+        echo json_encode($data);
+    }
+
+
+
  }

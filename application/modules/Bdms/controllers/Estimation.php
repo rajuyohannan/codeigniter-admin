@@ -51,8 +51,7 @@ class Estimation extends MY_Controller {
 
 
     public function add() {
-
-
+        
     	$data['content'] = $this->load->view('admin/add_estimations', $view, TRUE);
     	$data['title'] = 'Assign Estimation';
     	return $this->load->view('html', $data);
