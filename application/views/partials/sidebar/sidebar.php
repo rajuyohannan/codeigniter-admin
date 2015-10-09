@@ -55,6 +55,20 @@
         </ul>
       </li>
 
+      <li class="treeview">
+        <a href="#">
+          <i class="fa fa-book"></i>
+          <span>Manage Posts</span>
+        </a>
+        <ul class="treeview-menu">
+          <li>
+            <a href="#"><i class="fa fa-file"></i>Articles</a>
+            <a href="#"><i class="fa fa-commenting-o"></i>Comments</a>
+          </li>
+        </ul>
+      </li>
+
+
       <li class="header">NOTIFICATIONS</li>
       <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span>
       <small class="label pull-right bg-red">30</small>

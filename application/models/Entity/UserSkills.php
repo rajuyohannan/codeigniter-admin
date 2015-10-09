@@ -97,4 +97,10 @@ class UserSkills
     {
         return $this->term;
     }
+
+
+    public function getAllTerms() {
+        
+    }
+
 }

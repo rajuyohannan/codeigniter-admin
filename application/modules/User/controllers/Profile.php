@@ -6,12 +6,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
  */
 
 class Profile extends MY_Controller {
+    
+    /**
+     * [__construct description]
+     */
     function __construct()
     {
         parent::__construct();
         if (!$this->require_min_level(1)) {
         	show_error('You are not authorized to access this page.', '403');
         }
+
+        $this->load->model('user_model');
     }
 
     /**
@@ -29,13 +35,13 @@ class Profile extends MY_Controller {
         $image_array = get_clickable_smileys(base_url('assets/plugins/emojione/'), 'comments');
         $view['smiley_table'] = $this->table->make_columns($image_array, 12);
 
-        $view['user']         = $this->doctrine->em->getRepository('Entity\Users', 1)
+        $view['user'] = $user = $this->doctrine->em->getRepository('Entity\Users')
             ->findOneBy(array('userId' => $id));
-        $view['profile'] = $this->doctrine->em->getRepository('Entity\Profiles')->find($id);
-        
 
-        $view['skills'] = $this->doctrine->em->getReference('Entity\Categories', 3)
-            ->loadTermsByCategory($this->doctrine->em);
+        $view['profile'] = $this->doctrine->em->getRepository('Entity\Profiles')->find($id);
+
+        $view['skills'] = $this->user_model->loadTermsByCategory(9);
+        $view['userSkills'] = array_flip($this->user_model->getUserSkills($this->auth_user_id));
 
     	$data['title']   = "My Profile";
     	$data['content'] = $this->load->view('user_profile', $view, true);
@@ -71,7 +77,7 @@ class Profile extends MY_Controller {
 
             $now = date_create(date('Y-m-d H:i:s'));
 
-            $profile->setName($this->input->post('name'));
+            $profile->setName(preg_replace('/\_/', '', $this->input->post('name')));
             $profile->setDob(date_create(date('Y-m-d H:i:s', strtotime($this->input->post('dob')))));
             $profile->setContactNumber($this->input->post('contact'));
             $profile->setAddress($this->input->post('address'));
@@ -88,17 +94,12 @@ class Profile extends MY_Controller {
                         $terms->setStatus(1);
                         $terms->setDescription('');
 
-
-
-
-                        $dql = "SELECT MAX(t.weight) AS weight FROM Entity\Terms t " .
-                               "WHERE t.category = ?1";
-                        $category = $this->doctrine->em->getReference('Entity\Categories', 3);
+                        $category = $this->doctrine->em->getReference('Entity\Categories', 9);
                         
-                        $weight = $category->getMaxWeight();
+                        $weight = $this->user_model->getMaxWeight($category->getId());
 
                         $terms->setWeight($weight + 1);
-                        $terms->setCategory();
+                        $terms->setCategory($category);
                         $terms->setCreatedBy($actingUser);
                         $terms->setCreatedOn(date_create(date('Y-m-d H:i:s')));
                         $this->doctrine->em->persist($terms);

@@ -67,7 +67,8 @@ $autoload['libraries'] = array(
 	'tokens',
 	'Authentication',
 	'form_validation',
-	'email'
+	'email',
+	'upload'
 	);
 
 /*

@@ -298,26 +298,4 @@ class Categories extends \Entity\Categories implements \Doctrine\ORM\Proxy\Proxy
         return parent::getCreatedBy();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function loadTermsByCategory($em)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'loadTermsByCategory', array($em));
-
-        return parent::loadTermsByCategory($em);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getMaxWeight()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getMaxWeight', array());
-
-        return parent::getMaxWeight();
-    }
-
 }
