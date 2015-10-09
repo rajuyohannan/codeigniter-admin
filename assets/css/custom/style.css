@@ -499,6 +499,9 @@ margin-bottom: 100px;
 
 .panel > .panel-body {
     background-color: #e8f1f4;
-    padding: 0.625rem;
     z-index: 1;
+}
+
+.panel {
+    border: none;
 }

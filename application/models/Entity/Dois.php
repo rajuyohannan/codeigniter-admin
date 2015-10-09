@@ -1,6 +1,6 @@
 <?php
 
-
+namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -198,7 +198,7 @@ class Dois
      * @param \Users $createdBy
      * @return Dois
      */
-    public function setCreatedBy(\Users $createdBy = null)
+    public function setCreatedBy(Users $createdBy = null)
     {
         $this->createdBy = $createdBy;
 
@@ -221,7 +221,7 @@ class Dois
      * @param \Terms $source
      * @return Dois
      */
-    public function setSource(\Terms $source = null)
+    public function setSource(Terms $source = null)
     {
         $this->source = $source;
 
@@ -244,7 +244,7 @@ class Dois
      * @param \Estimations $estimation
      * @return Dois
      */
-    public function setEstimation(\Estimations $estimation = null)
+    public function setEstimation(Estimations $estimation = null)
     {
         $this->estimation = $estimation;
 
@@ -267,7 +267,7 @@ class Dois
      * @param \Projects $project
      * @return Dois
      */
-    public function setProject(\Projects $project = null)
+    public function setProject(Projects $project = null)
     {
         $this->project = $project;
 

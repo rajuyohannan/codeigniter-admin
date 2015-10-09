@@ -1,6 +1,6 @@
 <?php
 
-
+namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -138,7 +138,7 @@ class ProjectPayment
      * @param \Projects $project
      * @return ProjectPayment
      */
-    public function setProject(\Projects $project = null)
+    public function setProject(Projects $project = null)
     {
         $this->project = $project;
 

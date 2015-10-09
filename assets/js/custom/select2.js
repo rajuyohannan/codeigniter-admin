@@ -4,6 +4,8 @@ $(function () {
     	tags: true
     });
 
+    $("#estimation").select2();
+
     $("#assignTo").select2({
       ajax: {
         url: baseurl + 'user/get',
