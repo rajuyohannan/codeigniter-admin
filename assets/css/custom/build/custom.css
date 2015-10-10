@@ -599,3 +599,14 @@ margin-bottom: 100px;
 .panel {
     border: none;
 }
+.control-label > p {
+    display: inline;
+}
+.adjPad .input-group-addon {
+    padding: 0 20px;
+}
+.small-box-footer {
+    bottom: 0;
+    position: absolute !important;
+    width: 100%;
+}

@@ -18,4 +18,15 @@
 	  $(".add-more_container").after(newElement);
 	});
 
+
+	$("#existingclient").on('ifChecked', function(event){
+		console.log("Checked");
+		$(".newClientBlock").hide();
+		$(".existingClientBlock").removeClass('hidden');
+	}).on('ifUnchecked', function(event){
+		console.log("Unchecked");
+		$(".newClientBlock").show();
+		$(".existingClientBlock").addClass('existingClientBlock hidden');
+	});
+
 })();

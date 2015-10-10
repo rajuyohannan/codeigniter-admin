@@ -357,8 +357,8 @@ class User extends MY_Controller {
         $data['title'] = 'Add User';
         $em = $this->doctrine->em;
 
-
-        $view['department'] = $em->getReference('\Entity\Categories', 1)->loadTermsByCategory($em);
+        $this->load->model('user_model');
+        $view['department'] = $this->user_model->loadTermsByCategory(9);
 
         //Validate
         $this->form_validation->set_rules('username', 'Username', 'required|callback__username_check');

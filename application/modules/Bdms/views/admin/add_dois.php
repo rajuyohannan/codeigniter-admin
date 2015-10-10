@@ -14,10 +14,7 @@
       <div class="col-md-8">
         <?php if( null != validation_errors() ): ?>
           <div class="callout callout-danger">
-            <h4>The following error prevented DOI creation</h4>
-            <ul>
-              <?php echo validation_errors(); ?>
-            </ul>
+            <h4>Validation error prevented DOI creation</h4>
             <p>DOI not created</p>
           </div>
         <?php endif; ?>
@@ -41,7 +38,7 @@
               <div class="form-group estimationRef">
                 <label for="leadsource">Estimation Reference<i class="fa fa-asterisk form-required"></i></label>
                 <?php echo form_dropdown(
-                  'Estimation Refernce', 
+                  'EstimationRefernce', 
                   array('-1' => ' - Select - ', 'self' => ' - SELF ESTIMATION - ', 'public' => 'Public Groups', 'private' => 'Private Groups'),
                   set_value('estimation'),
                   array(
@@ -54,24 +51,22 @@
                 <div class="col-md-7">
                 <div class="form-group">
                       <?php echo form_input(array(
-                        'name' => 'title', 
-                        'id'   => 'title',
+                        'name' => 'department[]', 
                         'class' => 'form-control', 
                         'placeholder' => 'Department',
                         'maxlength' => 255,
-                        'value' => set_value('title'),
+                        'value' => set_value('department'),
                         )); ?>
                 </div>
                 </div>
                 <div class="col-md-5">
                   <div class="input-group">
                     <?php echo form_input(array(
-                      'name' => 'title', 
-                      'id'   => 'title',
+                      'name' => 'effort[]', 
                       'class' => 'form-control',
                       'placeholder' => 'Estimated efforts', 
                       'maxlength' => 255,
-                      'value' => set_value('title'),
+                      'value' => set_value('effort'),
                       )); ?>
                       <span class="input-group-addon">Hours</span>
                   </div>
@@ -93,8 +88,8 @@
 
            <div class="row">
             <div class="col-md-6">
-              <div class="form-group">
-                <label>Project Name</label>
+              <div class="form-group <?php echo form_error('title') ? 'has-error' : ''; ?>">
+                <label for="title">Project Name<i class="fa fa-asterisk form-required"></i></label>
                     <?php echo form_input(array(
                       'name' => 'title', 
                       'id'   => 'title',
@@ -102,18 +97,30 @@
                       'maxlength' => 255,
                       'value' => set_value('title'),
                       )); ?>
+                      <?php if(form_error('title')): ?>
+                        <label for="inputError" class="control-label">
+                          <i class="fa fa-times-circle-o"></i><?php echo form_error('title'); ?>
+                        </label>
+                      <?php endif; ?>
+                      
               </div>            
             </div>
             <div class="col-md-6">
-              <div class="form-group">
-                <label>Project Timeline</label>
+              <label>Project Timeline</label>
+              <div class="input-group adjPad">
                     <?php echo form_input(array(
-                      'name' => 'title', 
-                      'id'   => 'title',
+                      'name' => 'timeline', 
+                      'id'   => 'timeline',
                       'class' => 'form-control', 
                       'maxlength' => 255,
-                      'value' => set_value('title'),
+                      'value' => set_value('timeline'),
                       )); ?>
+                      <span class="input-group-addon">
+                          <select>
+                            <option>Days</option>
+                            <option>Hours</option>
+                          </select>
+                      </span>
               </div> 
             </div>
            </div>
@@ -178,11 +185,11 @@
             <div class="form-group">
               <label>Risk Identified</label>
                 <?php echo form_textarea(array(
-                  'name' => 'title', 
-                  'id'   => 'title',
+                  'name' => 'risk', 
+                  'id'   => 'risk',
                   'class' => 'form-control', 
                   'maxlength' => 255,
-                  'value' => set_value('title'),
+                  'value' => set_value('risk'),
                   )); ?>
             </div>
 
@@ -212,11 +219,11 @@
                 <label for="leadsource">Order Value<i class="fa fa-asterisk form-required"></i></label>
                 <div class="input-group">
                     <?php echo form_input(array(
-                      'name' => 'title', 
-                      'id'   => 'title',
+                      'name' => 'value', 
+                      'id'   => 'value',
                       'class' => 'form-control', 
                       'maxlength' => 255,
-                      'value' => set_value('title'),
+                      'value' => set_value('value'),
                       )); ?>
                       <span class="input-group-addon">.00</span>         
                 </div>
@@ -271,8 +278,7 @@
               <div class="col-md-6">
                 <div class="form-group">
                     <?php echo form_input(array(
-                      'name' => 'title', 
-                      'id'   => 'title',
+                      'name' => 'distribution[]', 
                       'class' => 'form-control', 
                       'maxlength' => 255,
                       'disabled'  => 'disabled',
@@ -283,8 +289,7 @@
               <div class="col-md-6">
                 <div class="input-group">
                     <?php echo form_input(array(
-                      'name' => 'title', 
-                      'id'   => 'title',
+                      'name' => 'domain[]', 
                       'placeholder' => 'Value for domain',
                       'class' => 'form-control', 
                       'maxlength' => 255,
@@ -303,14 +308,41 @@
             <h3 class="panel-title">Client Details</h3>
           </div>
           <div class="panel-body">
+
+            <div class="form-group">
+              <?php echo form_checkbox(array(
+                'name' => 'existingclient', 
+                'id'   => 'existingclient',
+                'class' => 'form-control input-lg',
+                'checked' => false, 
+                ), '1'); ?>
+                <?php echo form_label('Existing Client', 'existing'); ?>
+              </div>
+              
+              <div class="existingClientBlock hidden">
+
+                <div class="form-group">
+                  <label for="leadsource">Select Client<i class="fa fa-asterisk form-required"></i></label>
+                  <?php echo form_dropdown(
+                    'EstimationRefernce', 
+                    array('-1' => ' - Select - ', 'self' => ' - SELF ESTIMATION - ', 'public' => 'Public Groups', 'private' => 'Private Groups'),
+                    set_value('estimation'),
+                    array(
+                      'id'   => 'estimation',
+                      'class' => 'form-control', 
+                      )); ?>              
+                </div>
+
+              </div>
+
+              <div class="newClientBlock">
                 <div class="form-group">
                   <label>Name</label>
                       <?php echo form_input(array(
-                        'name' => 'title', 
-                        'id'   => 'title',
+                        'name' => 'clientName', 
                         'class' => 'form-control', 
                         'maxlength' => 255,
-                        'value' => set_value('title'),
+                        'value' => set_value('clientName'),
                         )); ?>
                 </div>
                 <div class="row">
@@ -318,11 +350,10 @@
                     <div class="form-group">
                       <label>Email</label>
                           <?php echo form_input(array(
-                            'name' => 'title', 
-                            'id'   => 'title',
+                            'name' => 'email', 
                             'class' => 'form-control', 
                             'maxlength' => 255,
-                            'value' => set_value('title'),
+                            'value' => set_value('email'),
                             )); ?>
                     </div>
                   </div>
@@ -330,11 +361,10 @@
                     <div class="form-group">
                       <label>Phone Number</label>
                           <?php echo form_input(array(
-                            'name' => 'title', 
-                            'id'   => 'title',
+                            'name' => 'phone', 
                             'class' => 'form-control', 
                             'maxlength' => 255,
-                            'value' => set_value('title'),
+                            'value' => set_value('phone'),
                             )); ?>
                     </div>
                   </div>
@@ -344,11 +374,10 @@
                     <div class="form-group">
                       <label>IM</label>
                           <?php echo form_input(array(
-                            'name' => 'title', 
-                            'id'   => 'title',
+                            'name' => 'im', 
                             'class' => 'form-control', 
                             'maxlength' => 255,
-                            'value' => set_value('title'),
+                            'value' => set_value('im'),
                             )); ?>
                     </div>
                     </div>
@@ -356,11 +385,10 @@
                       <div class="form-group">
                         <label>Timezone</label>
                             <?php echo form_input(array(
-                              'name' => 'title', 
-                              'id'   => 'title',
+                              'name' => 'timezone', 
                               'class' => 'form-control', 
                               'maxlength' => 255,
-                              'value' => set_value('title'),
+                              'value' => set_value('timezone'),
                               )); ?>
                       </div>
                     </div>
@@ -368,13 +396,13 @@
                 <div class="form-group">
                   <label>Address</label>
                       <?php echo form_textarea(array(
-                        'name' => 'title', 
-                        'id'   => 'title',
+                        'name' => 'address', 
                         'class' => 'form-control', 
                         'maxlength' => 255,
-                        'value' => set_value('title'),
+                        'value' => set_value('address'),
                         )); ?>
                 </div>
+            </div>
           </div>
         </div>
 
@@ -389,22 +417,20 @@
                 <div class="form-group">
                   <label>Project Overview</label>
                       <?php echo form_textarea(array(
-                        'name' => 'title', 
-                        'id'   => 'title',
+                        'name' => 'overview', 
                         'class' => 'form-control', 
                         'maxlength' => 255,
-                        'value' => set_value('title'),
+                        'value' => set_value('overview'),
                         )); ?>
                 </div>
 
                 <div class="form-group">
                   <label>Additional Notes</label>
                       <?php echo form_textarea(array(
-                        'name' => 'title', 
-                        'id'   => 'title',
+                        'name' => 'notes', 
                         'class' => 'form-control', 
                         'maxlength' => 255,
-                        'value' => set_value('title'),
+                        'value' => set_value('notes'),
                         )); ?>
                 </div>
 

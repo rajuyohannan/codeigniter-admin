@@ -52,7 +52,17 @@ class Doi extends MY_Controller {
 
     public function add() {
         
-    	$data['content'] = $this->load->view('admin/add_dois', $view, TRUE);
+        //Validation
+        $this->form_validation->set_rules('title', 'Project name', 'trim|required');
+
+        if (!$this->form_validation->run()) {
+            $data['content'] = $this->load->view('admin/add_dois', $view, TRUE);            
+        }
+        else {
+            //Save values
+            redirect('admin/bdms/doi');
+        }
+
     	$data['title'] = 'Create DOI';
     	return $this->load->view('html', $data);
     }

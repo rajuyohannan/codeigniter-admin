@@ -1,3 +1,4 @@
+autosize(document.querySelectorAll('textarea'));
 $(function () {
 
 	$("[data-toggle=tooltip]").tooltip();
@@ -59,12 +60,22 @@ $(function () {
 	    $(".add-more_container").nextAll('div.row').remove();
 	});
 
-
 	$(".addmore a").on("click", function(e){
 	  e.preventDefault();
 	  var elementToAdd = $(".add-more_container .row:first").html();
 	  var newElement   = $('<div />', {"class": 'row'}).html(elementToAdd);
 	  $(".add-more_container").after(newElement);
+	});
+
+
+	$("#existingclient").on('ifChecked', function(event){
+		console.log("Checked");
+		$(".newClientBlock").hide();
+		$(".existingClientBlock").removeClass('hidden');
+	}).on('ifUnchecked', function(event){
+		console.log("Unchecked");
+		$(".newClientBlock").show();
+		$(".existingClientBlock").addClass('existingClientBlock hidden');
 	});
 
 })();
@@ -390,6 +401,11 @@ $(function () {
       minimumInputLength: 1,
       templateResult: formatRepo, 
       templateSelection: formatRepoSelection 
+    });
+
+
+    $(".categoriesSelect").on("change", function(e){
+      this.form.submit();
     });
 
 });

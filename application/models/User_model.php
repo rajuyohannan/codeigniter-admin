@@ -35,6 +35,22 @@ class User_model extends MY_Model {
 	}
 
     /**
+     * [loadCategories description]
+     * @return [type] [description]
+     */
+    public function loadCategories() {
+        $query = $this->em->createQuery("SELECT c.id, c.title FROM Entity\Categories c")->getResult();
+
+        $result = array();
+        foreach($query as $key => $category) {
+            $result[$query[$key]['id']] = $query[$key]['title'];
+        }
+
+        return $result;
+
+    }
+
+    /**
      * Load all terms by category
      * @return mixed    result
      */
@@ -85,5 +101,23 @@ class User_model extends MY_Model {
         return $weight;
 
     }    
+
+
+
+    public function getMasterCategories() {
+
+        $dql = "SELECT c.id as catid, m.title mcatid FROM Entity\Categories c, Entity\MasterCategories m JOIN m.category mc WHERE c.id=mc";
+
+        $result = $this->em->createQuery($dql)->getArrayResult();
+
+        $return = array();
+
+        foreach ($result as $terms) {
+            $return[$terms['mcatid']] = array(
+                    'catid' => $terms['catid'],
+                );
+        }
+        return $return;
+    }
 
 }

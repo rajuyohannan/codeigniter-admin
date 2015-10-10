@@ -23,6 +23,7 @@ grunt.initConfig({
         'bower_components/jquery.inputmask/dist/inputmask/jquery.inputmask.js',
         'bower_components/jquery.inputmask/dist/inputmask/inputmask.extensions.js',
         'bower_components/select2/dist/js/select2.js',
+        'bower_components/autosize/dist/autosize.js',
         ], 
         dest: 'assets/js/vendor/vendor.js' 
       },

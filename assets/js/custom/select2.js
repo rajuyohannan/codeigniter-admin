@@ -29,6 +29,11 @@ $(function () {
       templateSelection: formatRepoSelection 
     });
 
+
+    $(".categoriesSelect").on("change", function(e){
+      this.form.submit();
+    });
+
 });
 
 
