@@ -248,27 +248,31 @@
 
             <div class="row">
               <div class="col-md-6">
-                <div class="form-group">
-                  <label for="leadsource">Advance Amount<i class="fa fa-asterisk form-required"></i></label>
-                  <?php echo form_dropdown(
-                    'type', 
-                    array('-1' => ' - Select - ', 'self' => ' - SELF ESTIMATION - ', 'public' => 'Public Groups', 'private' => 'Private Groups'),
-                    set_value('estimation'),
+                <label for="advance">Advance Amount<i class="fa fa-asterisk form-required"></i></label>
+                <div class="input-group">
+                  <?php echo form_input(
                     array(
+                      'name' => 'advance',
                       'class' => 'form-control', 
-                      )); ?>              
+                      )); ?> 
+                      <span class="input-group-addon">.00</span>
                 </div>
               </div>
               <div class="col-md-6">
-                <div class="form-group">
-                  <label for="leadsource">Received On<i class="fa fa-asterisk form-required"></i></label>
-                  <?php echo form_dropdown(
-                    'type', 
-                    array('-1' => ' - Select - ', 'self' => ' - SELF ESTIMATION - ', 'public' => 'Public Groups', 'private' => 'Private Groups'),
-                    set_value('estimation'),
-                    array(
-                      'class' => 'form-control', 
-                      )); ?>              
+                <label for="receivedOn">Received On<i class="fa fa-asterisk form-required"></i></label>
+                <div class="input-group" id='datetimepicker-received'>
+                   <?php echo form_input(array(
+                        'name' => 'receivedOn',
+                        'id'   => 'receivedOn',
+                        'class' => 'form-control',
+                        'placeholder' => 'mm/dd/yyyy',
+                        'value' => set_value('receivedOn'),
+                        'autocomplete' => false,
+                      ));
+                    ?>  
+                  <span class="input-group-addon">
+                    <span class="fa fa-calendar"></span>
+                  </span>         
                 </div>
               </div>
             </div>

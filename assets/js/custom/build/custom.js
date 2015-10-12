@@ -33,13 +33,20 @@ $(function () {
 		dates.push(currentDate);
 	}
 	
+	//One Week from current date
 	$('#datetimepicker-scheduled').datetimepicker({
 		daysOfWeekDisabled: [0],
 		format: 'MM/DD/YYYY HH:mm',
 		enabledDates: dates,
 	});
 
+	//Future dates disabled
+	$("#datetimepicker-received").datetimepicker({
+		format: 'MM/DD/YYYY',
+		maxDate: new Date(),
+	});
 
+	//20 years before current date
 	$("#dob").datetimepicker({
 		format: 'MM/DD/YYYY',
 		maxDate: new Date(new Date().setYear(new Date().getFullYear() - 20)),
@@ -201,7 +208,7 @@ $(function () {
             _upload: function (file){
                if( file ){
                   file.xhr = FileAPI.upload({
-                     url: '/upload',
+                     url: baseurl + 'files/upload',
                      files: { file: file },
                      upload: function (){
                         FU._getEl(file).addClass('b-file_upload');
@@ -219,6 +226,14 @@ $(function () {
                         FU._getEl(file).removeClass('b-file_upload');
                         FU._getEl(file, '.js-progress').animate({ opacity: 0 }, 200, function (){ $(this).hide() });
                         FU._getEl(file, '.js-info').append(', <b class="b-file__'+state+'">'+(err ? (xhr.statusText || err) : state)+'</b>');
+
+                        if (!err) {
+                           var idsVal = $("[name=fileIds]").val();
+                           var response = xhr.responseText;
+                           idsVal += response + ',';
+                           $("[name=fileIds]").val(idsVal);
+
+                        }
 
                         FU.index++;
                         FU.active = false;
@@ -466,7 +481,7 @@ $(function () {
 	$('#description').wysihtml5({
 		toolbar: {
 			"font-styles": false,
-			"image": false
+			"image": false,
 		}	
 	});
 });

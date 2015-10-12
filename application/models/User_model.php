@@ -19,19 +19,17 @@ class User_model extends MY_Model {
 		$this->em = $this->doctrine->em;
 	}
 
+
 	public function getUserName($uid = null) {
-		if (!$uid)
-			$uid = $this->auth_user_id;
 
-		$user = $this->em->getRepository('Entity/Profiles')->findOneBy(array('user' => $uid));
+        $dql = "SELECT p.name,u.userName FROM Entity\Profiles p JOIN p.user u WHERE p.user = ?1";
+		$user = $this->em->createQuery($dql)->setParameter(1, $uid)->getArrayResult();
 
-		if ($user->getName()) {
-			return $user->getName();
-		}
-		else {
-			return $this->auth_user_name;
-		}
-		
+        $name = $user[0]['name'];
+        if (!$name) {
+            $name = $user[0]['userName'];
+        }
+        return $name;
 	}
 
     /**
@@ -55,6 +53,11 @@ class User_model extends MY_Model {
      * @return mixed    result
      */
     public function loadTermsByCategory($category = null) {
+
+        if (!is_numeric($category)) {
+            $category = $this->em->createQuery("SELECT c.id FROM Entity\Categories c WHERE c.title = :title")->setParameter(':title', $category)->getResult()[0]['id'];
+        }
+
         $query = $this->em->createQuery("SELECT t.id, t.title FROM Entity\Terms t WHERE t.category = ?1 AND t.status = ?2");
         $query->setParameters(array(1 => $category, 2 => 1));
         $terms = $query->getResult();
@@ -103,7 +106,10 @@ class User_model extends MY_Model {
     }    
 
 
-
+    /**
+     * [getMasterCategories description]
+     * @return [type] [description]
+     */
     public function getMasterCategories() {
 
         $dql = "SELECT c.id as catid, m.title mcatid FROM Entity\Categories c, Entity\MasterCategories m JOIN m.category mc WHERE c.id=mc";
@@ -120,4 +126,75 @@ class User_model extends MY_Model {
         return $return;
     }
 
+    /**
+     * [getMasterTerms description]
+     * @param  array  $category [description]
+     * @return [type]           [description]
+     */
+    public function getMasterTerms($category = array()) {
+        $masterCategory = $this->getMasterCategories();
+
+        $return = array();
+        foreach ($category as $key => $value) {
+            $id = $masterCategory[$value]['catid'];
+            $dql = "SELECT t FROM Entity\Terms t WHERE t.category = ?1";
+            $result = $this->em->createQuery($dql)->setParameter(1,$id)->getArrayResult();
+
+            foreach ($result as $term) {
+                $return[$value][$term['id']] = $term['title'];
+            }
+        }
+        
+        return $return;
+    }
+
+     /**
+      * [getUserByRoles description]
+      * @param  array  $roles [description]
+      * @return  [type]        [description]
+      */
+    public function getUserByRoles($roles = array()) {
+
+        $allRoles = $this->config->item('levels_and_roles');
+        $return = array();
+
+        foreach ($roles as $key => $value) {
+            $roleid = array_search($value, $allRoles);
+            $dql = "SELECT p, u FROM Entity\Profiles p JOIN p.user u WHERE u.userLevel = ?1 ";
+            $result = $this->em->createQuery($dql)->setParameter(1, $roleid)->getArrayResult();
+
+            foreach ($result as $user) {
+                $return[$user['user']['userId']] = $this->getUserName($user['user']['userId']);
+            }
+        }
+        return $return;
+    }
+
+    /**
+     * [getUserProfile description]
+     * @param  [type] $uid [description]
+     * @return [type]      [description]
+     */
+    public function getUserProfile($uid = null) {
+        $dql = "SELECT p, u FROM Entity\Profiles p JOIN p.user u WHERE p.user = ?1 ";
+        $result = $this->em->createQuery($dql)->setParameter(1, $uid)->getArrayResult();
+
+        return $result[0];
+    }
+
+    public function getAssignedBy($entity, $field) {
+
+        $dql = "SELECT DISTINCT(e.$field) FROM $entity e";
+        $result = $this->em->createQuery($dql)->getArrayResult();
+        $return = array();
+        foreach ($result as $assignedby) {
+            $return[$assignedby[1]] = $this->getUserName($assignedby[1]);
+        }
+
+        return $return;
+    }
+
+    public function getAssignedTo($entity) {
+        return $return;
+    }
 }

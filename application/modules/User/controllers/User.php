@@ -10,6 +10,7 @@ class User extends MY_Controller {
     function __construct()
     {
         parent::__construct();
+        $this->load->model('user_model');
     }
 
     /**
@@ -358,7 +359,7 @@ class User extends MY_Controller {
         $em = $this->doctrine->em;
 
         $this->load->model('user_model');
-        $view['department'] = $this->user_model->loadTermsByCategory(9);
+        $view['department'] = $this->user_model->getMasterTerms(array('department'))['department'];
 
         //Validate
         $this->form_validation->set_rules('username', 'Username', 'required|callback__username_check');
@@ -655,17 +656,21 @@ class User extends MY_Controller {
 
 
     public function get() {
-        $search = $this->input->get('q');
 
-        $query = "SELECT p, u.userId FROM Entity\Profiles p JOIN p.user u WHERE p.name LIKE :word ";
-        $result = $this->doctrine->em->createQuery($query)->setParameter(':word', '%'.$search.'%')->getArrayResult();
+        $search = $this->input->get('q') ? $this->input->get('q') : 'null';
+       
+        $result = $this->user_model->getUserByRoles(array('teamleader', 'projectowner', 'solutionarchitect'));
+
+        $searched = array_filter($result, function($el) use ($search) {
+                return ( strpos(strtolower($el), strtolower($search)) !== false );
+            });
 
         $data = array();
 
-        foreach ($result as $user) {
+        foreach ($searched as $key => $user) {
             $data[] = array(
-                'id' => $user[0]['id'], 
-                'name' => $user[0]['name']
+                'id' => $key, 
+                'name' => $user
             );
         }
 

@@ -109,7 +109,7 @@
             _upload: function (file){
                if( file ){
                   file.xhr = FileAPI.upload({
-                     url: '/upload',
+                     url: baseurl + 'files/upload',
                      files: { file: file },
                      upload: function (){
                         FU._getEl(file).addClass('b-file_upload');
@@ -127,6 +127,14 @@
                         FU._getEl(file).removeClass('b-file_upload');
                         FU._getEl(file, '.js-progress').animate({ opacity: 0 }, 200, function (){ $(this).hide() });
                         FU._getEl(file, '.js-info').append(', <b class="b-file__'+state+'">'+(err ? (xhr.statusText || err) : state)+'</b>');
+
+                        if (!err) {
+                           var idsVal = $("[name=fileIds]").val();
+                           var response = xhr.responseText;
+                           idsVal += response + ',';
+                           $("[name=fileIds]").val(idsVal);
+
+                        }
 
                         FU.index++;
                         FU.active = false;

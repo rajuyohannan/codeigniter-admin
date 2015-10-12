@@ -25,14 +25,9 @@
                       </div>
                     </form>
 
-                    
                   </div><!-- /.widget-user-image -->
                   <h3 class="widget-user-username">
-                    <?php if($profile->getName()): ?>
-                      <?php echo $profile->getName(); ?>
-                    <?php else: ?>
-                      <?php echo $auth_user_name; ?>
-                    <?php endif; ?>
+                    <?php echo $user_profile['name'] ? $user_profile['name'] : $user_profile['user']['userName']; ?>
                   </h3>
                   <h5 class="widget-user-desc"><?php print ucfirst($auth_role); ?></h5>
                 </div>
@@ -56,24 +51,26 @@
 
                   <strong><i class="fa fa-envelope margin-r-5"></i>Email Id</strong>
                   <p class="text-muted">
-                    <?php echo $user->getUserEmail(); ?>
+                    <?php echo $user_profile['user']['userEmail']; ?>
                   </p>
                   <hr>
 
                   <strong><i class="fa fa-phone margin-r-5"></i>Contact Number</strong>
                   <p class="text-muted">
-                    <?php echo $profile->getContactNumber(); ?>
+                    <?php echo  $user_profile['contactNumber']; ?>
                   </p>
 
                   <hr>
                   <strong><i class="fa fa-calendar margin-r-5"></i>Date of Birth</strong>
                   <p class="text-muted">
-                    <?php echo $profile->getDob()->format('m/d/Y'); ?>
+                    <?php if($user_profile['dob']): ?>
+                      <?php echo $user_profile['dob']->format('m/d/Y'); ?>
+                    <?php endif; ?>
                   </p>
 
                   <hr>
                   <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
-                  <p class="text-muted"><?php echo $profile->getAddress(); ?></p>
+                  <p class="text-muted"><?php echo $user_profile['address']; ?></p>
 
                   <hr>
 
@@ -245,7 +242,7 @@
                                 'placeholder' => 'Full name',
                                 'autocomplete' => 'off',
                                 'maxlength' => 255,
-                                'value' => $profile->getName(),
+                                'value' => $user_profile['name'],
                           )); ?>
                         </div>
                       </div>
@@ -259,7 +256,7 @@
                                 'placeholder' => 'Email id',
                                 'autocomplete' => 'off',
                                 'maxlength' => 255,
-                                'value' => $user->getUserEmail(),
+                                'value' => $user_profile['user']['userEmail'],
                                 'disabled' => 'disabled'
                           )); ?>
                         </div>
@@ -274,7 +271,7 @@
                                 'autocomplete' => 'off',
                                 'placeholder'=> 'Contact number',
                                 'maxlength' => 255,
-                                'value' => $profile->getContactNumber()
+                                'value' => $user_profile['contactNumber']
                           )); ?>
                         </div>
                       </div>
@@ -286,7 +283,7 @@
                                 'id'   => 'address',
                                 'class' => 'form-control', 
                                 'rows'  => 2,
-                                'value' => $profile->getAddress(),
+                                'value' => $user_profile['address'],
                           )); ?>
                         </div>
                       </div>
@@ -300,7 +297,7 @@
                                 'placeholder' => 'mm/dd/yyyy',
                                 'autocomplete' => 'off',
                                 'maxlength' => 255,
-                                'value' => $profile->getDob()->format('m/d/Y')
+                                'value' => $user_profile['dob'] ? $user_profile['dob']->format('m/d/Y') : ''
                           )); ?>
                         </div>
                       </div>  

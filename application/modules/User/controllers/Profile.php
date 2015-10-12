@@ -34,13 +34,8 @@ class Profile extends MY_Controller {
 
         $image_array = get_clickable_smileys(base_url('assets/plugins/emojione/'), 'comments');
         $view['smiley_table'] = $this->table->make_columns($image_array, 12);
-
-        $view['user'] = $user = $this->doctrine->em->getRepository('Entity\Users')
-            ->findOneBy(array('userId' => $id));
-
-        $view['profile'] = $this->doctrine->em->getRepository('Entity\Profiles')->find($id);
-
-        $view['skills'] = $this->user_model->loadTermsByCategory(9);
+        $view['user_profile'] = $this->user_model->getUserProfile($id);
+        $view['skills'] = $this->user_model->loadTermsByCategory('skills');
         $view['userSkills'] = array_flip($this->user_model->getUserSkills($this->auth_user_id));
 
     	$data['title']   = "My Profile";
@@ -67,7 +62,8 @@ class Profile extends MY_Controller {
         }
         else {
 
-            $profile = $this->doctrine->em->getRepository('Entity\Profiles')->find($id);
+            $profile = $this->doctrine->em->getRepository('Entity\Profiles')->findOneBy(array('user' => $id));
+
             $actingUser = $this->doctrine->em->getReference('Entity\Users', $this->auth_user_id);
 
             if (!$profile) {
@@ -82,8 +78,9 @@ class Profile extends MY_Controller {
             $profile->setContactNumber($this->input->post('contact'));
             $profile->setAddress($this->input->post('address'));
             $profile->setCreatedOn($now);
-            
+
             $this->doctrine->em->persist($profile);
+
             //Add Skills
             if ($skills = $this->input->post("skills")) {
                 foreach ($skills as $skill) {
@@ -109,7 +106,7 @@ class Profile extends MY_Controller {
                         $terms = $this->doctrine->em->getRepository('Entity\Terms')->find($skill);
                     }
 
-                    $exist = $this->doctrine->em->getRepository('Entity\UserSkills')->findBy(array('term' => $terms->getId()));
+                    $exist = $this->doctrine->em->getRepository('Entity\UserSkills')->findBy(array('term' => $terms->getId(), 'user' => $id));
 
                     if (!$exist) {
                         //Add Terms in user skills

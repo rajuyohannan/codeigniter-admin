@@ -24,14 +24,14 @@ class Files
     /**
      * @var integer
      *
-     * @ORM\Column(name="entity_id", type="integer", nullable=false)
+     * @ORM\Column(name="entity_id", type="integer", nullable=true)
      */
     private $entityId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="entity_type", type="string", length=255, nullable=false)
+     * @ORM\Column(name="entity_type", type="string", length=255, nullable=true)
      */
     private $entityType;
 

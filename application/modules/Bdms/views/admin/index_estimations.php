@@ -53,40 +53,26 @@
             </div>
             <div class="col-md-3">
               <div class="form-group">
-                <label for="visibility">Assigned By</label>
+                <label for="marketplace">Lead Source</label>
                 <?php echo form_dropdown(
-                  'visibility', 
-                  array('-1' => ' - Select - ', 'public' => 'Public Groups', 'private' => 'Private Groups'),
-                  $_GET['visibility'],
+                  'marketplace', 
+                  array('-1' => '- SELECT -') + $marketplace,
+                  $_GET['marketplace'],
                   array(
-                    'id'   => 'visibility',
+                    'id'   => 'marketplace',
                     'class' => 'form-control', 
                     'maxlength' => 255,
                     )); ?>              
                   </div>
                 </div>
-                <div class="col-md-3">
-                  <div class="form-group">
-                  <label for="type">Assigned to</label>
-                    <?php echo form_dropdown(
-                      'type', 
-                      array('-1' => ' - Select  - ', 'organic' => 'Organic Groups', 'project' => 'Project Groups'),
-                      $_GET['type'],
-                      array(
-                        'id'   => 'type',
-                        'class' => 'form-control', 
-                        'maxlength' => 255,
-                        )); ?>              
-                      </div>
-                    </div>
 
                 <div class="col-md-3">
                   <div class="form-group">
                   <label for="type">Assigned by</label>
                     <?php echo form_dropdown(
-                      'type', 
-                      array('-1' => ' - Select  - ', 'organic' => 'Organic Groups', 'project' => 'Project Groups'),
-                      $_GET['type'],
+                      'assignedBy', 
+                      array('-1' => '- SELECT -') + $assignedby,
+                      $_GET['assignedBy'],
                       array(
                         'id'   => 'type',
                         'class' => 'form-control', 
@@ -107,47 +93,46 @@
                         ); ?>
                       </div>
                       <div class="col-md-2">
-                        <?php echo anchor('admin/groups', 'Reset', array('class' => 'btn-block btn btn-danger btn-flat')); ?>
+                        <?php echo anchor('admin/bdms/estimations', 'Reset', array('class' => 'btn-block btn btn-danger btn-flat')); ?>
                       </div>
                     </div>
                     <?php form_close(); ?>
                   </div>
                 </div>
-
                 <div class="box-body">
                   <table class="table table-striped">
                     <tbody>
                       <tr>
                         <th>Title</th>
-                        <th>Marketplace</th>
+                        <th>Lead Source</th>
                         <th>Assigned By</th>
+                        <th>Assigned To</th>
                         <th>Est. Completion</th>
                         <th>Aging</th>
-                        <th>Actions</th>
                       </tr>
                       <?php if($estimations): ?>
                         <?php foreach($estimations as $estimation): ?>
                           <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td><?php echo $estimation->getTitle(); ?></td>
+                            <td><?php echo $estimation->getMarketplace()->getTitle(); ?></td>
+                            <td><?php echo $estimation->getAssignedBy()->getUserName(); ?></td>
                             <td>
-                              <a class="btn btn-info" href="<?php echo base_url('admin/groups/edit/'. $group->getId()); ?>">
-                                <i class="fa fa-edit"></i>&nbsp;Edit
-                              </a> 
-                              <a  data-toggle="modal" 
-                                  data-target="#Modal"
-                                  data-title="Are you sure, you want to delete this record?"
-                                  data-body="The action can not be undone. The deleted groups will be removed from persistent storage." 
-                                  data-button="Delete" 
-                                  data-class="modal-danger" 
-                                  data-action="<?php echo base_url('admin/groups/delete/'.$group->getId()); ?>" 
-                              class="btn btn-danger" href="#">
-                              <i class="fa fa-trash"></i>&nbsp;Delete
-                            </a>
-                          </td>
+                                <?php foreach ($estimation_users[$estimation->getId()] as $estuser): ?>
+                                  <?php foreach ($estuser as $user): ?>
+                                    <span class="label label-<?php echo $user['status']; ?>">
+                                      <?php echo $user['user']; ?>
+                                    </span>&nbsp;
+                                  <?php endforeach; ?>
+                                <?php endforeach; ?>
+                            </td>
+
+                            <td><?php echo $estimation->getSchduledOn()->format('m/d/Y'); ?></td>
+                            <td>
+                                <?php $interval = date_create(date('Y-m-d H:i:s'))->diff($estimation->getSchduledOn()); ?>
+                                <span class="label label-<?php echo ($interval->format('%R%a') >= 0) ? 'success' : 'danger' ?>">
+                                  <?php echo $interval->format('%R%a days'); ?>
+                                </span>
+                            </td>
                         </tr>
                       <?php endforeach; ?>
                     <?php else: ?>

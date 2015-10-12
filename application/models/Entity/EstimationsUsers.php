@@ -1,5 +1,6 @@
 <?php
 
+
 namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -24,7 +25,7 @@ class EstimationsUsers
     /**
      * @var string
      *
-     * @ORM\Column(name="data", type="text", length=65535, nullable=false)
+     * @ORM\Column(name="data", type="text", length=65535, nullable=true)
      */
     private $data;
 
@@ -38,14 +39,14 @@ class EstimationsUsers
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="started_on", type="datetime", nullable=false)
+     * @ORM\Column(name="started_on", type="datetime", nullable=true)
      */
     private $startedOn;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="completed_on", type="datetime", nullable=false)
+     * @ORM\Column(name="completed_on", type="datetime", nullable=true)
      */
     private $completedOn;
 
@@ -178,7 +179,7 @@ class EstimationsUsers
      * @param \Users $assignedTo
      * @return EstimationsUsers
      */
-    public function setAssignedTo(\Users $assignedTo = null)
+    public function setAssignedTo(Users $assignedTo = null)
     {
         $this->assignedTo = $assignedTo;
 
@@ -201,7 +202,7 @@ class EstimationsUsers
      * @param \Estimations $estimation
      * @return EstimationsUsers
      */
-    public function setEstimation(\Estimations $estimation = null)
+    public function setEstimation(Estimations $estimation = null)
     {
         $this->estimation = $estimation;
 

@@ -1,16 +1,16 @@
 <?php
 
-namespace Entity; 
+namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Subscription
+ * Likes
  *
- * @ORM\Table(name="subscription", indexes={@ORM\Index(name="group_id", columns={"group_id"}), @ORM\Index(name="user_id", columns={"user_id"})})
+ * @ORM\Table(name="likes", indexes={@ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="articles_id", columns={"articles_id"})})
  * @ORM\Entity
  */
-class Subscription
+class Likes
 {
     /**
      * @var integer
@@ -31,22 +31,22 @@ class Subscription
     /**
      * @var \Users
      *
-     * @ORM\ManyToOne(targetEntity="Users", cascade={"remove","persist"})
+     * @ORM\ManyToOne(targetEntity="Users")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="user_id", referencedColumnName="user_id")
+     *   @ORM\JoinColumn(name="created_by", referencedColumnName="user_id")
      * })
      */
-    private $user;
+    private $createdBy;
 
     /**
-     * @var \Groups
+     * @var \Articles
      *
-     * @ORM\ManyToOne(targetEntity="Groups", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="Articles")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="group_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="articles_id", referencedColumnName="id")
      * })
      */
-    private $group;
+    private $articles;
 
 
     /**
@@ -63,7 +63,7 @@ class Subscription
      * Set createdOn
      *
      * @param \DateTime $createdOn
-     * @return Subscription
+     * @return Likes
      */
     public function setCreatedOn($createdOn)
     {
@@ -83,48 +83,48 @@ class Subscription
     }
 
     /**
-     * Set user
+     * Set createdBy
      *
-     * @param \Users $user
-     * @return Subscription
+     * @param \Users $createdBy
+     * @return Likes
      */
-    public function setUser(Users $user = null)
+    public function setCreatedBy(\Users $createdBy = null)
     {
-        $this->user = $user;
+        $this->createdBy = $createdBy;
 
         return $this;
     }
 
     /**
-     * Get user
+     * Get createdBy
      *
      * @return \Users 
      */
-    public function getUser()
+    public function getCreatedBy()
     {
-        return $this->user;
+        return $this->createdBy;
     }
 
     /**
-     * Set group
+     * Set articles
      *
-     * @param \Groups $group
-     * @return Subscription
+     * @param \Articles $articles
+     * @return Likes
      */
-    public function setGroup(Groups $group = null)
+    public function setArticles(\Articles $articles = null)
     {
-        $this->group = $group;
+        $this->articles = $articles;
 
         return $this;
     }
 
     /**
-     * Get group
+     * Get articles
      *
-     * @return \Groups 
+     * @return \Articles 
      */
-    public function getGroup()
+    public function getArticles()
     {
-        return $this->group;
+        return $this->articles;
     }
 }

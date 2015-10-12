@@ -15,30 +15,33 @@
 
       <?php if( null != validation_errors() ): ?>
         <div class="callout callout-danger">
-          <h4>The following error prevented estimation assignment</h4>
-          <ul>
-            <?php echo validation_errors(); ?>
-          </ul>
-          <p>Estimation not assigned</p>
+          <h4>The following error prevented estimation assignment.</h4>
         </div>
       <?php endif; ?>
-
-      <?php echo form_open(); ?>
+      <?php $hidden = array('fileIds' => ''); ?>
+      <?php echo form_open('','',$hidden); ?>
         <p>Fields marked with <i class="fa fa-asterisk form-required"></i> are required.</p>
 
-      <div class="form-group">
+      <div class="form-group <?php echo form_error('leadsource') ? 'has-error' : ''; ?>">
         <label for="leadsource">Lead Source<i class="fa fa-asterisk form-required"></i></label>
         <?php echo form_dropdown(
           'leadsource', 
-          array('-1' => ' - Select - ', 'public' => 'Public Groups', 'private' => 'Private Groups'),
+          $leadsource,
           set_value('leadsource'),
           array(
             'id'   => 'leadsource',
             'class' => 'form-control input-lg', 
-            )); ?>              
+            )); ?>          
+
+            <?php if(form_error('leadsource')): ?>
+              <label for="inputError" class="control-label">
+                <i class="fa fa-times-circle-o"></i><?php echo form_error('leadsource'); ?>
+              </label>
+            <?php endif; ?>
+                
           </div>
 
-        <div class="form-group">
+        <div class="form-group  <?php echo form_error('title') ? 'has-error' : ''; ?>">
           <label for="title">Title <i class="fa fa-asterisk form-required"></i></label>
           <?php echo form_input(array(
             'name' => 'title', 
@@ -48,9 +51,14 @@
             'maxlength' => 255,
             'value' => set_value('title'),
             )); ?>
+            <?php if(form_error('title')): ?>
+              <label for="inputError" class="control-label">
+                <i class="fa fa-times-circle-o"></i><?php echo form_error('title'); ?>
+              </label>
+            <?php endif; ?>
           </div>
 
-        <div class="form-group">
+        <div class="form-group <?php echo form_error('description') ? 'has-error' : ''; ?>">
           <label for="email">Description<i class="fa fa-asterisk form-required"></i></label>
           <?php echo form_textarea(array(
             'name' => 'description', 
@@ -59,6 +67,11 @@
             'placeholder' => 'Enter description about the estimation being created',
             'value' => set_value('description'),
             )); ?>
+            <?php if(form_error('description')): ?>
+              <label for="inputError" class="control-label">
+                <i class="fa fa-times-circle-o"></i><?php echo form_error('description'); ?>
+              </label>
+            <?php endif; ?>
           </div>
           
           <div class="form-group">
@@ -115,21 +128,26 @@
                 </div>
               </script>
             </div>
-         <div class="form-group">
+         <div class="form-group <?php echo form_error('assignTo[]') ? 'has-error' : ''; ?>">
           <label for="assignTo">Select Assignee<i class="fa fa-asterisk form-required"></i></label>
              <?php echo form_multiselect(
                 'assignTo[]', 
                 '',
-                '',
+                set_value('assignTo'),
                 array(
                 'id'   => 'assignTo',
                 'class' => 'form-control', 
                 "multiple" => "multiple",
                 "style" => 'width:100%',
               )); ?>
+              <?php if(form_error('assignTo[]')): ?>
+                <label for="inputError" class="control-label">
+                  <i class="fa fa-times-circle-o"></i><?php echo form_error('assignTo[]'); ?>
+                </label>
+              <?php endif; ?>
          </div>
-         <div class="form-group">
-            <label for="scheduledOn">Scheduled Completion<i class="fa fa-asterisk form-required"></i></label>
+         <div class="form-group <?php echo form_error('scheduledOn') ? 'has-error' : ''; ?>">
+           <label for="scheduledOn">Scheduled Completion<i class="fa fa-asterisk form-required"></i></label>
            <div class='input-group date' id='datetimepicker-scheduled'>
            <?php echo form_input(array(
                 'name' => 'scheduledOn',
@@ -144,6 +162,11 @@
                   <span class="fa fa-calendar"></span>
               </span>
               </div>
+              <?php if(form_error('scheduledOn')): ?>
+                <label for="inputError" class="control-label">
+                  <i class="fa fa-times-circle-o"></i><?php echo form_error('scheduledOn'); ?>
+                </label>
+              <?php endif; ?>
           </div>
 
           <div class="row">
