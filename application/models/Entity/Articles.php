@@ -75,8 +75,7 @@ class Articles
      * })
      */
     private $groups;
-
-
+    
     /**
      * Get id
      *
@@ -168,6 +167,7 @@ class Articles
 
         return $this;
     }
+	
 
     /**
      * Get createdOn
@@ -247,4 +247,5 @@ class Articles
     {
         return $this->groups;
     }
+	
 }

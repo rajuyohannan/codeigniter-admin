@@ -7,6 +7,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Estimation extends MY_Controller {
 
+    /**
+     * [__construct description]
+     */
     function __construct()
     {
         parent::__construct();
@@ -16,7 +19,11 @@ class Estimation extends MY_Controller {
         $this->load->model('user_model');
     }
 
-
+    /**
+     * [index description]
+     * @param  integer $page [description]
+     * @return [type]        [description]
+     */
     public function index($page = 1) {
        $em = $this->doctrine->em;
         $where = array();
@@ -69,11 +76,11 @@ class Estimation extends MY_Controller {
     	return $this->load->view('html', $data);
     }
 
-
+    /**
+     * [add description]
+     */
     public function add() {
         
-        $this->load->model('user_model');
-
         //Validations
         $this->form_validation->set_rules('leadsource', 'Lead Source', 'greater_than[0]', 
             array('greater_than' => 'You must select a valid lead source.'));
@@ -129,14 +136,9 @@ class Estimation extends MY_Controller {
 
             foreach ($files as $file) {
                 $fileEntity = $this->doctrine->em->getReference('Entity\Files', $file);
-                $fileEntity->getEntityId($estimation->getId());
+                $fileEntity->setEntityId($estimation->getId());
                 $this->doctrine->em->persist($fileEntity);
-                echo "<pre>";
-                    print_r($estimation->getId());
-
             }
-            exit;
-
 
             $this->doctrine->em->flush();
             $this->session->set_flashdata('success', 'Estimation has been successfully assigned.');

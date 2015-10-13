@@ -47,10 +47,10 @@ class Doctrine {
         // Database connection information
         $connectionOptions = array(
             'driver' =>   'pdo_mysql',
-            'user' =>     'root',
-            'password' => 'whoami',
+            'user' =>     'Dev_Pms',
+            'password' => 'Mobi1234DB',
             'host' =>     'localhost',
-            'dbname' =>   'pms3'
+            'dbname' =>   'Dev_PMS_12Aug15_Ash'
         );
 
         // Create EntityManager

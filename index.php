@@ -66,9 +66,9 @@
 switch (ENVIRONMENT)
 {
 	case 'development':
-		error_reporting(E_ALL & ~E_NOTICE);
-		ini_set('display_errors', 1);
-	break;
+	 	error_reporting(E_ALL & ~E_NOTICE);
+	 	ini_set('display_errors', 1);
+	 break;
 
 	case 'testing':
 	case 'production':

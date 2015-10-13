@@ -32,7 +32,7 @@
 
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title">Filter Estimations</h3>
+        <h3 class="panel-title">Fi  lter Estimations</h3>
       </div>
       <div class="panel-body">
         <?php echo form_open('', array('method' => 'GET')); ?>
@@ -134,7 +134,7 @@
                             <td></td>
                             <td></td>
                             <td>
-                              <a class="btn btn-info" href="<?php echo base_url('admin/groups/edit/'. $group->getId()); ?>">
+                              <a class="btn btn-info" href="<?php echo base_url('admin/groups/edit/'); ?>">
                                 <i class="fa fa-edit"></i>&nbsp;Edit
                               </a> 
                               <a  data-toggle="modal" 
@@ -143,7 +143,7 @@
                                   data-body="The action can not be undone. The deleted groups will be removed from persistent storage." 
                                   data-button="Delete" 
                                   data-class="modal-danger" 
-                                  data-action="<?php echo base_url('admin/groups/delete/'.$group->getId()); ?>" 
+                                  data-action="<?php echo base_url('admin/groups/delete/'); ?>" 
                               class="btn btn-danger" href="#">
                               <i class="fa fa-trash"></i>&nbsp;Delete
                             </a>

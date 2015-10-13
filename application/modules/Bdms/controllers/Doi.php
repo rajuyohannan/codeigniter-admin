@@ -13,6 +13,7 @@ class Doi extends MY_Controller {
         if (!$this->require_min_level(1)) {
         	show_error('You do not have access to view this resource', '403');
         }
+        $this->load->model('user_model');
     }
 
 
@@ -34,9 +35,9 @@ class Doi extends MY_Controller {
         $this->load->library('pagination');
         $config = $this->config->load('pagination', TRUE);
 
-        $view['estimations'] = $em->getRepository('Entity\Estimations')->findBy($where, array('title' => 'ASC'), $config['per_page'], ($page - 1) * $config['per_page']);
+        $view['estimations'] = $em->getRepository('Entity\Dois')->findBy($where, array('project' => 'ASC'), $config['per_page'], ($page - 1) * $config['per_page']);
 
-        $estimations = $em->getRepository('Entity\Estimations')->findBy($where, array('title' => 'ASC'));
+        $estimations = $em->getRepository('Entity\Dois')->findBy($where, array('project' => 'ASC'));
 
         $config['base_url'] = base_url('admin/bdms/estimations');
         $config['total_rows'] = count($estimations);
@@ -52,8 +53,35 @@ class Doi extends MY_Controller {
 
     public function add() {
         
+        $masterCategory  = $this->user_model->getMasterCategories();
+        $view['options'] = $this->user_model->getMasterTerms(array_keys($masterCategory));
+        
         //Validation
         $this->form_validation->set_rules('title', 'Project name', 'trim|required');
+        $this->form_validation->set_rules('orderValue', 'Order Value', 'trim|required');
+        $this->form_validation->set_rules('advanceAmount', 'Advance Amount', 'trim|required|decimal');
+        $this->form_validation->set_rules('projectType', 'Type', 'trim|required|is_natural', 
+            array('is_natural' => 'Project type field is required'));
+        $this->form_validation->set_rules('projectTech[]', 'Technologies', 'trim|required|is_natural', 
+            array('is_natural' => 'Technologies field is required'));
+        $this->form_validation->set_rules('projectStage', 'Stage', 'trim|required|is_natural', 
+            array('is_natural' => 'Project stage field is required'));
+        $this->form_validation->set_rules('projectCodebase', 'Codebase', 'trim|required|is_natural', 
+            array('is_natural' => 'Codebase field is required'));
+        $this->form_validation->set_rules('projectCurrency', 'Codebase', 'trim|required|is_natural', 
+            array('is_natural' => 'Currency field is required'));
+
+        if ($this->input->post('existingclient')) {
+            $view['show_existing'] = true;
+            $this->form_validation->set_rules('clientId', 'Existing client', 'trim|required|is_natural', 
+                array('is_natural' => 'You must select an existing client'));
+        }
+        else {
+            $view['show_existing'] = false;
+            $this->form_validation->set_rules('clientName', 'Client name', 'trim|required');
+            $this->form_validation->set_rules('clientEmail', 'Client Email', 'trim|required|valid_email');
+            $this->form_validation->set_rules('clientPhone', 'Client Phone', 'trim|required|min_length[8]|max_length[10]');
+        }
 
         if (!$this->form_validation->run()) {
             $data['content'] = $this->load->view('admin/add_dois', $view, TRUE);            

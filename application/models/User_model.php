@@ -197,4 +197,20 @@ class User_model extends MY_Model {
     public function getAssignedTo($entity) {
         return $return;
     }
+	
+	public function getContentReference($entity) {
+
+    $dql = "SELECT e.id, e.title FROM $entity e";
+    $result = $this->em->createQuery($dql)->getArrayResult();
+
+    $return = array();
+
+    foreach ($result as $reference) {
+      $return[$reference['id']] = $reference['title'];
+    }
+
+    return $return;
+	
+	}
+	
 }

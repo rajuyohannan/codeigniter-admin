@@ -69,6 +69,7 @@ class Profile extends MY_Controller {
             if (!$profile) {
                 //Add a new profile for user   
                 $profile = new Entity\Profiles();
+                $profile->setUser($actingUser);
             }
 
             $now = date_create(date('Y-m-d H:i:s'));
@@ -91,7 +92,7 @@ class Profile extends MY_Controller {
                         $terms->setStatus(1);
                         $terms->setDescription('');
 
-                        $category = $this->doctrine->em->getReference('Entity\Categories', 9);
+                        $category = $this->doctrine->em->getReference('Entity\Categories', 8);
                         
                         $weight = $this->user_model->getMaxWeight($category->getId());
 

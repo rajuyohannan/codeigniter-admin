@@ -17,7 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | environments.
 |
 */
-$config['base_url'] = 'http://localhost/codeigniter-admin/';
+$config['base_url'] = 'http://172.16.0.9/PROJECTS/PMS/codeigniter-admin';
 
 /*
 |--------------------------------------------------------------------------

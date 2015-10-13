@@ -36,13 +36,13 @@
                 <?php echo form_label('Self Estimation', 'self'); ?>
               </div>
               <div class="form-group estimationRef">
-                <label for="leadsource">Estimation Reference<i class="fa fa-asterisk form-required"></i></label>
+                <label for="EstimationRefernce">Estimation Reference<i class="fa fa-asterisk form-required"></i></label>
                 <?php echo form_dropdown(
                   'EstimationRefernce', 
                   array('-1' => ' - Select - ', 'self' => ' - SELF ESTIMATION - ', 'public' => 'Public Groups', 'private' => 'Private Groups'),
                   set_value('estimation'),
                   array(
-                    'id'   => 'estimation',
+                    'id'   => 'EstimationRefernce',
                     'class' => 'form-control', 
                     )); ?>              
               </div>
@@ -55,7 +55,7 @@
                         'class' => 'form-control', 
                         'placeholder' => 'Department',
                         'maxlength' => 255,
-                        'value' => set_value('department'),
+                        'value' => set_value('department[]'),
                         )); ?>
                 </div>
                 </div>
@@ -66,7 +66,7 @@
                       'class' => 'form-control',
                       'placeholder' => 'Estimated efforts', 
                       'maxlength' => 255,
-                      'value' => set_value('effort'),
+                      'value' => set_value('effort[]'),
                       )); ?>
                       <span class="input-group-addon">Hours</span>
                   </div>
@@ -130,54 +130,75 @@
             
             <div class="row">
               <div class="col-md-6">
-                <div class="form-group">
-                  <label for="leadsource">Project Type<i class="fa fa-asterisk form-required"></i></label>
+                <div class="form-group <?php echo form_error('projectType') ? 'has-error' : ''; ?>">
+                  <label for="projectType">Project Type<i class="fa fa-asterisk form-required"></i></label>
                   <?php echo form_dropdown(
-                    'type', 
-                    array('-1' => ' - Select - ', 'self' => ' - SELF ESTIMATION - ', 'public' => 'Public Groups', 'private' => 'Private Groups'),
-                    set_value('estimation'),
+                    'projectType', 
+                    array('-1' => ' - SELECT - ') + $options['projecttype'],
+                    set_value('projectType'),
                     array(
                       'class' => 'form-control', 
-                      )); ?>              
+                      )); ?>    
+                    <?php if(form_error('projectType')): ?>
+                      <label for="inputError" class="control-label">
+                        <i class="fa fa-times-circle-o"></i><?php echo form_error('projectType'); ?>
+                      </label>
+                    <?php endif; ?>          
                 </div>
               </div>
               <div class="col-md-6">
-                <div class="form-group">
-                  <label for="leadsource">Technologies<i class="fa fa-asterisk form-required"></i></label>
+                <div class="form-group <?php echo form_error('projectTech[]') ? 'has-error' : ''; ?>">
+                  <label for="projectTech">Technologies<i class="fa fa-asterisk form-required"></i></label>
                   <?php echo form_dropdown(
-                    'type', 
-                    array('-1' => ' - Select - ', 'self' => ' - SELF ESTIMATION - ', 'public' => 'Public Groups', 'private' => 'Private Groups'),
-                    set_value('estimation'),
+                    'projectTech[]', 
+                    array('-1' => ' - SELECT - ') + $options['technologies'],
+                    set_value('projectTech[]'),
                     array(
                       'class' => 'form-control', 
-                      )); ?>              
+                      'multiple' => true,
+                      )); ?>  
+                    <?php if(form_error('projectTech[]')): ?>
+                      <label for="inputError" class="control-label">
+                        <i class="fa fa-times-circle-o"></i><?php echo form_error('projectTech[]'); ?>
+                      </label>
+                    <?php endif; ?>             
                 </div>
               </div>
             </div>
             
             <div class="row">
               <div class="col-md-6">
-                <div class="form-group">
-                  <label for="leadsource">Project Stage<i class="fa fa-asterisk form-required"></i></label>
+                <div class="form-group <?php echo form_error('projectStage') ? 'has-error' : ''; ?>">
+                  <label for="projectStage">Project Stage<i class="fa fa-asterisk form-required"></i></label>
                   <?php echo form_dropdown(
-                    'type', 
-                    array('-1' => ' - Select - ', 'self' => ' - SELF ESTIMATION - ', 'public' => 'Public Groups', 'private' => 'Private Groups'),
-                    set_value('estimation'),
+                    'projectStage', 
+                    array('-1' => ' - SELECT - ') + $options['project stage'],
+                    set_value('projectStage'),
                     array(
                       'class' => 'form-control', 
-                      )); ?>              
+                      )); ?> 
+                    <?php if(form_error('projectStage')): ?>
+                      <label for="inputError" class="control-label">
+                        <i class="fa fa-times-circle-o"></i><?php echo form_error('projectStage'); ?>
+                      </label>
+                    <?php endif; ?>              
                 </div>
               </div>
               <div class="col-md-6">
-                <div class="form-group">
-                  <label for="leadsource">Codebase<i class="fa fa-asterisk form-required"></i></label>
+                <div class="form-group <?php echo form_error('projectCodebase') ? 'has-error' : ''; ?>">
+                  <label for="projectCodebase">Codebase<i class="fa fa-asterisk form-required"></i></label>
                   <?php echo form_dropdown(
-                    'type', 
-                    array('-1' => ' - Select - ', 'self' => ' - SELF ESTIMATION - ', 'public' => 'Public Groups', 'private' => 'Private Groups'),
-                    set_value('estimation'),
+                    'projectCodebase', 
+                    array('-1' => ' - SELECT - ') + $options['codebase'],
+                    set_value('projectCodebase'),
                     array(
                       'class' => 'form-control', 
-                      )); ?>              
+                      )); ?>  
+                    <?php if(form_error('projectCodebase')): ?>
+                      <label for="inputError" class="control-label">
+                        <i class="fa fa-times-circle-o"></i><?php echo form_error('projectCodebase'); ?>
+                      </label>
+                    <?php endif; ?>                 
                 </div>
               </div>
             </div>             
@@ -188,7 +209,7 @@
                   'name' => 'risk', 
                   'id'   => 'risk',
                   'class' => 'form-control', 
-                  'maxlength' => 255,
+                  'rows'  => '4',
                   'value' => set_value('risk'),
                   )); ?>
             </div>
@@ -204,62 +225,78 @@
           <div class="panel-body">
             <div class="row">
               <div class="col-md-4">
-                <div class="form-group">
-                  <label for="leadsource">Currency <i class="fa fa-asterisk form-required"></i></label>
+                <div class="form-group <?php echo form_error('projectCurrency') ? 'has-error' : ''; ?>">
+                  <label for="projectCurrency">Currency <i class="fa fa-asterisk form-required"></i></label>
                   <?php echo form_dropdown(
-                    'type', 
-                    array('-1' => ' - Select - ', 'self' => ' - SELF ESTIMATION - ', 'public' => 'Public Groups', 'private' => 'Private Groups'),
-                    set_value('estimation'),
+                    'projectCurrency', 
+                    array('-1' => ' - SELECT - ') + $options['currency'],
+                    set_value('projectCurrency'),
                     array(
                       'class' => 'form-control', 
-                      )); ?>              
+                      )); ?>  
+                    <?php if(form_error('projectCurrency')): ?>
+                      <label for="inputError" class="control-label">
+                        <i class="fa fa-times-circle-o"></i><?php echo form_error('projectCurrency'); ?>
+                      </label>
+                    <?php endif; ?>              
                 </div>
               </div>
               <div class="col-md-4">
-                <label for="leadsource">Order Value<i class="fa fa-asterisk form-required"></i></label>
-                <div class="input-group">
+                <div class="<?php echo form_error('orderValue') ? 'has-error' : ''; ?>">
+                <label for="orderValue">Order Value<i class="fa fa-asterisk form-required"></i></label>
+                <div class="input-group ">
                     <?php echo form_input(array(
-                      'name' => 'value', 
-                      'id'   => 'value',
+                      'name' => 'orderValue', 
+                      'id'   => 'orderValue',
                       'class' => 'form-control', 
                       'maxlength' => 255,
-                      'value' => set_value('value'),
+                      'value' => set_value('orderValue'),
                       )); ?>
                       <span class="input-group-addon">.00</span>         
                 </div>
+                    <?php if(form_error('orderValue')): ?>
+                      <label for="inputError" class="control-label">
+                        <i class="fa fa-times-circle-o"></i><?php echo form_error('orderValue'); ?>
+                      </label>
+                    <?php endif; ?>     
+                </div>
               </div>
+
               <div class="col-md-4">
                 <div class="form-group">
-                  <?php echo form_label('Marketplace fees Included?', 'self'); ?>
+                  <?php echo form_label('Marketplace fees Included?', 'marketfee'); ?>
                   <br/>
                   <?php echo form_checkbox(array(
-                    'name' => 'selfestimated', 
-                    'id'   => 'selfestimated',
+                    'name' => 'marketfee', 
+                    'id'   => 'marketfee',
                     'class' => 'form-control input-lg',
                     'checked' => true, 
                     ), '1'); ?> Yes
-                    
                 </div>
-
-
-
               </div>
             </div>
 
             <div class="row">
               <div class="col-md-6">
-                <label for="advance">Advance Amount<i class="fa fa-asterisk form-required"></i></label>
+                <div class="form-group <?php echo form_error('advanceAmount') ? 'has-error' : ''; ?>">
+                <label for="advanceAmount">Advance Amount<i class="fa fa-asterisk form-required"></i></label>
                 <div class="input-group">
                   <?php echo form_input(
                     array(
-                      'name' => 'advance',
+                      'name' => 'advanceAmount',
                       'class' => 'form-control', 
                       )); ?> 
                       <span class="input-group-addon">.00</span>
                 </div>
+                <?php if(form_error('advanceAmount')): ?>
+                  <label for="inputError" class="control-label">
+                    <i class="fa fa-times-circle-o"></i><?php echo form_error('advanceAmount'); ?>
+                  </label>
+                <?php endif; ?> 
               </div>
+            </div>
               <div class="col-md-6">
-                <label for="receivedOn">Received On<i class="fa fa-asterisk form-required"></i></label>
+                <label for="receivedOn">Received On</label>
                 <div class="input-group" id='datetimepicker-received'>
                    <?php echo form_input(array(
                         'name' => 'receivedOn',
@@ -302,7 +339,6 @@
                 </div>
               </div>
             </div>
-            
           </div>
         </div>
 
@@ -318,58 +354,75 @@
                 'name' => 'existingclient', 
                 'id'   => 'existingclient',
                 'class' => 'form-control input-lg',
-                'checked' => false, 
-                ), '1'); ?>
+                ), '1', set_value('existingclient')); ?>
                 <?php echo form_label('Existing Client', 'existing'); ?>
               </div>
               
-              <div class="existingClientBlock hidden">
-
-                <div class="form-group">
-                  <label for="leadsource">Select Client<i class="fa fa-asterisk form-required"></i></label>
+              <div class="existingClientBlock <?php echo $show_existing ? '' : 'hidden'; ?>">
+                <div class="form-group <?php echo form_error('clientId') ? 'has-error' : ''; ?>">
+                  <label for="clientId">Select Client<i class="fa fa-asterisk form-required"></i></label>
                   <?php echo form_dropdown(
-                    'EstimationRefernce', 
-                    array('-1' => ' - Select - ', 'self' => ' - SELF ESTIMATION - ', 'public' => 'Public Groups', 'private' => 'Private Groups'),
-                    set_value('estimation'),
+                    'clientId', 
+                    array('-1' => ' - Select - ', 'add' => ' - ADD CLIENT - '),
+                    set_value('clientId'),
                     array(
-                      'id'   => 'estimation',
+                      'id'   => 'clientId',
                       'class' => 'form-control', 
-                      )); ?>              
+                      )); ?>   
+                    <?php if(form_error('clientId')): ?>
+                      <label for="inputError" class="control-label">
+                        <i class="fa fa-times-circle-o"></i><?php echo form_error('clientId'); ?>
+                      </label>
+                    <?php endif; ?>            
                 </div>
-
               </div>
 
-              <div class="newClientBlock">
-                <div class="form-group">
-                  <label>Name</label>
+              <div class="newClientBlock <?php echo !$show_existing ? '' : 'hidden'; ?>">
+                <div class="form-group <?php echo form_error('clientName') ? 'has-error' : ''; ?>">
+                  <label>Name <i class="fa fa-asterisk form-required"></i></label>
                       <?php echo form_input(array(
                         'name' => 'clientName', 
                         'class' => 'form-control', 
                         'maxlength' => 255,
                         'value' => set_value('clientName'),
                         )); ?>
+                      <?php if(form_error('clientName')): ?>
+                        <label for="inputError" class="control-label">
+                          <i class="fa fa-times-circle-o"></i><?php echo form_error('clientName'); ?>
+                        </label>
+                      <?php endif; ?>   
                 </div>
                 <div class="row">
                   <div class="col-md-6">
-                    <div class="form-group">
-                      <label>Email</label>
+                    <div class="form-group <?php echo form_error('clientEmail') ? 'has-error' : ''; ?>">
+                      <label for="clientEmail">Email <i class="fa fa-asterisk form-required"></i></label>
                           <?php echo form_input(array(
-                            'name' => 'email', 
+                            'name' => 'clientEmail', 
                             'class' => 'form-control', 
                             'maxlength' => 255,
-                            'value' => set_value('email'),
+                            'value' => set_value('clientEmail'),
                             )); ?>
+                      <?php if(form_error('clientEmail')): ?>
+                        <label for="inputError" class="control-label">
+                          <i class="fa fa-times-circle-o"></i><?php echo form_error('clientEmail'); ?>
+                        </label>
+                      <?php endif; ?>   
                     </div>
                   </div>
                   <div class="col-md-6">
-                    <div class="form-group">
-                      <label>Phone Number</label>
+                    <div class="form-group <?php echo form_error('clientPhone') ? 'has-error' : ''; ?>">
+                      <label for="clientPhone">Phone Number <i class="fa fa-asterisk form-required"></i></label>
                           <?php echo form_input(array(
-                            'name' => 'phone', 
+                            'name' => 'clientPhone', 
                             'class' => 'form-control', 
                             'maxlength' => 255,
-                            'value' => set_value('phone'),
+                            'value' => set_value('clientPhone'),
                             )); ?>
+                        <?php if(form_error('clientPhone')): ?>
+                          <label for="inputError" class="control-label">
+                            <i class="fa fa-times-circle-o"></i><?php echo form_error('clientPhone'); ?>
+                          </label>
+                        <?php endif; ?>   
                     </div>
                   </div>
                 </div>
@@ -388,12 +441,7 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Timezone</label>
-                            <?php echo form_input(array(
-                              'name' => 'timezone', 
-                              'class' => 'form-control', 
-                              'maxlength' => 255,
-                              'value' => set_value('timezone'),
-                              )); ?>
+                        <?php echo timezone_menu('UM8', 'form-control', 'clientTimezone'); ?>
                       </div>
                     </div>
                 </div>
@@ -402,7 +450,7 @@
                       <?php echo form_textarea(array(
                         'name' => 'address', 
                         'class' => 'form-control', 
-                        'maxlength' => 255,
+                        'rows' => 2,
                         'value' => set_value('address'),
                         )); ?>
                 </div>
@@ -423,7 +471,7 @@
                       <?php echo form_textarea(array(
                         'name' => 'overview', 
                         'class' => 'form-control', 
-                        'maxlength' => 255,
+                        'rows' => 4,
                         'value' => set_value('overview'),
                         )); ?>
                 </div>
@@ -433,7 +481,7 @@
                       <?php echo form_textarea(array(
                         'name' => 'notes', 
                         'class' => 'form-control', 
-                        'maxlength' => 255,
+                        'rows' => 4,
                         'value' => set_value('notes'),
                         )); ?>
                 </div>
