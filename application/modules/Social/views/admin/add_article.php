@@ -73,12 +73,14 @@
             'class' => 'form-control input-lg',
             ), 'organic', set_value('type') == 'organic' ? TRUE : FALSE); ?>
           <?php echo form_label('Publish', 'type'); ?>
+          <br/>
           <?php echo form_radio(array(
             'name' => 'type', 
             'id'   => 'type',
             'class' => 'form-control input-lg',
             ), 'project', set_value('type') == 'project' ? TRUE : FALSE); ?>
           <?php echo form_label('Unpublish', 'type'); ?>
+          <br/>
 		  <?php echo form_radio(array(
             'name' => 'type', 
             'id'   => 'type',

@@ -288,7 +288,7 @@ class Clients
      * @param \Users $createdBy
      * @return Clients
      */
-    public function setCreatedBy(\Users $createdBy = null)
+    public function setCreatedBy(Users $createdBy = null)
     {
         $this->createdBy = $createdBy;
 

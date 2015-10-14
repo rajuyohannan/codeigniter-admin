@@ -248,7 +248,7 @@ class Projects
      * @param \Clients $client
      * @return Projects
      */
-    public function setClient(\Clients $client = null)
+    public function setClient(Clients $client = null)
     {
         $this->client = $client;
 
@@ -271,7 +271,7 @@ class Projects
      * @param \Terms $type
      * @return Projects
      */
-    public function setType(\Terms $type = null)
+    public function setType(Terms $type = null)
     {
         $this->type = $type;
 
@@ -294,7 +294,7 @@ class Projects
      * @param \Terms $currency
      * @return Projects
      */
-    public function setCurrency(\Terms $currency = null)
+    public function setCurrency(Terms $currency = null)
     {
         $this->currency = $currency;
 
@@ -317,7 +317,7 @@ class Projects
      * @param \Terms $stage
      * @return Projects
      */
-    public function setStage(\Terms $stage = null)
+    public function setStage(Terms $stage = null)
     {
         $this->stage = $stage;
 
@@ -340,7 +340,7 @@ class Projects
      * @param \Terms $codebase
      * @return Projects
      */
-    public function setCodebase(\Terms $codebase = null)
+    public function setCodebase(Terms $codebase = null)
     {
         $this->codebase = $codebase;
 
@@ -363,7 +363,7 @@ class Projects
      * @param \Users $createdBy
      * @return Projects
      */
-    public function setCreatedBy(\Users $createdBy = null)
+    public function setCreatedBy(Users $createdBy = null)
     {
         $this->createdBy = $createdBy;
 

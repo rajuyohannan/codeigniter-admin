@@ -49,9 +49,11 @@
             <a href="#"><i class="fa fa-bullseye"></i>Leads<i class="fa fa-angle-left pull-right"></i></a>
             <ul class="treeview-menu">
               <li><a href="<?php echo base_url('admin/bdms/estimations'); ?>"><i class="fa fa-calculator"></i>Estimations</a></li>
-              <li><a href="<?php echo base_url('admin/bdms/doi'); ?>"><i class="fa  fa-paperclip"></i>DOIs</a></li>
             </ul>
           </li>
+          <li><a href="<?php echo base_url('admin/bdms/doi'); ?>"><i class="fa  fa-paperclip"></i>DOIs</a></li>
+          <li><a href="<?php echo base_url('admin/bdms/clients'); ?>"><i class="fa  fa-users"></i>Clients</a></li>
+          <li><a href="<?php echo base_url('admin/bdms/skills'); ?>"><i class="fa  fa-tags  "></i>Skill Pool</a></li>
         </ul>
       </li>
 
@@ -62,8 +64,8 @@
         </a>
         <ul class="treeview-menu">
           <li>
-            <a href="#"><i class="fa fa-file"></i>Articles</a>
-            <a href="#"><i class="fa fa-commenting-o"></i>Comments</a>
+            <a href="<?php echo base_url('admin/articles'); ?>"><i class="fa fa-file"></i>Articles</a>
+            <a href="<?php echo base_url('admin/comments'); ?>"><i class="fa fa-commenting-o"></i>Comments</a>
           </li>
         </ul>
       </li>

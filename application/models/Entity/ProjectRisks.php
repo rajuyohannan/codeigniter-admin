@@ -148,7 +148,7 @@ class ProjectRisks
      * @param \Users $createdBy
      * @return ProjectRisks
      */
-    public function setCreatedBy(\Users $createdBy = null)
+    public function setCreatedBy(Users $createdBy = null)
     {
         $this->createdBy = $createdBy;
 
@@ -171,7 +171,7 @@ class ProjectRisks
      * @param \Projects $project
      * @return ProjectRisks
      */
-    public function setProject(\Projects $project = null)
+    public function setProject(Projects $project = null)
     {
         $this->project = $project;
 

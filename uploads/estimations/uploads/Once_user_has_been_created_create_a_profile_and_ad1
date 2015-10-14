@@ -1,0 +1,50 @@
+Profile
+	id
+	user_id
+	name
+	dob
+	contact number
+	address
+	skills
+	department
+	created_on
+	updated_on
+
+estimation
+	id
+	title
+	description
+	completion
+	assigned_by
+	created_on
+	updated_on
+
+estimation_user
+	id
+	estimation_id
+	user_id
+	estimation_sheet
+	estimation_extra
+	created_on
+
+files
+	id
+	entity_id
+	entity_type
+	filename
+	filepath
+	filemime
+	created_on
+	uploaded_by
+
+DOI
+	
+
+
+Manage Posts
+	Masti
+
+Manage BDMS
+	Estimations
+	DOI
+

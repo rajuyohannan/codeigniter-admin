@@ -21,7 +21,4 @@ $(function () {
 		$("html, body").animate({ scrollTop: 0 }, "slow");
 	}
 	
- 	$("#contact").inputmask("mask", {"mask": "(999) 999-9999"});
- 	$("#name").inputmask("mask", {"mask": "a{5,25} a{5,25} a{5,25}"});
-
 });

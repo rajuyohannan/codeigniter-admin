@@ -56,10 +56,10 @@ $(function () {
 });
 (function (){
 	$('#selfestimated').on('ifChecked', function(event){
-	    $(".estimationRef").hide();
+	    $(".estimationRef").addClass('form-group estimationRef hidden');
 	    $(".add-more_container, p.addmore").removeClass("hidden");
 	}).on('ifUnchecked', function(event){
-	    $(".estimationRef").show(); 
+	    $(".estimationRef").removeClass('hidden'); 
 	    $(".add-more_container").addClass("add-more_container hidden");
 	   	$("p.addmore").addClass("addmore hidden text-right");
 
@@ -69,20 +69,84 @@ $(function () {
 
 	$(".addmore a").on("click", function(e){
 	  e.preventDefault();
-	  var elementToAdd = $(".add-more_container .row:first").html();
+	  // var elementToAdd = $(".add-more_container .row:first").html();
+	  
+	  // //Remove the values from html
+	  // elementToAdd.replace(/value=\"([^+])\"/g, '');
+
+	  var elementToAdd = '
+          <div class="col-md-7">
+            <div class="form-group  ">
+              <input name="department[]" value="" class="form-control" placeholder="Department" maxlength="255" type="text">
+            </div>
+          </div>
+          <div class="col-md-4 form-group ">
+            <div class="input-group">
+              <input name="effort[]" value="" class="form-control" placeholder="Estimated efforts" maxlength="255" type="text">
+            <span class="input-group-addon">Hours</span> 
+            </div>
+          </div>
+          <div class="col-md-1">
+            <span class="remove-rows label label-danger"><i class="fa fa-trash"></i></span>
+          </div>';
+                  
+
 	  var newElement   = $('<div />', {"class": 'row'}).html(elementToAdd);
 	  $(".add-more_container").after(newElement);
 	});
 
 
 	$("#existingclient").on('ifChecked', function(event){
-		console.log("Checked");
-		$(".newClientBlock").hide();
+		$(".newClientBlock").addClass('newClientBlock hidden');
 		$(".existingClientBlock").removeClass('hidden');
 	}).on('ifUnchecked', function(event){
-		console.log("Unchecked");
-		$(".newClientBlock").show();
+		$(".newClientBlock").removeClass('hidden');
 		$(".existingClientBlock").addClass('existingClientBlock hidden');
+	});
+
+	$("#EstimationRefernce").on("change", function(){
+		if ($(this).val() == 'self') {
+			$(this).val('-1');
+			$('#selfestimated').iCheck('check');
+		}
+	});
+
+	$("#clientId").on("change", function(){
+		if ($(this).val() == 'add-client') {
+			$(this).val('-1');
+			$('#existingclient').iCheck('uncheck');
+		}
+	});
+
+
+	$(".panel-body").on('click', 'span.remove-rows', function(){
+		$(this).parents('.row').remove();
+	});
+
+
+	var $technologySelect = $("#projectTech");
+	$technologySelect.on("select2:select", function (e) { 
+		var selId = e.params.data.id;
+		var selTitle = e.params.data.text;
+
+		if ($(".distribution-tech").hasClass('hidden')) {
+			$(".distribution-tech").removeClass('hidden');
+		}
+
+		$(".row-" + selId).show();
+
+	});
+	$technologySelect.on("select2:unselect", function (e) { 
+		var selId = e.params.data.id;
+		var selTitle = e.params.data.text;
+		var count = $("#projectTech :selected").length;
+
+		if (count == 0) {
+			$(".distribution-tech").addClass('distribution-tech hidden');
+		}
+
+		$(".row-" + selId).hide();
+
 	});
 
 })();
@@ -336,6 +400,33 @@ $(function () {
 
    })();
 $(function () {
+	//Phone number
+ 	$("#contact, #clientPhone").inputmask("mask", {"mask": "(999) 999-9999"});
+ 	
+ 	//Name
+ 	$("#name, #clientName").inputmask("mask", {"mask": "a{5,25} a{5,25} a{5,25}"});
+
+ 	//Instant Messenger
+ 	$("#clientIm").inputmask("mask", {"mask": "a{5,25}:a{5,25}"});
+
+ 	//Client Email
+ 	$("#clientEmail").inputmask("mask", {
+ 		"mask": "*{1,50}[.*{1,50}][.*{1,50}][.*{1,50}]@*{1,50}[.*{2,6}][.*{1,2}]",
+ 		 greedy: false,
+        onBeforePaste: function (pastedValue, opts) {
+            pastedValue = pastedValue.toLowerCase();
+            return pastedValue.replace("mailto:", "");
+        },
+        definitions: {
+            '*': {
+                validator: "[0-9A-Za-z!#$%&'*+/=?^_`{|}~\-]",
+                cardinality: 1,
+                casing: "lower"
+            }
+        }
+ 	});
+});
+$(function () {
 
   /**
    * Sortable Jquery UI
@@ -383,9 +474,6 @@ $(function () {
 		$("html, body").animate({ scrollTop: 0 }, "slow");
 	}
 	
- 	$("#contact").inputmask("mask", {"mask": "(999) 999-9999"});
- 	$("#name").inputmask("mask", {"mask": "a{5,25} a{5,25} a{5,25}"});
-
 });
 $(function () {
 
@@ -393,7 +481,7 @@ $(function () {
     	tags: true
     });
 
-    $("#estimation").select2();
+    $("#estimation, #projectTech").select2();
 
     $("#assignTo").select2({
       ajax: {

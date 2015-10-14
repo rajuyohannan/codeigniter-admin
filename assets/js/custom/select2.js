@@ -4,7 +4,7 @@ $(function () {
     	tags: true
     });
 
-    $("#estimation").select2();
+    $("#estimation, #projectTech").select2();
 
     $("#assignTo").select2({
       ajax: {

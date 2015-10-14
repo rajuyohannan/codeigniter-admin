@@ -88,7 +88,7 @@ class ProjectDistribution
      * @param \Projects $project
      * @return ProjectDistribution
      */
-    public function setProject(\Projects $project = null)
+    public function setProject(Projects $project = null)
     {
         $this->project = $project;
 
@@ -111,7 +111,7 @@ class ProjectDistribution
      * @param \Terms $technology
      * @return ProjectDistribution
      */
-    public function setTechnology(\Terms $technology = null)
+    public function setTechnology(Terms $technology = null)
     {
         $this->technology = $technology;
 
